@@ -1,0 +1,14 @@
+{
+  "tests/test_auth_integration.py::test_login_flow": true,
+  "tests/test_auth_integration.py::test_refresh_token_flow": true,
+  "tests/test_auth_integration.py::test_logout_flow": true,
+  "tests/test_auth_integration.py::test_reset_password_flow": true,
+  "tests/test_auth_integration.py::test_account_lock_mechanism": true,
+  "tests/test_auth_integration.py::test_rate_limiting": true,
+  "test_endpoints.py::test_endpoint": true,
+  "tests/test_education.py": true,
+  "tests/test_analysis.py": true,
+  "tests/test_support.py": true,
+  "tests/test_legal.py": true,
+  "tests/test_education.py::TestEducationEndpoints::test_get_videos": true
+}

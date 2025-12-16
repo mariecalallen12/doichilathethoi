@@ -1,0 +1,70 @@
+{
+  "tests": [
+    {
+      "scenario_name": "Uptrend +5% in 1 hour",
+      "initial_price": 45000.0,
+      "target_price": 47250.0,
+      "actual_price": 45655.48421638656,
+      "target_percent": 5.0,
+      "actual_percent": 1.4566315919701365,
+      "deviation": 3.5433684080298633,
+      "deviation_percent": 70.86736816059727,
+      "tolerance_percent": 0.5,
+      "passed": false,
+      "duration_seconds": 1.321022,
+      "num_ticks": 600
+    },
+    {
+      "scenario_name": "Downtrend -3% in 30 minutes",
+      "initial_price": 45000.0,
+      "target_price": 43650.0,
+      "actual_price": 45245.0204960589,
+      "target_percent": -3.0,
+      "actual_percent": 0.5444899912420078,
+      "deviation": 3.544489991242008,
+      "deviation_percent": 118.14966637473361,
+      "tolerance_percent": 0.5,
+      "passed": false,
+      "duration_seconds": 0.516254,
+      "num_ticks": 300
+    },
+    {
+      "scenario_name": "Uptrend +10% in 2 hours",
+      "initial_price": 45000.0,
+      "target_price": 49500.00000000001,
+      "actual_price": 47801.1540987562,
+      "target_percent": 10.0,
+      "actual_percent": 6.224786886124881,
+      "deviation": 3.775213113875119,
+      "deviation_percent": 37.75213113875119,
+      "tolerance_percent": 0.5,
+      "passed": false,
+      "duration_seconds": 2.591601,
+      "num_ticks": 1200
+    },
+    {
+      "scenario_name": "Small movement +1% in 15 minutes",
+      "initial_price": 45000.0,
+      "target_price": 45450.0,
+      "actual_price": 45123.53617967222,
+      "target_percent": 1.0,
+      "actual_percent": 0.27452484371604646,
+      "deviation": 0.7254751562839535,
+      "deviation_percent": 72.54751562839536,
+      "tolerance_percent": 0.5,
+      "passed": false,
+      "duration_seconds": 0.285335,
+      "num_ticks": 150
+    }
+  ],
+  "summary": {
+    "total_tests": 4,
+    "passed": 0,
+    "failed": 4,
+    "pass_rate": 0.0,
+    "avg_deviation_percent": 2.8971366673577363,
+    "max_deviation_percent": 3.775213113875119,
+    "ac3_requirement": "\u00b10.5%",
+    "ac3_passed": false
+  }
+}

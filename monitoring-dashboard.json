@@ -1,0 +1,34 @@
+{
+  "dashboard": {
+    "title": "Digital Utopia Platform Monitoring",
+    "panels": [
+      {
+        "title": "Container Health",
+        "type": "health",
+        "services": [
+          "client-app",
+          "backend",
+          "postgres",
+          "redis"
+        ]
+      },
+      {
+        "title": "API Response Times",
+        "type": "graph",
+        "metrics": [
+          "api_response_time",
+          "api_error_rate"
+        ]
+      },
+      {
+        "title": "Resource Usage",
+        "type": "graph",
+        "metrics": [
+          "cpu_usage",
+          "memory_usage",
+          "disk_usage"
+        ]
+      }
+    ]
+  }
+}

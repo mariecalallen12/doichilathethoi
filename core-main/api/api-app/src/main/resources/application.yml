@@ -1,0 +1,113 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: opex-api
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  r2dbc:
+    url: r2dbc:postgresql://${DB_IP_PORT:localhost}/opex
+    username: ${dbusername:opex}
+    password: ${dbpassword:hiopex}
+    initialization-mode: always
+  cloud:
+    bootstrap:
+      enabled: true
+    vault:
+      host: ${VAULT_HOST}
+      port: 8200
+      scheme: http
+      authentication: APPID
+      app-id:
+        user-id: co.nilin.opex.api.app.utils.VaultUserIdMechanism
+      fail-fast: true
+      kv:
+        enabled: true
+        backend: secret
+        profile-separator: '/'
+        application-name: ${spring.application.name}
+    consul:
+      host: ${CONSUL_HOST:localhost}
+      port: 8500
+      discovery:
+        #healthCheckPath: ${management.context-path}/health
+        instance-id: ${spring.application.name}:${server.port}
+        healthCheckInterval: 20s
+        prefer-ip-address: true
+  config:
+    import: vault://secret/${spring.application.name}
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: [ "health", "prometheus", "metrics", "loggers" ]
+  endpoint:
+    health:
+      show-details: when_authorized
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+logbook:
+  secure-filter:
+    enabled: true
+  format:
+    style: http
+  filter:
+    enabled: true
+    form-request-mode: BODY
+  attribute-extractors:
+    - type: JwtFirstMatchingClaimExtractor
+      claim-names: [ "sub", "subject" ]
+  obfuscate:
+    headers:
+      - Authorization
+    parameters:
+      - password
+    json-body-fields:
+      - password
+    replacement: "***"
+  write:
+    max-body-size: 10_000 #kb
+  predicate:
+    exclude:
+      - path: /auth**
+      - path: /actuator/**
+      - path: /swagger**
+    include:
+      - path: /v3/order
+        methods:
+          - POST
+          - PUT
+      - path: /v1/capital/deposit/address
+      - path: /v1/api-key
+        methods:
+          - POST
+          - PUT
+          - DELETE
+logging:
+  level:
+    co.nilin: INFO
+    org.zalando.logbook: TRACE
+app:
+  accountant:
+    url: http://opex-accountant
+  matching-gateway:
+    url: http://opex-matching-gateway
+  wallet:
+    url: http://opex-wallet
+  market:
+    url: http://opex-market
+  opex-bc-gateway:
+    url: http://opex-bc-gateway
+  auth:
+    cert-url: http://opex-auth/auth/realms/opex/protocol/openid-connect/certs
+    token-url: http://opex-auth/auth/realms/opex/protocol/openid-connect/token
+    api-key-client:
+      secret: ${API_KEY_CLIENT_SECRET}
+  binance:
+    api-url: https://api1.binance.com
+swagger:
+  authUrl: ${SWAGGER_AUTH_URL:https://api.opex.dev/auth}/realms/opex/protocol/openid-connect/token

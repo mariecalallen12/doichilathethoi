@@ -1,0 +1,276 @@
+==========================================
+  Scheduled Backup
+==========================================
+
+[0;34m[INFO][0m Running scheduled backup...
+[0;34m[INFO][0m Type: full
+[0;34m[INFO][0m Retention: 7 days
+==========================================
+BACKUP DỮ LIỆU TRƯỚC KHI CLEANUP
+==========================================
+Backup directory: ./backups/20251209_030001
+
+[0;32m[1] Backup PostgreSQL database...[0m
+✓ PostgreSQL backup completed: ./backups/20251209_030001/postgres_backup.sql
+
+[0;32m[2] Backup Redis data...[0m
+
+✓ Redis backup completed: ./backups/20251209_030001/redis_backup.rdb
+
+[0;32m[3] Backup uploads volume...[0m
+✓ Uploads backup completed: ./backups/20251209_030001/uploads_backup.tar.gz
+
+[0;32m[4] Tạo báo cáo metadata...[0m
+✓ Metadata report created: ./backups/20251209_030001/backup_metadata.txt
+
+[0;32mBackup hoàn thành![0m
+Backup location: ./backups/20251209_030001
+[0;34m[INFO][0m Rotating old backups (retention: 7 days)...
+[0;32m[SUCCESS][0m Backup rotation completed
+
+==========================================
+[0;32m[SUCCESS][0m Scheduled backup completed!
+==========================================
+==========================================
+  Scheduled Backup
+==========================================
+
+[0;34m[INFO][0m Running scheduled backup...
+[0;34m[INFO][0m Type: full
+[0;34m[INFO][0m Retention: 7 days
+==========================================
+BACKUP DỮ LIỆU TRƯỚC KHI CLEANUP
+==========================================
+Backup directory: ./backups/20251210_030001
+
+[0;32m[1] Backup PostgreSQL database...[0m
+✓ PostgreSQL backup completed: ./backups/20251210_030001/postgres_backup.sql
+
+[0;32m[2] Backup Redis data...[0m
+
+✓ Redis backup completed: ./backups/20251210_030001/redis_backup.rdb
+
+[0;32m[3] Backup uploads volume...[0m
+✓ Uploads backup completed: ./backups/20251210_030001/uploads_backup.tar.gz
+
+[0;32m[4] Tạo báo cáo metadata...[0m
+✓ Metadata report created: ./backups/20251210_030001/backup_metadata.txt
+
+[0;32mBackup hoàn thành![0m
+Backup location: ./backups/20251210_030001
+[0;34m[INFO][0m Rotating old backups (retention: 7 days)...
+[0;32m[SUCCESS][0m Backup rotation completed
+
+==========================================
+[0;32m[SUCCESS][0m Scheduled backup completed!
+==========================================
+==========================================
+  Scheduled Backup
+==========================================
+
+[0;34m[INFO][0m Running scheduled backup...
+[0;34m[INFO][0m Type: full
+[0;34m[INFO][0m Retention: 7 days
+==========================================
+BACKUP DỮ LIỆU TRƯỚC KHI CLEANUP
+==========================================
+Backup directory: ./backups/20251211_030001
+
+[0;32m[1] Backup PostgreSQL database...[0m
+✓ PostgreSQL backup completed: ./backups/20251211_030001/postgres_backup.sql
+
+[0;32m[2] Backup Redis data...[0m
+
+✓ Redis backup completed: ./backups/20251211_030001/redis_backup.rdb
+
+[0;32m[3] Backup uploads volume...[0m
+✓ Uploads backup completed: ./backups/20251211_030001/uploads_backup.tar.gz
+
+[0;32m[4] Tạo báo cáo metadata...[0m
+✓ Metadata report created: ./backups/20251211_030001/backup_metadata.txt
+
+[0;32mBackup hoàn thành![0m
+Backup location: ./backups/20251211_030001
+[0;34m[INFO][0m Rotating old backups (retention: 7 days)...
+[0;32m[SUCCESS][0m Backup rotation completed
+
+==========================================
+[0;32m[SUCCESS][0m Scheduled backup completed!
+==========================================
+==========================================
+  Scheduled Backup
+==========================================
+
+[0;34m[INFO][0m Running scheduled backup...
+[0;34m[INFO][0m Type: full
+[0;34m[INFO][0m Retention: 7 days
+==========================================
+BACKUP DỮ LIỆU TRƯỚC KHI CLEANUP
+==========================================
+Backup directory: ./backups/20251212_030001
+
+[0;32m[1] Backup PostgreSQL database...[0m
+✓ PostgreSQL backup completed: ./backups/20251212_030001/postgres_backup.sql
+
+[0;32m[2] Backup Redis data...[0m
+
+✓ Redis backup completed: ./backups/20251212_030001/redis_backup.rdb
+
+[0;32m[3] Backup uploads volume...[0m
+✓ Uploads backup completed: ./backups/20251212_030001/uploads_backup.tar.gz
+
+[0;32m[4] Tạo báo cáo metadata...[0m
+✓ Metadata report created: ./backups/20251212_030001/backup_metadata.txt
+
+[0;32mBackup hoàn thành![0m
+Backup location: ./backups/20251212_030001
+[0;34m[INFO][0m Rotating old backups (retention: 7 days)...
+[0;32m[SUCCESS][0m Backup rotation completed
+
+==========================================
+[0;32m[SUCCESS][0m Scheduled backup completed!
+==========================================
+==========================================
+  Scheduled Backup
+==========================================
+
+[0;34m[INFO][0m Running scheduled backup...
+[0;34m[INFO][0m Type: full
+[0;34m[INFO][0m Retention: 7 days
+==========================================
+BACKUP DỮ LIỆU TRƯỚC KHI CLEANUP
+==========================================
+Backup directory: ./backups/20251213_030001
+
+[0;32m[1] Backup PostgreSQL database...[0m
+✓ PostgreSQL backup completed: ./backups/20251213_030001/postgres_backup.sql
+
+[0;32m[2] Backup Redis data...[0m
+
+✓ Redis backup completed: ./backups/20251213_030001/redis_backup.rdb
+
+[0;32m[3] Backup uploads volume...[0m
+✓ Uploads backup completed: ./backups/20251213_030001/uploads_backup.tar.gz
+
+[0;32m[4] Tạo báo cáo metadata...[0m
+✓ Metadata report created: ./backups/20251213_030001/backup_metadata.txt
+
+[0;32mBackup hoàn thành![0m
+Backup location: ./backups/20251213_030001
+[0;34m[INFO][0m Rotating old backups (retention: 7 days)...
+[0;32m[SUCCESS][0m Backup rotation completed
+
+==========================================
+[0;32m[SUCCESS][0m Scheduled backup completed!
+==========================================
+==========================================
+  Scheduled Backup
+==========================================
+
+[0;34m[INFO][0m Running scheduled backup...
+[0;34m[INFO][0m Type: full
+[0;34m[INFO][0m Retention: 7 days
+==========================================
+BACKUP DỮ LIỆU TRƯỚC KHI CLEANUP
+==========================================
+Backup directory: ./backups/20251214_030001
+
+[0;32m[1] Backup PostgreSQL database...[0m
+✓ PostgreSQL backup completed: ./backups/20251214_030001/postgres_backup.sql
+
+[0;32m[2] Backup Redis data...[0m
+
+✓ Redis backup completed: ./backups/20251214_030001/redis_backup.rdb
+
+[0;32m[3] Backup uploads volume...[0m
+✓ Uploads backup completed: ./backups/20251214_030001/uploads_backup.tar.gz
+
+[0;32m[4] Tạo báo cáo metadata...[0m
+✓ Metadata report created: ./backups/20251214_030001/backup_metadata.txt
+
+[0;32mBackup hoàn thành![0m
+Backup location: ./backups/20251214_030001
+[0;34m[INFO][0m Rotating old backups (retention: 7 days)...
+[0;32m[SUCCESS][0m Backup rotation completed
+
+==========================================
+[0;32m[SUCCESS][0m Scheduled backup completed!
+==========================================
+==========================================
+  Scheduled Backup
+==========================================
+
+[0;34m[INFO][0m Running scheduled backup...
+[0;34m[INFO][0m Type: full
+[0;34m[INFO][0m Retention: 7 days
+==========================================
+BACKUP DỮ LIỆU TRƯỚC KHI CLEANUP
+==========================================
+Backup directory: ./backups/20251215_030001
+
+[0;32m[1] Backup PostgreSQL database...[0m
+✓ PostgreSQL backup completed: ./backups/20251215_030001/postgres_backup.sql
+
+[0;32m[2] Backup Redis data...[0m
+
+✓ Redis backup completed: ./backups/20251215_030001/redis_backup.rdb
+
+[0;32m[3] Backup uploads volume...[0m
+✓ Uploads backup completed: ./backups/20251215_030001/uploads_backup.tar.gz
+
+[0;32m[4] Tạo báo cáo metadata...[0m
+✓ Metadata report created: ./backups/20251215_030001/backup_metadata.txt
+
+[0;32mBackup hoàn thành![0m
+Backup location: ./backups/20251215_030001
+[0;34m[INFO][0m Rotating old backups (retention: 7 days)...
+[0;32m[SUCCESS][0m Backup rotation completed
+
+==========================================
+[0;32m[SUCCESS][0m Scheduled backup completed!
+==========================================
+==========================================
+  Scheduled Backup
+==========================================
+
+[0;34m[INFO][0m Running scheduled backup...
+[0;34m[INFO][0m Type: full
+[0;34m[INFO][0m Retention: 7 days
+==========================================
+BACKUP DỮ LIỆU TRƯỚC KHI CLEANUP
+==========================================
+Backup directory: ./backups/20251216_030001
+
+[0;32m[1] Backup PostgreSQL database...[0m
+pg_dump: warning: there are circular foreign-key constraints on this table:
+pg_dump: detail: hypertable
+pg_dump: hint: You might not be able to restore the dump without using --disable-triggers or temporarily dropping the constraints.
+pg_dump: hint: Consider using a full dump instead of a --data-only dump to avoid this problem.
+pg_dump: warning: there are circular foreign-key constraints on this table:
+pg_dump: detail: chunk
+pg_dump: hint: You might not be able to restore the dump without using --disable-triggers or temporarily dropping the constraints.
+pg_dump: hint: Consider using a full dump instead of a --data-only dump to avoid this problem.
+pg_dump: warning: there are circular foreign-key constraints on this table:
+pg_dump: detail: continuous_agg
+pg_dump: hint: You might not be able to restore the dump without using --disable-triggers or temporarily dropping the constraints.
+pg_dump: hint: Consider using a full dump instead of a --data-only dump to avoid this problem.
+✓ PostgreSQL backup completed: ./backups/20251216_030001/postgres_backup.sql
+
+[0;32m[2] Backup Redis data...[0m
+
+✓ Redis backup completed: ./backups/20251216_030001/redis_backup.rdb
+
+[0;32m[3] Backup uploads volume...[0m
+✓ Uploads backup completed: ./backups/20251216_030001/uploads_backup.tar.gz
+
+[0;32m[4] Tạo báo cáo metadata...[0m
+✓ Metadata report created: ./backups/20251216_030001/backup_metadata.txt
+
+[0;32mBackup hoàn thành![0m
+Backup location: ./backups/20251216_030001
+[0;34m[INFO][0m Rotating old backups (retention: 7 days)...
+[0;32m[SUCCESS][0m Backup rotation completed
+
+==========================================
+[0;32m[SUCCESS][0m Scheduled backup completed!
+==========================================

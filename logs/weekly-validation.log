@@ -1,0 +1,19 @@
+==========================================
+  Comprehensive Data Validation
+==========================================
+
+[0;34m[INFO][0m Validating users data...
+[0;31m[✗][0m Found  users without email or phone
+[0;34m[INFO][0m Validating data relationships...
+[0;32m[✓][0m Relationships validation passed
+[0;34m[INFO][0m Validating data constraints...
+[0;32m[✓][0m Constraints validation passed
+[0;34m[INFO][0m Validating business rules...
+[0;34m[INFO][0m Users without profiles: 1
+[0;32m[✓][0m Business rules validation passed
+[0;34m[INFO][0m Generating validation report...
+[0;32m[✓][0m Report generated: /root/forexxx/DATA_VALIDATION_REPORT_20251214_050005.md
+
+==========================================
+[0;31m[✗][0m Some validation checks failed
+==========================================

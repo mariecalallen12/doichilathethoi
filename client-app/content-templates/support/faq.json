@@ -1,0 +1,402 @@
+[
+{
+    "id": 1,
+  "question": "How do I reset my password?",
+    "answer": "To reset your password, click on 'Forgot Password' on the login page, enter your registered email address, and follow the instructions sent to your email. The reset link is valid for 24 hours.",
+    "category": "account",
+    "is_featured": true,
+    "language": "en"
+  },
+  {
+    "id": 2,
+    "question": "What is the minimum deposit amount?",
+    "answer": "The minimum deposit amount varies by account type and payment method. For standard accounts, the minimum is typically $100. Check the deposit page for current minimums for your selected payment method.",
+    "category": "account",
+    "is_featured": true,
+    "language": "en"
+  },
+  {
+    "id": 3,
+    "question": "How long does it take to process a withdrawal?",
+    "answer": "Withdrawal processing times vary by method: Bank transfers take 3-5 business days, credit card withdrawals take 5-7 business days, and cryptocurrency withdrawals typically process within 24-48 hours. All withdrawals are subject to security verification.",
+    "category": "account",
+    "is_featured": true,
+    "language": "en"
+  },
+  {
+    "id": 4,
+    "question": "What is leverage and how does it work?",
+    "answer": "Leverage allows you to control a larger position with a smaller amount of capital. For example, with 1:100 leverage, you can control $100,000 with just $1,000. While leverage can amplify profits, it also amplifies losses, so use it responsibly and always employ risk management tools like stop-loss orders.",
+    "category": "trading",
+    "is_featured": true,
+    "language": "en"
+  },
+  {
+    "id": 5,
+    "question": "What is a pip?",
+    "answer": "A pip (percentage in point) is the smallest price movement in forex trading. For most currency pairs, 1 pip equals 0.0001. For JPY pairs, 1 pip equals 0.01. Pips are used to measure price changes and calculate profit or loss.",
+    "category": "trading",
+    "is_featured": true,
+    "language": "en"
+  },
+  {
+    "id": 6,
+    "question": "What is a stop-loss order?",
+    "answer": "A stop-loss order automatically closes your position when the price reaches a specified level, limiting your potential loss. It's an essential risk management tool that helps protect your capital. Always use stop-loss orders when trading.",
+    "category": "trading",
+    "is_featured": true,
+    "language": "en"
+  },
+  {
+    "id": 7,
+    "question": "How do I verify my account?",
+    "answer": "To verify your account, log in and go to 'Account' → 'Verification'. Upload a clear photo of your government-issued ID and a proof of address (utility bill or bank statement dated within 3 months). Verification typically takes 1-3 business days.",
+    "category": "account",
+    "is_featured": true,
+    "language": "en"
+  },
+  {
+    "id": 8,
+    "question": "What trading platforms do you support?",
+    "answer": "We support web-based trading through your browser, as well as mobile apps for iOS and Android. All platforms offer full trading functionality including charts, indicators, order management, and account access.",
+    "category": "technical",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 9,
+    "question": "Are my funds safe?",
+    "answer": "Yes, we take security seriously. Client funds are held in segregated accounts separate from company funds. We use bank-level encryption, two-factor authentication, and comply with financial regulations. Your funds are protected by industry-standard security measures.",
+    "category": "general",
+    "is_featured": true,
+    "language": "en"
+  },
+  {
+    "id": 10,
+    "question": "What currency pairs can I trade?",
+    "answer": "We offer trading on major, minor, and exotic currency pairs including EUR/USD, GBP/USD, USD/JPY, USD/CHF, AUD/USD, USD/CAD, NZD/USD, and many more. Check the trading platform for the complete list of available pairs.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 11,
+    "question": "What are the trading hours?",
+    "answer": "The forex market is open 24 hours a day, 5 days a week (Monday to Friday). The market closes Friday at 22:00 GMT and reopens Sunday at 22:00 GMT. Different trading sessions (Asian, European, American) have varying levels of liquidity and volatility.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 12,
+    "question": "How do I enable two-factor authentication?",
+    "answer": "Go to 'Settings' → 'Security' and click 'Enable Two-Factor Authentication'. Download an authenticator app (Google Authenticator, Authy, or Microsoft Authenticator), scan the QR code, and enter the 6-digit code to complete setup. Don't forget to save your backup codes.",
+    "category": "account",
+    "is_featured": true,
+    "language": "en"
+  },
+  {
+    "id": 13,
+    "question": "What fees do you charge?",
+    "answer": "Our primary fee is the spread (difference between buy and sell prices). Some account types may charge a commission per lot. Overnight positions may incur swap fees. Most deposit methods are free, while withdrawal fees vary by method. Check our fees page for detailed information.",
+    "category": "account",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 14,
+    "question": "Can I trade on mobile?",
+    "answer": "Yes, we offer mobile apps for both iOS and Android devices. The mobile app includes all essential features: trading, charts, account management, economic calendar, and support access. Download from the App Store or Google Play Store.",
+    "category": "technical",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 15,
+    "question": "What is a margin call?",
+    "answer": "A margin call occurs when your account equity falls below the required margin level. When this happens, you may need to deposit more funds or close some positions to maintain your open trades. To avoid margin calls, monitor your account balance and use appropriate position sizes.",
+    "category": "trading",
+    "is_featured": true,
+    "language": "en"
+  },
+  {
+    "id": 16,
+    "question": "How do I place a trade?",
+    "answer": "Select a currency pair, choose Buy (Long) or Sell (Short), set your trade size, set stop-loss and take-profit levels (recommended), review your trade details, and click 'Place Order'. Your trade will execute at the current market price.",
+    "category": "trading",
+    "is_featured": true,
+    "language": "en"
+  },
+  {
+    "id": 17,
+    "question": "What is the difference between a market order and a limit order?",
+    "answer": "A market order executes immediately at the current market price. A limit order executes only when the price reaches your specified level or better. Use market orders for immediate execution and limit orders when you want a specific entry or exit price.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 18,
+    "question": "How do I close a trade?",
+    "answer": "Go to 'Open Positions' in your dashboard, find the position you want to close, and click 'Close' or 'Close Position'. You can also set stop-loss or take-profit orders that will automatically close your trade at specified price levels.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 19,
+    "question": "What documents do I need for account verification?",
+    "answer": "You need a government-issued photo ID (passport, driver's license, or national ID card) and a proof of address (utility bill, bank statement, or government document dated within the last 3 months). Both documents must be clear and legible.",
+    "category": "account",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 20,
+    "question": "Can I have multiple trading accounts?",
+    "answer": "Yes, you can open multiple trading accounts under the same name and email address. Each account operates independently with its own balance and trading history. Contact support if you need assistance setting up additional accounts.",
+    "category": "account",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 21,
+    "question": "What is swap or overnight fee?",
+    "answer": "Swap (also called overnight fee or rollover) is the interest charged or paid for holding a position overnight. It's calculated based on the interest rate differential between the two currencies in a pair. Swap is applied daily at 00:00 GMT server time.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 22,
+    "question": "How do I set price alerts?",
+    "answer": "Navigate to the currency pair you want to monitor, click the 'Alerts' icon, set your target price, choose the alert type (price reaches, crosses above, or crosses below), select notification method (email, push, or both), and save. You can manage all alerts from the 'Alerts' section.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 23,
+    "question": "What happens if I forget my 2FA code?",
+    "answer": "If you lose access to your authenticator app, use your backup codes that were provided during 2FA setup. If you don't have backup codes, contact our support team with your account details. We'll verify your identity and help you regain access.",
+    "category": "account",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 24,
+    "question": "How do I calculate my position size?",
+    "answer": "Position size should be based on your risk tolerance. A common rule is to risk 1-2% of your account per trade. Calculate: Position Size = (Account Balance × Risk %) / (Stop Loss in Pips × Pip Value). Use our position size calculator for assistance.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 25,
+    "question": "What is slippage?",
+    "answer": "Slippage occurs when your order executes at a different price than expected, usually during high volatility or low liquidity. Market orders are more susceptible to slippage than limit orders. Slippage can be positive (better price) or negative (worse price).",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 26,
+    "question": "How do I contact customer support?",
+    "answer": "You can contact support via live chat (24/7), email (support@example.com, response within 24 hours), or phone during business hours. You can also browse our Help Center for articles and FAQs. Have your account number ready when contacting support.",
+    "category": "general",
+    "is_featured": true,
+    "language": "en"
+  },
+  {
+    "id": 27,
+    "question": "What is a lot size?",
+    "answer": "A lot is the standard unit size for forex trading. Standard lot = 100,000 units, mini lot = 10,000 units, micro lot = 1,000 units, nano lot = 100 units. The lot size determines how much one pip movement is worth in your account currency.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 28,
+    "question": "Can I change my account type?",
+    "answer": "Yes, you can upgrade your account type at any time by depositing the required minimum amount for the new account type. Account upgrades are processed automatically. Downgrades may require contacting support. Check account type requirements on our website.",
+    "category": "account",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 29,
+    "question": "What is the spread?",
+    "answer": "The spread is the difference between the buy (ask) price and sell (bid) price of a currency pair. It's the primary cost of trading. Tighter spreads mean lower trading costs. Spreads vary by currency pair and market conditions, typically wider during low liquidity periods.",
+    "category": "trading",
+    "is_featured": true,
+    "language": "en"
+  },
+  {
+    "id": 30,
+    "question": "How do I read trading charts?",
+    "answer": "Charts display price movements over time. The most common type is candlestick charts, where green/white candles show price increases and red/black candles show decreases. Use different timeframes (1 min, 1 hour, 1 day) to analyze trends. Look for support, resistance, and chart patterns.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 31,
+    "question": "What is the difference between major, minor, and exotic pairs?",
+    "answer": "Major pairs involve USD and are most liquid (e.g., EUR/USD, GBP/USD). Minor pairs don't involve USD (e.g., EUR/GBP, EUR/JPY). Exotic pairs include one major and one emerging market currency (e.g., USD/TRY, EUR/ZAR). Majors have tighter spreads, exotics have wider spreads.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 32,
+    "question": "How do I update my email address?",
+    "answer": "Go to 'Settings' → 'Profile', click 'Edit' next to your email, enter your new email address, verify your current email, verify your new email via the confirmation link sent, and confirm the change. Email changes require verification for security.",
+    "category": "account",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 33,
+    "question": "What is a take-profit order?",
+    "answer": "A take-profit order automatically closes your position when the price reaches a specified profit level. It helps secure your gains and removes the need to constantly monitor your trades. Always set take-profit levels to lock in profits.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 34,
+    "question": "Are there any trading restrictions?",
+    "answer": "Some restrictions may apply based on your account type, location, or regulatory requirements. Scalping and hedging policies vary by account type. Check your account terms or contact support for specific restrictions that may apply to your account.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 35,
+    "question": "How do I view my trading history?",
+    "answer": "Go to 'Account' → 'Trading History' to view all your past trades. You can filter by date range, instrument, result, or trade type. Export your history for record-keeping or analysis. Trading history helps you review performance and improve your strategy.",
+    "category": "account",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 36,
+    "question": "What is the economic calendar?",
+    "answer": "The economic calendar shows important economic events, data releases, and central bank announcements that can affect currency prices. Events are marked by impact level (high, medium, low). Use it to plan your trading around major economic releases.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 37,
+    "question": "Can I trade cryptocurrencies?",
+    "answer": "Yes, we offer cryptocurrency trading on major pairs like BTC/USD, ETH/USD, and others. Crypto trading has different characteristics than forex, including 24/7 markets and higher volatility. Check our trading platform for available crypto pairs.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 38,
+    "question": "What should I do if I suspect unauthorized account access?",
+    "answer": "If you suspect unauthorized access, immediately change your password, enable 2FA if not already enabled, check your account activity and trading history, and contact our support team immediately. We'll help secure your account and investigate any suspicious activity.",
+  "category": "account",
+  "is_featured": true,
+  "language": "en"
+  },
+  {
+    "id": 39,
+    "question": "How do I use technical indicators?",
+    "answer": "Technical indicators help identify trends and potential entry/exit points. Popular indicators include Moving Averages, RSI, MACD, and Bollinger Bands. Add indicators to your charts from the indicators menu. Don't use too many - choose 2-3 that complement each other.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 40,
+    "question": "What is the best time to trade?",
+    "answer": "The best trading times are during session overlaps when liquidity is highest: London-New York overlap (13:00-17:00 GMT) is typically the most volatile and liquid. Asian session is generally quieter. Trade when you can focus and when your preferred pairs are most active.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 41,
+    "question": "How do I deposit using cryptocurrency?",
+    "answer": "Go to 'Deposit', select 'Cryptocurrency', choose your crypto (Bitcoin, Ethereum, etc.), you'll receive a wallet address and QR code, send the crypto from your wallet to the provided address, and your deposit will be credited once confirmed on the blockchain (usually within 30 minutes to a few hours).",
+    "category": "account",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 42,
+    "question": "What is a demo account?",
+    "answer": "A demo account lets you practice trading with virtual funds in a risk-free environment. It uses real market data and conditions but with simulated money. It's perfect for learning, testing strategies, and getting familiar with the platform before trading with real funds.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 43,
+    "question": "How do I access educational resources?",
+    "answer": "Visit our Education section for video tutorials, ebooks, market reports, and the economic calendar. All resources are free for registered users. Filter by category (beginner, intermediate, advanced) or search for specific topics. Track your learning progress in your account.",
+    "category": "general",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 44,
+    "question": "What is a pending order?",
+    "answer": "A pending order is an order that will execute when certain conditions are met. Types include limit orders (execute at specific price), stop orders (become market orders when price reaches level), and stop-limit orders (combination). Pending orders help you enter trades at desired prices.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 45,
+    "question": "How do I cancel a withdrawal request?",
+    "answer": "If your withdrawal is still pending, you may be able to cancel it from 'Withdrawals' → 'Pending'. Once processing begins, withdrawals cannot be cancelled. Contact support immediately if you need to cancel a pending withdrawal.",
+    "category": "account",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 46,
+    "question": "What browser should I use?",
+    "answer": "We recommend using the latest versions of Google Chrome, Mozilla Firefox, Microsoft Edge, or Safari. Ensure JavaScript is enabled and your browser is updated. Clear cache and cookies if you experience issues. Mobile browsers are supported for basic functions.",
+    "category": "technical",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 47,
+    "question": "How do I calculate my profit or loss?",
+    "answer": "Profit/Loss = (Exit Price - Entry Price) × Lot Size × Pip Value. For long positions, profit when exit > entry. For short positions, profit when exit < entry. Your trading platform automatically calculates and displays P&L for all open and closed positions.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 48,
+    "question": "What is the maximum leverage I can use?",
+    "answer": "Maximum leverage depends on your account type and regulatory requirements. Standard accounts typically offer up to 1:100, premium accounts up to 1:200, and VIP accounts up to 1:400. Leverage limits may vary by instrument. Check your account details for specific limits.",
+    "category": "trading",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 49,
+    "question": "How do I report a complaint?",
+    "answer": "If you have a complaint, contact our support team first. If the issue isn't resolved, you can submit a formal complaint through the 'Legal' → 'Complaints' section. We take all complaints seriously and will investigate and respond according to our complaints procedure.",
+    "category": "legal",
+    "is_featured": false,
+    "language": "en"
+  },
+  {
+    "id": 50,
+    "question": "What happens to my account if I don't trade for a long time?",
+    "answer": "Inactive accounts remain open and accessible. However, very long periods of inactivity may result in account dormancy. We may contact you to confirm you still want to maintain the account. Your funds remain safe and accessible. Log in periodically to keep your account active.",
+    "category": "account",
+    "is_featured": false,
+    "language": "en"
+  }
+]

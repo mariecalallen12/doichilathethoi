@@ -1,0 +1,53 @@
+Traceback (most recent call last):
+  File "/root/forexxx/tests/scenario_test.py", line 16, in <module>
+    from app.services.trading_data_simulator import TradingDataSimulator, get_trading_data_simulator
+  File "/root/forexxx/tests/../backend/app/__init__.py", line 6, in <module>
+    from . import api
+  File "/root/forexxx/tests/../backend/app/api/__init__.py", line 6, in <module>
+    from .endpoints import auth_router
+  File "/root/forexxx/tests/../backend/app/api/endpoints/__init__.py", line 6, in <module>
+    from .auth import router as auth_router
+  File "/root/forexxx/tests/../backend/app/api/endpoints/auth.py", line 28, in <module>
+    from ...db.session import get_db
+  File "/root/forexxx/tests/../backend/app/db/__init__.py", line 8, in <module>
+    from .session import (
+  File "/root/forexxx/tests/../backend/app/db/session.py", line 15, in <module>
+    from ..core.config import settings
+  File "/root/forexxx/tests/../backend/app/core/__init__.py", line 6, in <module>
+    from .config import settings
+  File "/root/forexxx/tests/../backend/app/core/config.py", line 122, in <module>
+    settings = get_settings()
+  File "/root/forexxx/tests/../backend/app/core/config.py", line 118, in get_settings
+    return Settings()
+  File "/usr/local/lib/python3.10/dist-packages/pydantic_settings/main.py", line 71, in __init__
+    super().__init__(
+  File "/usr/local/lib/python3.10/dist-packages/pydantic/main.py", line 164, in __init__
+    __pydantic_self__.__pydantic_validator__.validate_python(data, self_instance=__pydantic_self__)
+pydantic_core._pydantic_core.ValidationError: 9 validation errors for Settings
+BACKEND_PORT
+  Extra inputs are not permitted [type=extra_forbidden, input_value='8000', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.5/v/extra_forbidden
+CLIENT_PORT
+  Extra inputs are not permitted [type=extra_forbidden, input_value='3002', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.5/v/extra_forbidden
+ADMIN_PORT
+  Extra inputs are not permitted [type=extra_forbidden, input_value='3001', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.5/v/extra_forbidden
+CLIENT_API_BASE_URL
+  Extra inputs are not permitted [type=extra_forbidden, input_value='http://localhost:8000', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.5/v/extra_forbidden
+ADMIN_API_BASE_URL
+  Extra inputs are not permitted [type=extra_forbidden, input_value='http://localhost:8000', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.5/v/extra_forbidden
+PRODUCTION_MODE
+  Extra inputs are not permitted [type=extra_forbidden, input_value='true', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.5/v/extra_forbidden
+BACKUP_ENABLED
+  Extra inputs are not permitted [type=extra_forbidden, input_value='true', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.5/v/extra_forbidden
+BACKUP_SCHEDULE
+  Extra inputs are not permitted [type=extra_forbidden, input_value='0 2 * * *', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.5/v/extra_forbidden
+BACKUP_RETENTION_DAYS
+  Extra inputs are not permitted [type=extra_forbidden, input_value='30', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.5/v/extra_forbidden

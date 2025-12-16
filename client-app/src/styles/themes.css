@@ -1,0 +1,20 @@
+/* Theme Variables */
+:root {
+  --trading-bg-primary: #0F172A;
+  --trading-bg-secondary: #1E293B;
+  --trading-bg-tertiary: #334155;
+  
+  --trading-text-primary: #F8FAFC;
+  --trading-text-secondary: #CBD5E1;
+  --trading-text-muted: #94A3B8;
+  
+  --trading-border: rgba(255, 255, 255, 0.1);
+  --trading-border-purple: rgba(139, 92, 246, 0.3);
+  
+  --trading-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --trading-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --trading-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --trading-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --trading-shadow-purple: 0 8px 32px 0 rgba(139, 92, 246, 0.3);
+}
+

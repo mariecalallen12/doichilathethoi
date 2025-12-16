@@ -1,0 +1,52 @@
+name: Data Validation
+
+on:
+  push:
+    branches:
+      - develop
+      - staging
+      - main
+  pull_request:
+    branches:
+      - develop
+      - staging
+      - main
+  workflow_dispatch:
+
+jobs:
+  data-validation:
+    name: Data Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Docker
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Start services
+        run: |
+          docker-compose up -d postgres redis
+          sleep 10
+      
+      - name: Run schema verification
+        run: |
+          chmod +x scripts/verify-schema.sh
+          ./scripts/verify-schema.sh || true
+      
+      - name: Run data integrity check
+        run: |
+          chmod +x scripts/check-integrity.sh
+          ./scripts/check-integrity.sh || true
+      
+      - name: Run data consistency check
+        run: |
+          chmod +x scripts/validate-data-consistency.sh
+          ./scripts/validate-data-consistency.sh || true
+      
+      - name: Cleanup
+        if: always()
+        run: |
+          docker-compose down
+

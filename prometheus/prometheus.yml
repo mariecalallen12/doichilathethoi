@@ -1,0 +1,63 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'digital-utopia'
+    environment: 'production'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+# Load rules once and periodically evaluate them
+rule_files:
+  - "alert_rules.yml"
+
+# Scrape configurations
+scrape_configs:
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Backend API
+  - job_name: 'backend-api'
+    static_configs:
+      - targets: ['backend:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # OPEX API
+  - job_name: 'opex-api'
+    static_configs:
+      - targets: ['opex-api:8080']
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 15s
+
+  # OPEX Market
+  - job_name: 'opex-market'
+    static_configs:
+      - targets: ['opex-market:8080']
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 15s
+
+  # OPEX Matching Engine
+  - job_name: 'opex-matching-engine'
+    static_configs:
+      - targets: ['opex-matching-engine:8080']
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 15s
+
+  # PostgreSQL (via postgres_exporter if available)
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:5432']
+    scrape_interval: 30s
+
+  # Redis (via redis_exporter if available)
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+    scrape_interval: 30s

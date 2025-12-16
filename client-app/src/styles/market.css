@@ -1,0 +1,212 @@
+/* Market Page Styles */
+
+/* Market Layout */
+.market-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a0b2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+/* Glass Morphism for Market Cards */
+.market-card {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.05));
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.market-card:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Gradient Text */
+.gradient-text-purple {
+  background: linear-gradient(135deg, #8B5CF6, #3B82F6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Price Change Animations */
+@keyframes priceFlashGreen {
+  0%, 100% { 
+    background-color: transparent; 
+  }
+  50% { 
+    background-color: rgba(16, 185, 129, 0.3); 
+  }
+}
+
+@keyframes priceFlashRed {
+  0%, 100% { 
+    background-color: transparent; 
+  }
+  50% { 
+    background-color: rgba(239, 68, 68, 0.3); 
+  }
+}
+
+.price-up-flash {
+  animation: priceFlashGreen 0.6s ease;
+}
+
+.price-down-flash {
+  animation: priceFlashRed 0.6s ease;
+}
+
+/* Tab Hover Effects */
+.asset-tab {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.asset-tab::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #8B5CF6, #3B82F6);
+  transition: width 0.3s ease;
+}
+
+.asset-tab:hover::before,
+.asset-tab.active::before {
+  width: 80%;
+}
+
+/* Search Input Styling */
+.market-search-input {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.market-search-input:focus {
+  outline: none;
+  border-color: rgba(139, 92, 246, 0.6);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+  background: rgba(30, 41, 59, 0.8);
+}
+
+/* Table Row Hover */
+.price-table-row {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.price-table-row:hover {
+  background: rgba(139, 92, 246, 0.1);
+  transform: scale(1.01);
+}
+
+/* Heatmap Cell */
+.heatmap-cell {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.heatmap-cell:hover {
+  transform: scale(1.05);
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+/* News Card */
+.news-card {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.1));
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.news-card:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.2);
+}
+
+/* Indicator Card */
+.indicator-card {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.indicator-card:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  background: rgba(30, 41, 59, 0.8);
+}
+
+/* Quick Trade Widget */
+.quick-trade-widget {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.95), rgba(59, 130, 246, 0.95));
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.3);
+}
+
+/* Scrollbar Styling */
+.market-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.market-scrollbar::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 4px;
+}
+
+.market-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.5);
+  border-radius: 4px;
+}
+
+.market-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.7);
+}
+
+/* Loading Skeleton */
+.market-skeleton {
+  background: linear-gradient(90deg, 
+    rgba(139, 92, 246, 0.1) 25%, 
+    rgba(139, 92, 246, 0.2) 50%, 
+    rgba(139, 92, 246, 0.1) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .quick-trade-widget {
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+  }
+}
+

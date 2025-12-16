@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>co.nilin.opex.api</groupId>
+        <artifactId>api</artifactId>
+        <version>1.0.1-beta.7</version>
+    </parent>
+
+    <groupId>co.nilin.opex.api.app</groupId>
+    <artifactId>api-app</artifactId>
+    <name>api-app</name>
+    <description>Api app Opex</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-kotlin</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>co.nilin.opex.utility</groupId>
+            <artifactId>error-handler</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>co.nilin.opex.utility</groupId>
+            <artifactId>interceptors</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>co.nilin.opex.api.core</groupId>
+            <artifactId>api-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>co.nilin.opex.api.ports.proxy</groupId>
+            <artifactId>api-proxy-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>co.nilin.opex.api.ports.binance</groupId>
+            <artifactId>api-binance-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>co.nilin.opex.api.ports.postgres</groupId>
+            <artifactId>api-persister-postgres</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-vault-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>co.nilin.opex.utility</groupId>
+            <artifactId>preferences</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

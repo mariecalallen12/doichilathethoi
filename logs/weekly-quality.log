@@ -1,0 +1,14 @@
+==========================================
+  Data Quality Check
+==========================================
+
+[0;34m[INFO][0m Checking data completeness...
+[0;31m[✗][0m Found  incomplete records
+[0;34m[INFO][0m Checking data accuracy...
+[0;32m[✓][0m Data accuracy check passed
+[0;34m[INFO][0m Generating quality report...
+[0;32m[✓][0m Report generated: /root/forexxx/DATA_QUALITY_REPORT_20251214_050004.md
+
+==========================================
+[0;31m[✗][0m Data quality issues found
+==========================================

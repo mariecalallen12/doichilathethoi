@@ -1,0 +1,43 @@
+{
+  "timestamp": "1765426277.971223",
+  "tests": [
+    {
+      "name": "No Pricing Logic in Client Bundle",
+      "passed": false,
+      "errors": [
+        "index-Cpqp4vVn.js: Found 'drift.*component' pattern"
+      ],
+      "warnings": []
+    },
+    {
+      "name": "Formula Sandbox Blocks Code Injection",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "name": "Allowed Formula Functions Work",
+      "passed": false,
+      "errors": [],
+      "warnings": [
+        "Formula returned None or invalid type: price * (1 + drift * dt)",
+        "Formula returned None or invalid type: price + (random.random() - 0.5) * volatility",
+        "Formula returned None or invalid type: math.sqrt(price) * drift",
+        "Formula returned None or invalid type: abs(price - target) if target else price",
+        "Formula returned None or invalid type: price * math.sin(time.time())",
+        "Only 3/8 safe formulas worked"
+      ]
+    },
+    {
+      "name": "AST Whitelist Validation",
+      "passed": true,
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "summary": {
+    "total": 4,
+    "passed": 2,
+    "failed": 2
+  }
+}

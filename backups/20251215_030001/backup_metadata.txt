@@ -1,0 +1,47 @@
+Backup Date: Mon Dec 15 03:00:07 CET 2025
+PostgreSQL Database: digital_utopia
+Redis Database: 0
+Backup Location: ./backups/20251215_030001
+
+PostgreSQL Tables:
+ alembic_version            |         1
+ alert_history              |         0
+ alert_rules                |         0
+ aml_screenings             |         0
+ analytics_events           |         0
+ audit_logs                 |       200
+ compliance_events          |         0
+ exchange_rates             |         6
+ iceberg_orders             |         0
+ invoices                   |         0
+ kyc_documents              |         0
+ market_analysis            |         0
+ market_data_history        |         0
+ market_prices              |         0
+ notification_preferences   |         0
+ notifications              |         0
+ oco_orders                 |         0
+ payments                   |         0
+ permissions                |        21
+ portfolio_positions        |         0
+ referral_codes             |         0
+ referral_registrations     |         0
+ refresh_tokens             |        66
+ risk_assessments           |         0
+ role_permissions           |        53
+ roles                      |         4
+ scheduled_reports          |         0
+ system_settings            |         1
+ trading_adjustments        |         0
+ trading_bots               |         0
+ trading_diagnostic_reports |         0
+ trading_orders             |         0
+ trailing_stop_orders       |         0
+ transactions               |         0
+ user_profiles              |        10
+ users                      |        11
+ wallet_balances            |         0
+ watchlists                 |         0
+
+Redis Keys:
+

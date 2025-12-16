@@ -1,0 +1,16 @@
+==========================================
+  Data Maintenance
+==========================================
+
+[0;34m[INFO][0m Running all maintenance tasks...
+[0;34m[INFO][0m Running VACUUM on database...
+[0;32m[SUCCESS][0m VACUUM completed
+[0;34m[INFO][0m Reindexing database...
+[0;32m[SUCCESS][0m Reindex completed
+[0;34m[INFO][0m Cleaning up old data...
+[0;32m[SUCCESS][0m Cleanup completed
+[0;32m[SUCCESS][0m All maintenance tasks completed
+
+==========================================
+[0;32m[SUCCESS][0m Data maintenance completed!
+==========================================

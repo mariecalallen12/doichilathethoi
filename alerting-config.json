@@ -1,0 +1,22 @@
+{
+  "alerts": [
+    {
+      "name": "Service Down",
+      "condition": "container_status != 'running'",
+      "severity": "critical",
+      "notification": "email"
+    },
+    {
+      "name": "High Error Rate",
+      "condition": "error_rate > 0.05",
+      "severity": "critical",
+      "notification": "email"
+    },
+    {
+      "name": "Performance Degradation",
+      "condition": "response_time > 2000",
+      "severity": "warning",
+      "notification": "email"
+    }
+  ]
+}

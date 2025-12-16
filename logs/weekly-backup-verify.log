@@ -1,0 +1,23 @@
+==========================================
+  Weekly Backup Verification
+==========================================
+
+[0;34m[INFO][0m Verifying backups from the past week...
+[0;32m[SUCCESS][0m Backup 20251207_015519 verified successfully
+[0;32m[SUCCESS][0m Backup 20251207_015939 verified successfully
+[0;32m[SUCCESS][0m Backup 20251208_072415 verified successfully
+[0;32m[SUCCESS][0m Backup 20251208_073453 verified successfully
+[0;32m[SUCCESS][0m Backup 20251208_073455 verified successfully
+[0;32m[SUCCESS][0m Backup 20251208_073524 verified successfully
+[0;32m[SUCCESS][0m Backup 20251208_073731 verified successfully
+[0;32m[SUCCESS][0m Backup 20251208_195258 verified successfully
+[0;32m[SUCCESS][0m Backup 20251209_030001 verified successfully
+[0;32m[SUCCESS][0m Backup 20251210_030001 verified successfully
+[0;32m[SUCCESS][0m Backup 20251211_030001 verified successfully
+[0;32m[SUCCESS][0m Backup 20251212_030001 verified successfully
+[0;32m[SUCCESS][0m Backup 20251213_030001 verified successfully
+[0;31m[ERROR][0m Backup domain_migration_20251208_210006 verification failed
+[0;31m[ERROR][0m Backup redis verification failed
+[0;32m[SUCCESS][0m Weekly backup verification completed!
+[0;34m[INFO][0m Report generated: /root/forexxx/reports/weekly/weekly_backup_verification_20251214.md
+[0;31m[ERROR][0m Some backups failed verification. Review the report.

@@ -1,0 +1,90 @@
+version: '3.8'
+
+# Staging environment overrides for docker-compose.yml
+# Usage: docker-compose -f docker-compose.yml -f docker-compose.staging.yml up -d
+
+services:
+  # Client Application - Staging Configuration
+  client-app:
+    build:
+      context: ./client-app
+      dockerfile: Dockerfile
+      args:
+        # Staging API URLs (update with actual staging URLs)
+        VITE_API_BASE_URL: ${STAGING_API_BASE_URL:-https://staging-api.yourdomain.com}
+        VITE_WS_URL: ${STAGING_WS_URL:-wss://staging-api.yourdomain.com/ws}
+    container_name: digital_utopia_client_staging
+    environment:
+      VITE_API_BASE_URL: ${STAGING_API_BASE_URL:-https://staging-api.yourdomain.com}
+    ports:
+      - "${STAGING_CLIENT_PORT:-3003}:80"
+    labels:
+      - "environment=staging"
+      - "version=${STAGING_VERSION:-latest}"
+    # Staging: Keep volume mounts for easier debugging
+    volumes:
+      - ./client-app/dist:/usr/share/nginx/html:ro
+    # Staging: More verbose logging
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # Staging: Less strict resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  # Backend - Staging Configuration
+  backend:
+    environment:
+      DEBUG: "true"
+      ENVIRONMENT: "staging"
+      LOG_LEVEL: "DEBUG"
+      # Staging: More verbose CORS
+      CORS_ORIGINS: ${STAGING_CORS_ORIGINS:-http://localhost:3003,https://staging.yourdomain.com}
+    # Staging: Keep volume mounts for hot reload
+    volumes:
+      - ./backend:/app
+      - backend_uploads:/app/uploads
+    # Staging: Single worker for easier debugging
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  # Database - Staging Configuration
+  postgres:
+    # Staging: Expose port for debugging
+    ports:
+      - "${STAGING_POSTGRES_PORT:-5434}:5432"
+    environment:
+      POSTGRES_DB: ${STAGING_POSTGRES_DB:-digital_utopia_staging}
+      POSTGRES_USER: ${STAGING_POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${STAGING_POSTGRES_PASSWORD:-staging_password}
+    # Staging: Keep data for testing
+    volumes:
+      - postgres_staging_data:/var/lib/postgresql/data
+
+  # Redis - Staging Configuration
+  redis:
+    # Staging: Expose port for debugging
+    ports:
+      - "${STAGING_REDIS_PORT:-6380}:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_staging_data:/data
+
+volumes:
+  postgres_staging_data:
+    driver: local
+  redis_staging_data:
+    driver: local
+

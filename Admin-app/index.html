@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <base href="/admin/" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Prevent browser caching -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>AdminPortal - Administrator System</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Remixicon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.5.0/remixicon.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Secular+One&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- Force correct base URL to prevent browser cache issues -->
+    <script>
+      // Ensure base tag uses correct origin with port
+      (function() {
+        const currentPort = window.location.port || (window.location.protocol === 'https:' ? '443' : '80');
+        const expectedPort = '3001';
+        if (currentPort !== expectedPort && window.location.hostname === 'localhost') {
+          const newUrl = window.location.protocol + '//' + window.location.hostname + ':' + expectedPort + window.location.pathname + window.location.search + window.location.hash;
+          if (window.location.href !== newUrl) {
+            window.location.replace(newUrl);
+          }
+        }
+        // Fix base tag if needed
+        const baseTag = document.querySelector('base');
+        if (baseTag && !baseTag.href.startsWith(window.location.origin)) {
+          baseTag.href = '/admin/';
+        }
+      })();
+    </script>
+    <script>
+      // Unregister service worker from client-app immediately - must run before any other scripts
+      (function() {
+        if ('serviceWorker' in navigator) {
+          // Unregister all service workers immediately
+          navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for(let registration of registrations) {
+              registration.unregister().then(function(success) {
+                console.log('[Admin] Unregistered service worker:', registration.scope, success);
+                // Clear all caches
+                if ('caches' in window) {
+                  caches.keys().then(function(names) {
+                    for (let name of names) {
+                      caches.delete(name);
+                      console.log('[Admin] Deleted cache:', name);
+                    }
+                  });
+                }
+              });
+            }
+          });
+          
+          // Also try to unregister by scope
+          navigator.serviceWorker.getRegistration().then(function(registration) {
+            if (registration && !registration.scope.includes('/admin/')) {
+              registration.unregister().then(function(success) {
+                console.log('[Admin] Unregistered current service worker:', success);
+              });
+            }
+          });
+        }
+      })();
+    </script>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+

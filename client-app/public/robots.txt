@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /personal/
+Disallow: /test
+
+# Sitemap
+Sitemap: https://luxetrade.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
