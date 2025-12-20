@@ -43,21 +43,21 @@ jobs:
       
       - name: Start Docker Compose services
         run: |
-          docker compose up -d postgres redis
+          docker compose -f docker-compose.yml up -d postgres redis
           sleep 15
       
       - name: Check database connectivity
         run: |
-          docker compose exec -T postgres pg_isready -U postgres || true
+          docker compose -f docker-compose.yml exec -T postgres pg_isready -U postgres || true
           sleep 5
       
       - name: Run database migrations
         run: |
-          docker compose run --rm backend npm run migrate || true
+          docker compose -f docker-compose.yml run --rm backend npm run migrate || true
       
       - name: Start all application services
         run: |
-          docker compose up -d backend core-main
+          docker compose -f docker-compose.yml up -d backend core-main
           sleep 20
       
       - name: Check service health
@@ -74,15 +74,15 @@ jobs:
         if: failure()
         run: |
           echo "=== Backend Logs ==="
-          docker compose logs backend
+          docker compose -f docker-compose.yml logs backend
           echo "=== Core-Main Logs ==="
-          docker compose logs core-main
+          docker compose -f docker-compose.yml logs core-main
           echo "=== PostgreSQL Logs ==="
-          docker compose logs postgres
+          docker compose -f docker-compose.yml logs postgres
           echo "=== Redis Logs ==="
-          docker compose logs redis
+          docker compose -f docker-compose.yml logs redis
       
       - name: Cleanup
         if: always()
         run: |
-          docker compose down -v
+          docker compose -f docker-compose.yml down -v

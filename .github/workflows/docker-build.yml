@@ -173,7 +173,7 @@ jobs:
       run: |
         cd core-main
         # Build images using docker compose
-        docker compose -f docker compose.build.yml build
+        docker compose -f docker-compose.yml -f docker compose.build.yml build
         # Tag and push images
         for service in api-app wallet-app market-app matching-engine-app; do
           if docker images | grep -q $service; then
