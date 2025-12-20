@@ -24,23 +24,39 @@ jobs:
       with:
         node-version: '18'
         
-    - name: Install dependencies
+    - name: Check if Node.js project
+      id: check-package
       working-directory: ./core-main
-      run: npm install || echo "No package.json found"
+      run: |
+        if [ -f "package.json" ]; then
+          echo "has_package=true" >> $GITHUB_OUTPUT
+        else
+          echo "has_package=false" >> $GITHUB_OUTPUT
+          echo "⚠️ Core-Main is not a Node.js project - skipping CI"
+        fi
+        
+    - name: Install dependencies
+      if: steps.check-package.outputs.has_package == 'true'
+      working-directory: ./core-main
+      run: npm install
       
     - name: Lint code
+      if: steps.check-package.outputs.has_package == 'true'
       working-directory: ./core-main
       run: npm run lint || echo "Linting skipped"
       
     - name: Run tests
+      if: steps.check-package.outputs.has_package == 'true'
       working-directory: ./core-main
       run: npm test || echo "Tests skipped"
       
     - name: Build application
+      if: steps.check-package.outputs.has_package == 'true'
       working-directory: ./core-main
       run: npm run build
       
     - name: Upload build artifacts
+      if: steps.check-package.outputs.has_package == 'true'
       uses: actions/upload-artifact@v4
       with:
         name: core-main-build
