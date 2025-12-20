@@ -1,8 +1,0 @@
-==========================================
-Digital Utopia Platform - Integration Test
-==========================================
-
-1. Testing Container Status...
-----------------------------
-[0;31m❌ FAIL[0m: PostgreSQL container is not running
-Exit code: 1

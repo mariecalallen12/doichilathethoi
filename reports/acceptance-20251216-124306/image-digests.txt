@@ -1,3 +1,0 @@
-forexxx-backend:latest <none>
-forexxx-client-app:latest <none>
-forexxx-admin-app:latest <none>
