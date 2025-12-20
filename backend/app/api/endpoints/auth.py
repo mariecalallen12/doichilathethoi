@@ -45,6 +45,9 @@ from ...middleware.auth import (
 from ...models.user import User, UserProfile, Role, RefreshToken
 from ...services.user_service import UserService
 from ...models.audit import AuditLog
+import logging
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(tags=["authentication"])
 
@@ -444,6 +447,32 @@ async def register(
         db.commit()
         db.refresh(user)
         
+        # Create OPEX user account (async, non-blocking)
+        # This runs in background and doesn't block registration
+        try:
+            from ...services.opex_user_service import get_opex_user_service
+            import asyncio
+            
+            opex_user_service = get_opex_user_service()
+            # Schedule background task (fire and forget)
+            # Since we're in an async endpoint, we can create a task
+            try:
+                asyncio.create_task(
+                    opex_user_service.sync_user_to_opex(
+                        user_id=user.id,
+                        email=email_to_use,
+                        phone=phone_number_normalized,
+                        full_name=register_data.displayName or phone_number,
+                        initialize_wallet=True
+                    )
+                )
+            except Exception as async_error:
+                # Don't fail registration if OPEX sync fails
+                logger.warning(f"Failed to schedule OPEX user sync: {async_error}")
+        except Exception as e:
+            # Don't fail registration if OPEX sync fails
+            logger.warning(f"Failed to sync user to OPEX during registration: {e}")
+        
         # Create referral registration if applicable
         if referral_code_id:
             from ...models.referral import ReferralRegistration
@@ -770,14 +799,83 @@ async def forgot_password(
             # Fallback: store in DB (would need a password_reset_tokens table)
             pass
         
-        # TODO: Send email with reset link
-        # reset_link = f"https://digital-utopia.app/reset-password?token={reset_token}"
-        # await send_email({
-        #     "to": user.email,
-        #     "template": "password_reset",
-        #     "subject": "Đặt lại mật khẩu",
-        #     "data": {"reset_link": reset_link}
-        # })
+        # Send email with reset link
+        try:
+            from ...services.email_service import EmailService
+            from ...core.config import settings
+            
+            email_service = EmailService()
+            reset_link = f"{settings.FRONTEND_URL}/reset-password?token={reset_token}"
+            
+            # Create HTML email content
+            html_content = f"""
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <style>
+                    body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                    .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                    .header {{ background-color: #7c3aed; color: white; padding: 20px; text-align: center; border-radius: 5px 5px 0 0; }}
+                    .content {{ background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; }}
+                    .button {{ display: inline-block; padding: 12px 24px; background-color: #7c3aed; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }}
+                    .footer {{ text-align: center; padding: 20px; color: #666; font-size: 12px; }}
+                    .warning {{ background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 15px 0; }}
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h1>Đặt lại mật khẩu</h1>
+                    </div>
+                    <div class="content">
+                        <p>Xin chào,</p>
+                        <p>Chúng tôi nhận được yêu cầu đặt lại mật khẩu cho tài khoản của bạn.</p>
+                        <p>Vui lòng nhấp vào nút bên dưới để đặt lại mật khẩu:</p>
+                        <p style="text-align: center;">
+                            <a href="{reset_link}" class="button">Đặt lại mật khẩu</a>
+                        </p>
+                        <p>Hoặc sao chép và dán link sau vào trình duyệt:</p>
+                        <p style="word-break: break-all; color: #7c3aed;">{reset_link}</p>
+                        <div class="warning">
+                            <strong>Lưu ý:</strong> Link này sẽ hết hạn sau 24 giờ. Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này.
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <p>Email này được gửi tự động, vui lòng không trả lời.</p>
+                        <p>&copy; 2025 CMEETRADING. All rights reserved.</p>
+                    </div>
+                </div>
+            </body>
+            </html>
+            """
+            
+            text_content = f"""
+            Đặt lại mật khẩu
+            
+            Xin chào,
+            
+            Chúng tôi nhận được yêu cầu đặt lại mật khẩu cho tài khoản của bạn.
+            
+            Vui lòng truy cập link sau để đặt lại mật khẩu:
+            {reset_link}
+            
+            Lưu ý: Link này sẽ hết hạn sau 24 giờ. Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này.
+            
+            Email này được gửi tự động, vui lòng không trả lời.
+            © 2025 CMEETRADING. All rights reserved.
+            """
+            
+            email_service.send_email(
+                to_emails=[user.email],
+                subject="Đặt lại mật khẩu - CMEETRADING",
+                html_content=html_content,
+                text_content=text_content
+            )
+        except Exception as e:
+            # Log error but don't fail the request (security: don't reveal if email exists)
+            import logging
+            logging.warning(f"Failed to send password reset email: {e}")
         
         log_audit(
             db, user.id, "forgot_password", "user",

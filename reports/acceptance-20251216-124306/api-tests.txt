@@ -1,0 +1,77 @@
+
+[0;34m================================================================================[0m
+[0;34mDigital Utopia Platform - Comprehensive API Testing[0m
+[0;34m================================================================================[0m
+
+
+[1;33m[Phase 1] Health and System Endpoints[0m
+--------------------------------------------------------------------------------
+
+[1;33m[Phase 2] Authentication Endpoints[0m
+--------------------------------------------------------------------------------
+
+[1;33m[Phase 3] Client Endpoints (Auth Required)[0m
+--------------------------------------------------------------------------------
+
+[1;33m[Phase 4] Admin Endpoints (Auth Required)[0m
+--------------------------------------------------------------------------------
+
+[1;33m[Phase 5] Financial Endpoints (Auth Required)[0m
+--------------------------------------------------------------------------------
+
+[1;33m[Phase 6] Trading Endpoints (Auth Required)[0m
+--------------------------------------------------------------------------------
+
+[1;33m[Phase 7] Market Data Endpoints[0m
+--------------------------------------------------------------------------------
+
+[1;33m[Phase 8] Portfolio Endpoints (Auth Required)[0m
+--------------------------------------------------------------------------------
+
+[1;33m[Phase 9] Compliance Endpoints (Auth Required)[0m
+--------------------------------------------------------------------------------
+
+[1;33m[Phase 10] Risk Management Endpoints (Auth Required)[0m
+--------------------------------------------------------------------------------
+
+[0;34m================================================================================[0m
+[0;34mTest Summary[0m
+[0;34m================================================================================[0m
+
+Total Tests: 39
+[0;32mPassed: 12[0m
+[0;31mFailed: 27[0m
+
+[1;33mFailed Tests:[0m
+  [0;31m✗[0m GET /api/client/profile - Status: 403
+  [0;31m✗[0m PUT /api/client/profile - Status: 403
+  [0;31m✗[0m GET /api/client/settings - Status: 403
+  [0;31m✗[0m PUT /api/client/settings - Status: 403
+  [0;31m✗[0m GET /api/client/preferences - Status: 403
+  [0;31m✗[0m PUT /api/client/preferences - Status: 403
+  [0;31m✗[0m GET /api/client/onboarding/status - Status: 403
+  [0;31m✗[0m POST /api/client/onboarding/complete - Status: 403
+  [0;31m✗[0m GET /api/admin/dashboard - Status: 403
+  [0;31m✗[0m GET /api/admin/users - Status: 403
+  [0;31m✗[0m GET /api/admin/platform-stats - Status: 403
+  [0;31m✗[0m GET /api/admin/analytics - Status: 403
+  [0;31m✗[0m GET /api/financial/balance - Status: 403
+  [0;31m✗[0m GET /api/financial/transactions - Status: 403
+  [0;31m✗[0m POST /api/financial/deposit - Status: 404
+  [0;31m✗[0m POST /api/financial/withdraw - Status: 404
+  [0;31m✗[0m GET /api/financial/reports - Status: 403
+  [0;31m✗[0m GET /api/trading/orders - Status: 403
+  [0;31m✗[0m POST /api/trading/orders - Status: 403
+  [0;31m✗[0m GET /api/trading/positions - Status: 403
+  [0;31m✗[0m GET /api/trading/statistics - Status: 403
+  [0;31m✗[0m GET /api/portfolio/analytics - Status: 403
+  [0;31m✗[0m GET /api/portfolio/metrics - Status: 403
+  [0;31m✗[0m GET /api/compliance/kyc - Status: 403
+  [0;31m✗[0m GET /api/compliance/aml - Status: 403
+  [0;31m✗[0m GET /api/risk-management/assessment - Status: 403
+  [0;31m✗[0m GET /api/risk-management/limits - Status: 403
+
+Average Response Time: 44.92ms
+
+[0;34mDetailed results saved to: /tmp/api_test_results.json[0m
+Exit code: 0

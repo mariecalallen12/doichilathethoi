@@ -1,0 +1,151 @@
+==========================================
+k6 Load Testing Script
+==========================================
+✅ k6 is installed
+k6 v1.4.2 (commit/5b725e8a6a, go1.25.4, linux/amd64)
+
+Configuration:
+  WS_URL: ws://localhost:8000/ws
+  API_BASE: http://localhost:8000/api
+  ADMIN_EMAIL: admin@example.com
+
+Checking server status...
+✅ Server is running
+
+==========================================
+Starting WebSocket Load Test
+==========================================
+
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: tests/load/websocket_test.js
+        output: json (results_websocket.json)
+
+     scenarios: (100.00%) 1 scenario, 10000 max VUs, 10m30s max duration (incl. graceful stop):
+              * default: Up to 10000 looping VUs for 10m0s over 7 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+Init      [  39% ] 03869/10000 VUs initialized
+default   [   0% ]
+
+Init      [  70% ] 07014/10000 VUs initialized
+default   [   0% ]
+
+running (00m00.4s), 00012/10000 VUs, 0 complete and 0 interrupted iterations
+default   [   0% ] 00012/10000 VUs  00m00.4s/10m00.0s
+
+running (00m01.4s), 00045/10000 VUs, 12 complete and 0 interrupted iterations
+default   [   0% ] 00045/10000 VUs  00m01.4s/10m00.0s
+
+running (00m02.4s), 00079/10000 VUs, 57 complete and 0 interrupted iterations
+default   [   0% ] 00079/10000 VUs  00m02.4s/10m00.0s
+
+running (00m03.4s), 00112/10000 VUs, 136 complete and 0 interrupted iterations
+default   [   1% ] 00112/10000 VUs  00m03.4s/10m00.0s
+
+running (00m04.4s), 00145/10000 VUs, 246 complete and 0 interrupted iterations
+default   [   1% ] 00145/10000 VUs  00m04.4s/10m00.0s
+
+running (00m05.4s), 00178/10000 VUs, 391 complete and 0 interrupted iterations
+default   [   1% ] 00178/10000 VUs  00m05.4s/10m00.0s
+
+running (00m06.4s), 00212/10000 VUs, 561 complete and 0 interrupted iterations
+default   [   1% ] 00212/10000 VUs  00m06.4s/10m00.0s
+
+running (00m07.4s), 00245/10000 VUs, 760 complete and 0 interrupted iterations
+default   [   1% ] 00245/10000 VUs  00m07.4s/10m00.0s
+
+running (00m08.4s), 00279/10000 VUs, 1005 complete and 0 interrupted iterations
+default   [   1% ] 00279/10000 VUs  00m08.4s/10m00.0s
+
+running (00m09.4s), 00312/10000 VUs, 1284 complete and 0 interrupted iterations
+default   [   2% ] 00312/10000 VUs  00m09.4s/10m00.0s
+
+running (00m10.4s), 00345/10000 VUs, 1578 complete and 0 interrupted iterations
+default   [   2% ] 00345/10000 VUs  00m10.4s/10m00.0s
+
+running (00m11.4s), 00378/10000 VUs, 1923 complete and 0 interrupted iterations
+default   [   2% ] 00378/10000 VUs  00m11.4s/10m00.0s
+
+running (00m12.4s), 00412/10000 VUs, 2291 complete and 0 interrupted iterations
+default   [   2% ] 00412/10000 VUs  00m12.4s/10m00.0s
+
+running (00m13.4s), 00445/10000 VUs, 2534 complete and 0 interrupted iterations
+default   [   2% ] 00445/10000 VUs  00m13.4s/10m00.0s
+
+running (00m14.4s), 00478/10000 VUs, 2906 complete and 0 interrupted iterations
+default   [   2% ] 00478/10000 VUs  00m14.4s/10m00.0s
+
+running (00m15.4s), 00512/10000 VUs, 3354 complete and 0 interrupted iterations
+default   [   3% ] 00512/10000 VUs  00m15.4s/10m00.0s
+
+running (00m16.4s), 00545/10000 VUs, 3752 complete and 0 interrupted iterations
+default   [   3% ] 00545/10000 VUs  00m16.4s/10m00.0s
+
+running (00m17.4s), 00578/10000 VUs, 4115 complete and 0 interrupted iterations
+default   [   3% ] 00578/10000 VUs  00m17.4s/10m00.0s
+
+running (00m18.4s), 00612/10000 VUs, 4486 complete and 0 interrupted iterations
+default   [   3% ] 00612/10000 VUs  00m18.4s/10m00.0s
+
+running (00m19.4s), 00645/10000 VUs, 4862 complete and 0 interrupted iterations
+default   [   3% ] 00645/10000 VUs  00m19.4s/10m00.0s
+
+running (00m20.4s), 00678/10000 VUs, 5291 complete and 0 interrupted iterations
+--- Last 50 lines ---
+
+  █ THRESHOLDS 
+
+    errors
+    ✗ 'rate<0.01' rate=100.00%
+
+    messages_received
+    ✓ 'rate>0.8' rate=0.00%
+
+    ws_connecting
+    ✗ 'p(95)<200' p(95)=1m0s
+
+    ws_session_duration
+    ✗ 'p(95)<5000' p(95)=1m0s
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 273562  436.351238/s
+    checks_succeeded...: 0.00%   0 out of 273562
+    checks_failed......: 100.00% 273562 out of 273562
+
+    ✗ WebSocket connection successful
+      ↳  0% — ✓ 0 / ✗ 273562
+
+    CUSTOM
+    errors................: 100.00% 273562 out of 273562
+    messages_received.....: 0.00%   0 out of 0
+
+    EXECUTION
+    iteration_duration....: avg=15.37s min=1s     med=7.78s max=1m1s p(90)=59.31s p(95)=1m1s
+    iterations............: 273447  436.167805/s
+    vus...................: 8       min=0                max=10000
+    vus_max...............: 10000   min=3865             max=10000
+
+    NETWORK
+    data_received.........: 28 MB   45 kB/s
+    data_sent.............: 53 MB   84 kB/s
+
+    WEBSOCKET
+    ws_connecting.........: avg=14.38s min=1.71ms med=6.78s max=1m0s p(90)=58.35s p(95)=1m0s
+    ws_session_duration...: avg=14.38s min=1.76ms med=6.78s max=1m0s p(90)=58.35s p(95)=1m0s
+    ws_sessions...........: 273562  436.351238/s
+
+
+
+
+running (10m26.9s), 00000/10000 VUs, 273447 complete and 1147 interrupted iterations
+default ✓ [ 100% ] 00000/10000 VUs  10m0s
+time="2025-12-10T01:59:57+01:00" level=error msg="thresholds on metrics 'errors, ws_connecting, ws_session_duration' have been crossed"

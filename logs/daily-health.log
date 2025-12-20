@@ -302,3 +302,117 @@
 ==========================================
 [0;31m[✗][0m Data health issues detected
 ==========================================
+==========================================
+  Data Health Monitoring
+==========================================
+
+[0;34m[INFO][0m Checking data freshness...
+[0;34m[INFO][0m Last user update: 2025-12-1701:52:15.485933+00
+[0;32m[✓][0m Data freshness check completed
+[0;34m[INFO][0m Checking data consistency...
+==========================================
+  Data Consistency Validation
+==========================================
+
+[0;34m[INFO][0m Checking for orphaned records...
+[0;32m[✓][0m No orphaned user_profiles found
+[0;32m[✓][0m No orphaned records found
+[0;34m[INFO][0m Checking foreign key integrity...
+[0;32m[✓][0m Foreign key integrity check passed
+[0;34m[INFO][0m Checking data constraints...
+[0;32m[✓][0m Data constraints check passed
+[0;34m[INFO][0m Checking for duplicate records...
+[0;32m[✓][0m No duplicate records found
+[0;34m[INFO][0m Validating business rules...
+[0;32m[✓][0m Business rules validation passed
+[0;34m[INFO][0m Generating consistency report...
+[0;32m[✓][0m Report generated: /root/forexxx/DATA_CONSISTENCY_REPORT_20251217_070005.md
+
+==========================================
+[0;32m[✓][0m Data consistency validation passed!
+==========================================
+[0;32m[✓][0m Data consistency check passed
+[0;34m[INFO][0m Checking data quality...
+[0;31m[✗][0m Found  users without email or phone
+[0;34m[INFO][0m Generating data health report...
+[0;32m[✓][0m Report generated: /root/forexxx/DATA_HEALTH_REPORT_20251217_070010.md
+
+==========================================
+[0;31m[✗][0m Data health issues detected
+==========================================
+==========================================
+  Data Health Monitoring
+==========================================
+
+[0;34m[INFO][0m Checking data freshness...
+[0;34m[INFO][0m Last user update: 2025-12-1701:52:15.485933+00
+[0;32m[✓][0m Data freshness check completed
+[0;34m[INFO][0m Checking data consistency...
+==========================================
+  Data Consistency Validation
+==========================================
+
+[0;34m[INFO][0m Checking for orphaned records...
+[0;32m[✓][0m No orphaned user_profiles found
+[0;32m[✓][0m No orphaned records found
+[0;34m[INFO][0m Checking foreign key integrity...
+[0;32m[✓][0m Foreign key integrity check passed
+[0;34m[INFO][0m Checking data constraints...
+[0;32m[✓][0m Data constraints check passed
+[0;34m[INFO][0m Checking for duplicate records...
+[0;32m[✓][0m No duplicate records found
+[0;34m[INFO][0m Validating business rules...
+[0;32m[✓][0m Business rules validation passed
+[0;34m[INFO][0m Generating consistency report...
+[0;32m[✓][0m Report generated: /root/forexxx/DATA_CONSISTENCY_REPORT_20251218_070007.md
+
+==========================================
+[0;32m[✓][0m Data consistency validation passed!
+==========================================
+[0;32m[✓][0m Data consistency check passed
+[0;34m[INFO][0m Checking data quality...
+[0;31m[✗][0m Found  users without email or phone
+[0;34m[INFO][0m Generating data health report...
+[0;32m[✓][0m Report generated: /root/forexxx/DATA_HEALTH_REPORT_20251218_070010.md
+
+==========================================
+[0;31m[✗][0m Data health issues detected
+==========================================
+==========================================
+  Data Health Monitoring
+==========================================
+
+[0;34m[INFO][0m Checking data freshness...
+[0;34m[INFO][0m Last user update: 2025-12-1701:52:15.485933+00
+[0;32m[✓][0m Data freshness check completed
+[0;34m[INFO][0m Checking data consistency...
+==========================================
+  Data Consistency Validation
+==========================================
+
+[0;34m[INFO][0m Checking for orphaned records...
+[0;32m[✓][0m No orphaned user_profiles found
+[0;32m[✓][0m No orphaned records found
+[0;34m[INFO][0m Checking foreign key integrity...
+[0;32m[✓][0m Foreign key integrity check passed
+[0;34m[INFO][0m Checking data constraints...
+[0;32m[✓][0m Data constraints check passed
+[0;34m[INFO][0m Checking for duplicate records...
+[0;32m[✓][0m No duplicate records found
+[0;34m[INFO][0m Validating business rules...
+[0;32m[✓][0m Business rules validation passed
+[0;34m[INFO][0m Generating consistency report...
+[0;32m[✓][0m Report generated: /root/forexxx/DATA_CONSISTENCY_REPORT_20251219_070005.md
+
+==========================================
+[0;32m[✓][0m Data consistency validation passed!
+==========================================
+[0;32m[✓][0m Data consistency check passed
+[0;34m[INFO][0m Checking data quality...
+[0;31m[✗][0m Found  users without email or phone
+[0;34m[INFO][0m Generating data health report...
+[0;32m[✓][0m Report generated: /root/forexxx/DATA_HEALTH_REPORT_20251219_070009.md
+
+==========================================
+[0;31m[✗][0m Data health issues detected
+==========================================

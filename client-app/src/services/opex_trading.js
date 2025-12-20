@@ -4,7 +4,7 @@
  */
 import api from './api/client'
 
-const BASE_URL = '/api/trading'
+const BASE_URL = '/trading'
 
 export default {
   /**
@@ -24,19 +24,14 @@ export default {
    * Get user's orders
    */
   async getOrders(params = {}) {
-    // #region agent log
-    fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'opex_trading.js:26',message:'getOrders called',data:{params,url:`${BASE_URL}/orders`},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})).catch(()=>{});
-    // #endregion
+    const { debugLog } = await import('../utils/sessionManager')
+    debugLog('opex_trading.js:getOrders', 'getOrders called', { params, url: `${BASE_URL}/orders` })
     try {
       const response = await api.get(`${BASE_URL}/orders`, { params })
-      // #region agent log
-      fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'opex_trading.js:29',message:'getOrders success',data:{status:response.status,dataLength:response.data?.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})).catch(()=>{});
-      // #endregion
+      debugLog('opex_trading.js:getOrders', 'getOrders success', { status: response.status, dataLength: response.data?.length })
       return response.data || []
     } catch (error) {
-      // #region agent log
-      fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'opex_trading.js:32',message:'getOrders error',data:{status:error?.response?.status,statusText:error?.response?.statusText,detail:error?.response?.data?.detail,url:error?.config?.url},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})).catch(()=>{});
-      // #endregion
+      debugLog('opex_trading.js:getOrders', 'getOrders error', { status: error?.response?.status, statusText: error?.response?.statusText, detail: error?.response?.data?.detail, url: error?.config?.url })
       console.error('Failed to get orders:', error)
       // Return empty array on error instead of throwing
       return []
@@ -73,19 +68,14 @@ export default {
    * Get user's positions
    */
   async getPositions(params = {}) {
-    // #region agent log
-    fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'opex_trading.js:66',message:'getPositions called',data:{params,url:`${BASE_URL}/positions`},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})).catch(()=>{});
-    // #endregion
+    const { debugLog } = await import('../utils/sessionManager')
+    debugLog('opex_trading.js:getPositions', 'getPositions called', { params, url: `${BASE_URL}/positions` })
     try {
       const response = await api.get(`${BASE_URL}/positions`, { params })
-      // #region agent log
-      fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'opex_trading.js:69',message:'getPositions success',data:{status:response.status,dataLength:response.data?.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})).catch(()=>{});
-      // #endregion
+      debugLog('opex_trading.js:getPositions', 'getPositions success', { status: response.status, dataLength: response.data?.length })
       return response.data || []
     } catch (error) {
-      // #region agent log
-      fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'opex_trading.js:72',message:'getPositions error',data:{status:error?.response?.status,statusText:error?.response?.statusText,detail:error?.response?.data?.detail,url:error?.config?.url},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})).catch(()=>{});
-      // #endregion
+      debugLog('opex_trading.js:getPositions', 'getPositions error', { status: error?.response?.status, statusText: error?.response?.statusText, detail: error?.response?.data?.detail, url: error?.config?.url })
       console.error('Failed to get positions:', error)
       // Return empty array on error instead of throwing
       return []

@@ -5,7 +5,11 @@ Digital Utopia Platform
 Channels:
 - orders: Order updates
 - positions: Position updates  
-- prices: Market price updates
+- prices: Market price updates (with change/changePercent)
+- orderbook: Order book updates
+- trades: Trade execution updates
+- candles: Candlestick updates
+- market_data: Market data updates
 """
 
 from fastapi import WebSocket, WebSocketDisconnect, Depends, HTTPException, status
@@ -92,19 +96,54 @@ class ConnectionManager:
             self.disconnect(conn, user_id)
     
     async def broadcast(self, message: dict, channel: str = None):
-        """Broadcast message to all connections (or specific channel)"""
+        """
+        Broadcast message to all connections (or specific channel).
+        
+        If channel is provided, only sends to connections subscribed to that channel.
+        Otherwise, broadcasts to all connections.
+        """
         message_json = json.dumps(message)
         disconnected = []
         
-        for connection in self.all_connections:
-            try:
-                await connection.send_text(message_json)
-            except Exception as e:
-                logger.error(f"Error broadcasting: {e}")
-                disconnected.append(connection)
+        if channel:
+            # Filter by channel - send only to connections subscribed to this channel
+            connections_to_send = set()
+            for user_id, user_channels in self.active_connections.items():
+                if channel in user_channels:
+                    connections_to_send.update(user_channels[channel])
+            
+            for connection in connections_to_send:
+                try:
+                    await connection.send_text(message_json)
+                except Exception as e:
+                    logger.error(f"Error broadcasting to channel {channel}: {e}")
+                    disconnected.append(connection)
+        else:
+            # Broadcast to all connections
+            for connection in self.all_connections:
+                try:
+                    await connection.send_text(message_json)
+                except Exception as e:
+                    logger.error(f"Error broadcasting: {e}")
+                    disconnected.append(connection)
         
         # Remove disconnected connections
         for conn in disconnected:
+            # Find and remove from active_connections
+            for user_id in list(self.active_connections.keys()):
+                user_channels = self.active_connections[user_id]
+                for ch in list(user_channels.keys()):
+                    if conn in user_channels[ch]:
+                        user_channels[ch].remove(conn)
+                # Clean up empty channels
+                self.active_connections[user_id] = {
+                    k: v for k, v in user_channels.items() if v
+                }
+                # Clean up empty user entries
+                if not self.active_connections[user_id]:
+                    del self.active_connections[user_id]
+            
+            # Remove from all_connections
             if conn in self.all_connections:
                 self.all_connections.remove(conn)
 
@@ -158,7 +197,7 @@ async def websocket_endpoint(websocket: WebSocket):
         logger.info(f"WebSocket authentication successful for user_id={user_id}")
         
         # Get channels from query params
-        channels_param = websocket.query_params.get("channels", "orders,positions,prices,candles,market_data")
+        channels_param = websocket.query_params.get("channels", "orders,positions,prices,orderbook,trades,candles,market_data")
         channels = [ch.strip() for ch in channels_param.split(",")]
         
         # Connect
@@ -215,14 +254,9 @@ async def websocket_endpoint(websocket: WebSocket):
         logger.info(f"WebSocket disconnected normally: user_id={user_id}")
     except Exception as e:
         logger.error(f"WebSocket error for user_id={user_id}: {e}", exc_info=True)
-        try:
-            await websocket.close(code=status.WS_1011_INTERNAL_ERROR, reason="Internal server error")
-        except:
-            pass
     finally:
         if user_id:
             manager.disconnect(websocket, user_id)
-            logger.info(f"WebSocket cleanup completed for user_id={user_id}")
 
 
 # ========== HELPER FUNCTIONS FOR BROADCASTING ==========
@@ -247,16 +281,36 @@ async def broadcast_position_update(position_data: dict, user_id: int):
     }, user_id, "positions")
 
 
-async def broadcast_price_update(symbol: str, price: float):
-    """Broadcast price update to all subscribers (optimized payload)"""
+async def broadcast_price_update(symbol: str, price: float, change: float = None, change_percent: float = None):
+    """
+    Broadcast price update to all subscribers.
+    
+    Args:
+        symbol: Trading symbol
+        price: Current price
+        change: Price change (optional)
+        change_percent: Price change percentage (optional)
+    """
+    data = {
+        "symbol": symbol,  # Full key for compatibility
+        "s": symbol,  # Short key for optimization
+        "price": round(price, 4),
+        "p": round(price, 4),  # Short key
+        "t": int(datetime.utcnow().timestamp()),  # Unix timestamp
+    }
+    
+    # Add change information if provided
+    if change is not None:
+        data["change"] = round(change, 4)
+        data["c"] = round(change, 4)  # Short key
+    if change_percent is not None:
+        data["changePercent"] = round(change_percent, 4)
+        data["cp"] = round(change_percent, 4)  # Short key
+    
     await manager.broadcast({
         "type": "price_update",
         "channel": "prices",
-        "data": {
-            "s": symbol,  # Short key
-            "p": round(price, 4),  # Rounded price
-            "t": int(datetime.utcnow().timestamp()),  # Unix timestamp
-        }
+        "data": data
     }, "prices")
 
 
@@ -312,6 +366,30 @@ async def broadcast_market_data_update(symbol: str, market_data: dict):
             "timestamp": datetime.utcnow().isoformat()
         }
     }, "market_data")
+
+
+async def broadcast_trade_update(symbol: str, trade_data: dict):
+    """
+    Broadcast trade update to all subscribers.
+    
+    Args:
+        symbol: Trading symbol (e.g., "BTCUSDT")
+        trade_data: Trade data dict with keys like:
+            - price: float
+            - quantity: float
+            - side: str ("buy" or "sell")
+            - timestamp: str (ISO format)
+            - id: str (optional trade ID)
+    """
+    await manager.broadcast({
+        "type": "trade_update",
+        "channel": "trades",
+        "data": {
+            "symbol": symbol,
+            "trade": trade_data,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+    }, "trades")
 
 
 async def broadcast_alert(alert_data: dict, user_id: int = None):

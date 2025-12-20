@@ -168,3 +168,35 @@ class PriceTick(Base):
     def __repr__(self):
         return f"<PriceTick(symbol={self.symbol}, price={self.price}, ts={self.ts})>"
 
+
+
+class MarketScenario(Base, TimestampMixin):
+    """
+    Bảng market_scenarios - Kịch bản thị trường
+    
+    Admin tạo và quản lý các kịch bản thị trường để áp dụng vào simulation
+    """
+    __tablename__ = "market_scenarios"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(100), nullable=False, index=True)
+    description = Column(Text, nullable=True)
+    scenario_type = Column(String(50), nullable=False, index=True)  # bull, bear, volatile, sideways
+    
+    # Configuration (JSONB for flexibility)
+    config = Column(JSONB, default={}, nullable=False)
+    # {
+    #   "trend": "up/down/sideways",
+    #   "volatility": 0.01-0.10 (float),
+    #   "volume_multiplier": 1.0-5.0 (float),
+    #   "price_change_per_interval": 0.001 (float)
+    # }
+    
+    is_active = Column(Boolean, default=False, index=True)
+    created_by = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True, index=True)
+    
+    # Relationships
+    creator = relationship("User", backref="created_scenarios", foreign_keys=[created_by])
+    
+    def __repr__(self):
+        return f"<MarketScenario(id={self.id}, name='{self.name}', type='{self.scenario_type}', active={self.is_active})>"

@@ -37,6 +37,7 @@ class OPEXClient:
         
         self.base_url = (base_url or settings.OPEX_API_URL).rstrip('/')
         self.api_key = api_key or settings.OPEX_API_KEY
+        self.api_secret = getattr(settings, "OPEX_API_SECRET", None)
         self.timeout = timeout or settings.OPEX_TIMEOUT
         self.client = httpx.AsyncClient(
             base_url=self.base_url,
@@ -74,7 +75,12 @@ class OPEXClient:
         url = f"{self.base_url}{endpoint}"
         request_headers = {}
         
-        if self.api_key:
+        # Prefer OPEX API key headers (core-main expects X-API-KEY/X-API-SECRET and will inject Authorization)
+        if self.api_key and self.api_secret:
+            request_headers["X-API-KEY"] = str(self.api_key)
+            request_headers["X-API-SECRET"] = str(self.api_secret)
+        elif self.api_key:
+            # Backward compatible: allow passing Authorization bearer directly if configured that way
             request_headers["Authorization"] = f"Bearer {self.api_key}"
         
         if headers:

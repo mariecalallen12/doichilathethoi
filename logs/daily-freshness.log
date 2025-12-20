@@ -99,3 +99,42 @@ Threshold: 24 hours
 ==========================================
 [0;32m[✓][0m Data freshness monitoring completed!
 ==========================================
+==========================================
+  Data Freshness Monitoring
+==========================================
+
+Threshold: 24 hours
+
+[0;34m[INFO][0m users: Last update: 2025-12-1701:52:15.485933+00
+[0;34m[INFO][0m audit_logs: Last update: 2025-12-1701:52:15.524915+00
+[0;34m[INFO][0m exchange_rates: Last update: 2025-12-1523:51:25.235631+00
+
+==========================================
+[0;32m[✓][0m Data freshness monitoring completed!
+==========================================
+==========================================
+  Data Freshness Monitoring
+==========================================
+
+Threshold: 24 hours
+
+[0;34m[INFO][0m users: Last update: 2025-12-1701:52:15.485933+00
+[0;34m[INFO][0m audit_logs: Last update: 2025-12-1701:52:15.524915+00
+[0;34m[INFO][0m exchange_rates: Last update: 2025-12-1523:51:25.235631+00
+
+==========================================
+[0;32m[✓][0m Data freshness monitoring completed!
+==========================================
+==========================================
+  Data Freshness Monitoring
+==========================================
+
+Threshold: 24 hours
+
+[0;34m[INFO][0m users: Last update: 2025-12-1701:52:15.485933+00
+[0;34m[INFO][0m audit_logs: Last update: 2025-12-1701:52:15.524915+00
+[0;34m[INFO][0m exchange_rates: Last update: 2025-12-1523:51:25.235631+00
+
+==========================================
+[0;32m[✓][0m Data freshness monitoring completed!
+==========================================

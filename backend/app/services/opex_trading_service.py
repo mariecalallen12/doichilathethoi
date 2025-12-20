@@ -7,6 +7,7 @@ import time
 from typing import Optional, List, Dict, Any
 from decimal import Decimal
 from datetime import datetime
+from fastapi import HTTPException
 
 from .opex_client import get_opex_client, OPEXClient
 from ..services.cache_service import CacheService
@@ -169,6 +170,15 @@ class OPEXTradingService:
             )
             
             logger.info(f"Order cancelled via OPEX: {order_id}")
+            
+            # Broadcast order update via WebSocket
+            try:
+                from ...api.websocket import broadcast_order_update
+                converted_order = self._convert_order_from_opex(result)
+                await broadcast_order_update(user_id, converted_order)
+            except Exception as ws_error:
+                logger.warning(f"Failed to broadcast order cancellation: {ws_error}")
+            
             return result
             
         except Exception as e:
@@ -339,6 +349,15 @@ class OPEXTradingService:
             )
             
             logger.info(f"Position closed via OPEX: {position_id}")
+            
+            # Broadcast position update via WebSocket
+            try:
+                from ...api.websocket import broadcast_position_update
+                converted_position = self._convert_position_from_opex(result)
+                await broadcast_position_update(user_id, converted_position)
+            except Exception as ws_error:
+                logger.warning(f"Failed to broadcast position update: {ws_error}")
+            
             return result
             
         except Exception as e:

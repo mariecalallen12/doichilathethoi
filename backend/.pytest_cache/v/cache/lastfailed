@@ -10,5 +10,22 @@
   "tests/test_analysis.py": true,
   "tests/test_support.py": true,
   "tests/test_legal.py": true,
-  "tests/test_education.py::TestEducationEndpoints::test_get_videos": true
+  "tests/test_education.py::TestEducationEndpoints::test_get_videos": true,
+  "tests/test_backend_integration.py::TestClient": true,
+  "tests/test_backend_integration.py::TestBackendInitialization": true,
+  "tests/test_backend_integration.py::TestDatabaseIntegration": true,
+  "tests/test_backend_integration.py::TestRedisIntegration": true,
+  "tests/test_backend_integration.py::TestAPIIntegration": true,
+  "tests/test_backend_integration.py::TestTradeBroadcasterIntegration": true,
+  "tests/test_backend_integration.py::TestWebSocketManagerIntegration": true,
+  "tests/test_backend_integration.py::TestErrorHandling": true,
+  "tests/test_backend_integration.py::TestSystemIntegration": true,
+  "tests/test_websocket_integration.py::TestClient": true,
+  "tests/test_websocket_integration.py::TestConnectionManager": true,
+  "tests/test_websocket_integration.py::TestWebSocketAuthentication": true,
+  "tests/test_websocket_integration.py::TestWebSocketMessageRouting": true,
+  "tests/test_websocket_integration.py::TestWebSocketChannelFiltering": true,
+  "tests/test_websocket_integration.py::TestWebSocketConnectionCleanup": true,
+  "tests/test_websocket_integration.py::TestWebSocketEndpoint": true,
+  "tests/test_backend_integration.py": true
 }

@@ -1,0 +1,56 @@
+{
+  "debug_levels": {
+    "minimal": {
+      "show_errors": true,
+      "show_warnings": false,
+      "show_info": false,
+      "show_details": false,
+      "show_timing": false,
+      "show_request": false,
+      "show_response": false
+    },
+    "normal": {
+      "show_errors": true,
+      "show_warnings": true,
+      "show_info": false,
+      "show_details": false,
+      "show_timing": false,
+      "show_request": false,
+      "show_response": false
+    },
+    "detailed": {
+      "show_errors": true,
+      "show_warnings": true,
+      "show_info": true,
+      "show_details": true,
+      "show_timing": true,
+      "show_request": true,
+      "show_response": true
+    },
+    "full": {
+      "show_errors": true,
+      "show_warnings": true,
+      "show_info": true,
+      "show_details": true,
+      "show_timing": true,
+      "show_request": true,
+      "show_response": true,
+      "show_stack_trace": true,
+      "show_suggestions": true,
+      "interactive_mode": true
+    }
+  },
+  "default_level": "normal",
+  "color_output": true,
+  "log_to_file": true,
+  "log_file": "reports/acceptance/debug/debug.log",
+  "breakpoints": [],
+  "auto_retry": {
+    "enabled": true,
+    "max_retries": 3,
+    "retry_delay": 1
+  },
+  "pause_on_error": false,
+  "interactive_mode": false
+}
+

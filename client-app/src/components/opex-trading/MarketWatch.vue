@@ -33,6 +33,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import api from '../../services/api/client'
+import { debugLog } from '../../utils/sessionManager'
 
 defineProps({
   selectedSymbol: {
@@ -46,19 +47,15 @@ defineEmits(['symbol-selected'])
 const symbols = ref([])
 
 onMounted(async () => {
-  // #region agent log
-  fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'MarketWatch.vue:48',message:'MarketWatch mounted, fetching symbols',data:{url:'/api/market/symbols'},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})).catch(()=>{});
-  // #endregion
+  debugLog('MarketWatch.vue:onMounted', 'MarketWatch mounted, fetching symbols', { url: '/api/market/symbols' })
   try {
     // Validate api is available and has get method
     if (!api || typeof api.get !== 'function') {
       throw new Error('API client is not properly initialized. Please refresh the page.')
     }
     
-    const response = await api.get('/api/market/symbols')
-    // #region agent log
-    fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'MarketWatch.vue:56',message:'MarketWatch symbols success',data:{status:response.status,dataLength:response.data?.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})).catch(()=>{});
-    // #endregion
+    const response = await api.get('/market/symbols')
+    debugLog('MarketWatch.vue:fetchSymbols', 'MarketWatch symbols success', { status: response.status, dataLength: response.data?.length })
     
     // Validate response structure
     if (!response || !response.data) {
@@ -82,9 +79,7 @@ onMounted(async () => {
       ]
     }
   } catch (error) {
-    // #region agent log
-    fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'MarketWatch.vue:78',message:'MarketWatch symbols error',data:{status:error?.response?.status,statusText:error?.response?.statusText,detail:error?.response?.data?.detail,url:error?.config?.url},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})).catch(()=>{});
-    // #endregion
+    debugLog('MarketWatch.vue:fetchSymbols', 'MarketWatch symbols error', { status: error?.response?.status, statusText: error?.response?.statusText, detail: error?.response?.data?.detail, url: error?.config?.url })
     console.error('Failed to fetch symbols:', error)
     
     // Check for specific API errors

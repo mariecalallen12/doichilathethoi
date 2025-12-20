@@ -1,0 +1,1 @@
+{"message":"CMEETRADING - FastAPI Backend","version":"2.0.0","status":"operational","docs":"/docs","health":"/api/health"}

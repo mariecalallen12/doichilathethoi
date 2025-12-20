@@ -279,8 +279,8 @@ export const useMarketStore = defineStore('market', () => {
         instruments.value[idx] = {
           ...instruments.value[idx],
           price: data.price,
-          change: data.change || instruments.value[idx].change,
-          changePercent: data.changePercent || instruments.value[idx].changePercent,
+          change: data.change !== undefined ? data.change : (data.change_24h !== undefined ? data.change_24h : instruments.value[idx].change),
+          changePercent: data.changePercent !== undefined ? data.changePercent : (data.change_percent !== undefined ? data.change_percent : instruments.value[idx].changePercent),
         };
       }
     });

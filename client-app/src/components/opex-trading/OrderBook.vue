@@ -39,6 +39,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import api from '../../services/api/client'
+import { debugLog } from '../../utils/sessionManager'
 
 const props = defineProps({
   symbol: {
@@ -53,19 +54,15 @@ const orderbook = ref({
 })
 
 async function fetchOrderbook() {
-  // #region agent log
-  fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OrderBook.vue:55',message:'OrderBook fetchOrderbook called',data:{symbol:props.symbol,url:`/api/market/orderbook/${props.symbol}`},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})).catch(()=>{});
-  // #endregion
+  debugLog('OrderBook.vue:fetchOrderbook', 'OrderBook fetchOrderbook called', { symbol: props.symbol, url: `/api/market/orderbook/${props.symbol}` })
   try {
     // Validate api is available and has get method
     if (!api || typeof api.get !== 'function') {
       throw new Error('API client is not properly initialized. Please refresh the page.')
     }
     
-    const response = await api.get(`/api/market/orderbook/${props.symbol}`)
-    // #region agent log
-    fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OrderBook.vue:63',message:'OrderBook fetchOrderbook success',data:{status:response.status,hasBids:!!response.data?.bids,hasAsks:!!response.data?.asks},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})).catch(()=>{});
-    // #endregion
+    const response = await api.get(`/market/orderbook/${props.symbol}`)
+    debugLog('OrderBook.vue:fetchOrderbook', 'OrderBook fetchOrderbook success', { status: response.status, hasBids: !!response.data?.bids, hasAsks: !!response.data?.asks })
     
     // Validate response structure
     if (!response || !response.data) {
@@ -79,9 +76,7 @@ async function fetchOrderbook() {
       }
     }
   } catch (error) {
-    // #region agent log
-    fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OrderBook.vue:75',message:'OrderBook fetchOrderbook error',data:{status:error?.response?.status,statusText:error?.response?.statusText,detail:error?.response?.data?.detail,url:error?.config?.url,symbol:props.symbol},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})).catch(()=>{});
-    // #endregion
+    debugLog('OrderBook.vue:fetchOrderbook', 'OrderBook fetchOrderbook error', { status: error?.response?.status, statusText: error?.response?.statusText, detail: error?.response?.data?.detail, url: error?.config?.url, symbol: props.symbol })
     console.error('Failed to fetch orderbook:', error)
     
     // Check for specific API errors

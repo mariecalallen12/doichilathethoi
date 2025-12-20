@@ -85,6 +85,24 @@
         />
       </div>
 
+      <!-- Stop Price (for stop orders) -->
+      <div v-if="formData.type === 'stop'">
+        <label class="block text-sm text-purple-200/80 mb-2">Stop Price</label>
+        <input
+          v-model.number="formData.stop_price"
+          type="number"
+          step="0.01"
+          min="0"
+          class="w-full px-3 py-2 bg-slate-700/50 border border-purple-500/20 rounded-lg text-white"
+          required
+        />
+      </div>
+
+      <!-- Error Message -->
+      <div v-if="errorMessage" class="p-3 bg-red-500/20 border border-red-500/50 rounded-lg text-red-400 text-sm">
+        {{ errorMessage }}
+      </div>
+
       <!-- Submit Button -->
       <button
         type="submit"
@@ -110,16 +128,36 @@ const props = defineProps({
 const emit = defineEmits(['order-placed'])
 
 const isSubmitting = ref(false)
+const errorMessage = ref(null)
 const formData = reactive({
   symbol: props.symbol,
   side: 'buy',
   type: 'market',
   quantity: 0,
-  price: null
+  price: null,
+  stop_price: null
 })
 
 async function handleSubmit() {
+  // Validation
+  if (formData.quantity <= 0) {
+    errorMessage.value = 'Quantity must be greater than 0'
+    return
+  }
+
+  if (formData.type !== 'market' && (!formData.price || formData.price <= 0)) {
+    errorMessage.value = 'Price is required for limit and stop orders'
+    return
+  }
+
+  if (formData.type === 'stop' && (!formData.stop_price || formData.stop_price <= 0)) {
+    errorMessage.value = 'Stop price is required for stop orders'
+    return
+  }
+
+  errorMessage.value = null
   isSubmitting.value = true
+  
   try {
     const orderData = {
       symbol: formData.symbol,
@@ -132,13 +170,20 @@ async function handleSubmit() {
       orderData.price = formData.price
     }
     
+    if (formData.stop_price) {
+      orderData.stop_price = formData.stop_price
+    }
+    
     emit('order-placed', orderData)
     
     // Reset form
     formData.quantity = 0
     formData.price = null
+    formData.stop_price = null
+    errorMessage.value = null
   } catch (error) {
     console.error('Failed to place order:', error)
+    errorMessage.value = error.response?.data?.detail || error.message || 'Failed to place order'
   } finally {
     isSubmitting.value = false
   }

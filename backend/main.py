@@ -53,6 +53,19 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.error(f"❌ Database connection error: {e}")
 
+    # Initialize trade broadcaster
+    try:
+        from app.services.trade_broadcaster import get_trade_broadcaster
+        from app.api.websocket import broadcast_trade_update, broadcast_price_update
+        broadcaster = get_trade_broadcaster()
+        broadcaster.set_broadcast_function(broadcast_trade_update)
+        broadcaster.set_price_broadcast_function(broadcast_price_update)
+        await broadcaster.start(interval_seconds=2.0)
+        app.state.trade_broadcaster = broadcaster
+        logger.info("✅ Trade broadcaster started")
+    except Exception as e:
+        logger.error(f"❌ Trade broadcaster initialization error: {e}")
+
     # Setup authentication
     # Load configuration
     
@@ -77,6 +90,15 @@ async def lifespan(app: FastAPI):
             logger.info("Trading data simulator stopped")
     except Exception as e:
         logger.error(f"Error stopping trading data simulator: {e}")
+    
+    # Stop trade broadcaster
+    try:
+        from app.services.trade_broadcaster import get_trade_broadcaster
+        broadcaster = get_trade_broadcaster()
+        await broadcaster.stop()
+        logger.info("Trade broadcaster stopped")
+    except Exception as e:
+        logger.error(f"Error stopping trade broadcaster: {e}")
 
 # Create FastAPI application
 app = FastAPI(
@@ -303,8 +325,11 @@ from app.api.endpoints import (
     legal,
 )
 from app.api.endpoints import admin_trading
+from app.api.endpoints import admin_scenarios
+from app.api.endpoints import admin_simulation
 from app.api.endpoints import opex_trading
 from app.api.endpoints import opex_market
+from app.api.endpoints import market_mock
 from app.api.websocket import websocket_endpoint
 
 # Phase 1: Authentication endpoints (migrated from Next.js)
@@ -318,6 +343,12 @@ app.include_router(admin.router, prefix="/api/admin", tags=["admin"])
 
 # Admin Trading endpoints (OPEX)
 app.include_router(admin_trading.router, prefix="/api/admin", tags=["admin-trading"])
+
+# Admin Scenarios endpoints
+app.include_router(admin_scenarios.router, prefix="/api/admin", tags=["admin-scenarios"])
+
+# Admin Simulation Control endpoints
+app.include_router(admin_simulation.router, prefix="/api/admin", tags=["admin-simulation"])
 
 # Phase 1: Financial endpoints (migrated from Next.js)
 app.include_router(financial.router, prefix="/api/financial", tags=["financial"])
@@ -372,6 +403,10 @@ app.include_router(support.router, prefix="/api/support", tags=["support"])
 
 # Legal endpoints
 app.include_router(legal.router, prefix="/api/legal", tags=["legal"])
+
+# Simulator endpoints
+from app.api.endpoints import simulator
+app.include_router(simulator.router, prefix="/api/sim", tags=["simulator"])
 
 # WebSocket endpoint for real-time updates
 app.websocket("/ws")(websocket_endpoint)

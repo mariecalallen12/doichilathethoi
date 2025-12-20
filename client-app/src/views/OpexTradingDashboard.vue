@@ -65,6 +65,7 @@ import AccountSummary from '../components/opex-trading/AccountSummary.vue'
 import PositionList from '../components/opex-trading/PositionList.vue'
 import OrderHistory from '../components/opex-trading/OrderHistory.vue'
 import { connectWebSocket } from '../services/opex_websocket'
+import { debugLog } from '../utils/sessionManager'
 
 const tradingStore = useOpexTradingStore()
 const selectedSymbol = ref('BTCUSDT')
@@ -73,39 +74,25 @@ const orders = computed(() => tradingStore.orders)
 const openPositions = computed(() => tradingStore.openPositions)
 
 onMounted(async () => {
-  // #region agent log
-  fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OpexTradingDashboard.vue:75',message:'Trading dashboard mounted',data:{pathname:window.location.pathname},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})).catch(()=>{});
-  // #endregion
+  debugLog('OpexTradingDashboard.vue:onMounted', 'Trading dashboard mounted', { pathname: window.location.pathname })
   try {
     // Fetch initial data with error handling
     try {
-      // #region agent log
-      fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OpexTradingDashboard.vue:79',message:'Calling fetchOrders',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})).catch(()=>{});
-      // #endregion
+      debugLog('OpexTradingDashboard.vue:fetchOrders', 'Calling fetchOrders')
       await tradingStore.fetchOrders()
-      // #region agent log
-      fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OpexTradingDashboard.vue:82',message:'fetchOrders completed',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})).catch(()=>{});
-      // #endregion
+      debugLog('OpexTradingDashboard.vue:fetchOrders', 'fetchOrders completed')
     } catch (error) {
-      // #region agent log
-      fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OpexTradingDashboard.vue:85',message:'fetchOrders error',data:{errorMessage:error?.message,errorStatus:error?.response?.status},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})).catch(()=>{});
-      // #endregion
+      debugLog('OpexTradingDashboard.vue:fetchOrders', 'fetchOrders error', { errorMessage: error?.message, errorStatus: error?.response?.status })
       console.error('Failed to fetch orders:', error)
       // Continue even if orders fail
     }
     
     try {
-      // #region agent log
-      fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OpexTradingDashboard.vue:91',message:'Calling fetchPositions',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})).catch(()=>{});
-      // #endregion
+      debugLog('OpexTradingDashboard.vue:fetchPositions', 'Calling fetchPositions')
       await tradingStore.fetchPositions()
-      // #region agent log
-      fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OpexTradingDashboard.vue:94',message:'fetchPositions completed',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})).catch(()=>{});
-      // #endregion
+      debugLog('OpexTradingDashboard.vue:fetchPositions', 'fetchPositions completed')
     } catch (error) {
-      // #region agent log
-      fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'OpexTradingDashboard.vue:97',message:'fetchPositions error',data:{errorMessage:error?.message,errorStatus:error?.response?.status},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})).catch(()=>{});
-      // #endregion
+      debugLog('OpexTradingDashboard.vue:fetchPositions', 'fetchPositions error', { errorMessage: error?.message, errorStatus: error?.response?.status })
       console.error('Failed to fetch positions:', error)
       // Continue even if positions fail
     }
@@ -151,9 +138,17 @@ function handleSymbolSelected(symbol) {
 }
 
 async function handleOrderPlaced(order) {
-  await tradingStore.placeOrder(order)
-  // Refresh orders list
-  await tradingStore.fetchOrders(selectedSymbol.value)
+  try {
+    await tradingStore.placeOrder(order)
+    // Refresh orders list
+    await tradingStore.fetchOrders(selectedSymbol.value)
+    // Show success notification (you can integrate a toast library here)
+    console.log('Order placed successfully')
+  } catch (error) {
+    console.error('Failed to place order:', error)
+    // Show error notification
+    alert(error.response?.data?.detail || error.message || 'Failed to place order')
+  }
 }
 
 async function handleClosePosition(positionId) {

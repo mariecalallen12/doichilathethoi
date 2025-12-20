@@ -1,14 +1,16 @@
 """
 OPEX Market Data Service
-Integration layer for market data operations using OPEX Core
+Integration layer for market data operations using OPEX Core with mock data fallback
 """
 import logging
 import time
+import random
 from typing import Optional, List, Dict, Any
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from .opex_client import get_opex_client, OPEXClient
 from ..services.cache_service import CacheService
+from .market_generator import generate_candles, _seed_price
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +64,7 @@ class OPEXMarketService:
         limit: int = 20
     ) -> Dict[str, Any]:
         """
-        Get orderbook for a symbol
+        Get orderbook for a symbol (with fallback to mock data)
         
         Args:
             symbol: Trading pair symbol
@@ -74,26 +76,17 @@ class OPEXMarketService:
         try:
             opex_symbol = self._convert_symbol(symbol)
             result = await self.opex.get_orderbook(opex_symbol, limit)
-            if result:
+            if result and (result.get("bids") or result.get("asks")):
                 log_market_operation(
                     "get_orderbook",
                     "success",
-                    {"symbol": symbol, "limit": limit}
+                    {"symbol": symbol, "limit": limit, "source": "opex"}
                 )
                 return result
             else:
-                # Return empty orderbook
-                log_market_operation(
-                    "get_orderbook",
-                    "warning",
-                    {"symbol": symbol, "message": "Empty result from OPEX"}
-                )
-                return {
-                    "symbol": symbol,
-                    "bids": [],
-                    "asks": [],
-                    "timestamp": int(__import__('time').time() * 1000)
-                }
+                # Fallback to mock data
+                logger.warning(f"OPEX orderbook empty for {symbol}, using mock data")
+                return await self._get_mock_orderbook(symbol, limit)
         except Exception as e:
             log_market_operation(
                 "get_orderbook",
@@ -149,8 +142,8 @@ class OPEXMarketService:
                 }
             )
             logger.error(f"Failed to get trades from OPEX for {symbol}: {e}", exc_info=True)
-            # Return empty list instead of raising
-            return []
+            # Use mock trades as fallback
+            return await self._get_mock_trades(symbol, limit)
     
     async def get_candles(
         self,
@@ -190,8 +183,9 @@ class OPEXMarketService:
                 }
             )
             logger.error(f"Failed to get candles from OPEX for {symbol} ({interval}): {e}", exc_info=True)
-            # Return empty list instead of raising
-            return []
+            # Use mock candles as fallback
+            logger.info(f"Using mock candles for {symbol} {interval}")
+            return generate_candles(symbol, limit, interval)
     
     async def get_ticker(self, symbol: str) -> Dict[str, Any]:
         """
@@ -223,16 +217,8 @@ class OPEXMarketService:
                 }
             )
             logger.error(f"Failed to get ticker from OPEX for {symbol}: {e}", exc_info=True)
-            # Return minimal ticker data instead of raising
-            return {
-                "symbol": symbol,
-                "price": 0.0,
-                "change_24h": 0.0,
-                "change_percent_24h": 0.0,
-                "volume_24h": 0.0,
-                "high_24h": 0.0,
-                "low_24h": 0.0
-            }
+            # Use mock ticker as fallback
+            return await self._get_mock_ticker(symbol)
     
     async def get_symbols(self) -> List[Dict[str, Any]]:
         """
@@ -339,6 +325,73 @@ class OPEXMarketService:
             return f"{symbol[:3]}_{symbol[3:]}"
         
         return symbol
+    
+    async def _get_mock_orderbook(self, symbol: str, limit: int = 20) -> Dict[str, Any]:
+        """Generate mock orderbook data for fallback"""
+        base_price = _seed_price(symbol)
+        bids = []
+        asks = []
+        
+        for i in range(limit):
+            # Bids (buy orders) below current price
+            bid_price = base_price * (1 - (i + 1) * 0.0001)
+            bid_volume = random.uniform(0.1, 10.0)
+            bids.append([bid_price, bid_volume])
+            
+            # Asks (sell orders) above current price
+            ask_price = base_price * (1 + (i + 1) * 0.0001)
+            ask_volume = random.uniform(0.1, 10.0)
+            asks.append([ask_price, ask_volume])
+        
+        return {
+            "symbol": symbol,
+            "bids": bids,
+            "asks": asks,
+            "timestamp": int(time.time() * 1000),
+            "source": "mock"
+        }
+    
+    async def _get_mock_ticker(self, symbol: str) -> Dict[str, Any]:
+        """Generate mock ticker data for fallback"""
+        base_price = _seed_price(symbol)
+        change_percent = random.uniform(-5.0, 5.0)
+        
+        return {
+            "symbol": symbol,
+            "price": base_price,
+            "change_24h": base_price * (change_percent / 100),
+            "change_percent_24h": change_percent,
+            "volume_24h": random.uniform(1000, 100000),
+            "high_24h": base_price * 1.05,
+            "low_24h": base_price * 0.95,
+            "timestamp": int(time.time() * 1000),
+            "source": "mock"
+        }
+    
+    async def _get_mock_trades(self, symbol: str, limit: int = 50) -> List[Dict[str, Any]]:
+        """Generate mock recent trades for fallback"""
+        base_price = _seed_price(symbol)
+        trades = []
+        current_time = int(time.time() * 1000)
+        
+        for i in range(limit):
+            price_variation = random.uniform(-0.001, 0.001)
+            price = base_price * (1 + price_variation)
+            quantity = random.uniform(0.01, 5.0)
+            side = random.choice(['buy', 'sell'])
+            
+            trades.append({
+                "id": str(current_time - (i * 1000)),
+                "symbol": symbol,
+                "price": price,
+                "quantity": quantity,
+                "side": side,
+                "time": datetime.fromtimestamp((current_time - (i * 1000)) / 1000).isoformat(),
+                "source": "mock"
+            })
+        
+        return trades
+    
     
     def _convert_symbol_from_opex(self, symbol: Dict[str, Any]) -> Dict[str, Any]:
         """Convert symbol from OPEX format"""

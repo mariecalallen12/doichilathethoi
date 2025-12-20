@@ -1,0 +1,1062 @@
+{
+  "timestamp": "2025-12-16T13:23:40.299595",
+  "environment": {
+    "api_url": "http://localhost:8000",
+    "client_url": "http://localhost:3002",
+    "admin_url": "http://localhost:3001"
+  },
+  "overall_completion": 0.0028735632183908046,
+  "overall_percentage": 0.28735632183908044,
+  "overall_status": "fail",
+  "total_tests": 87,
+  "passed_tests": 1,
+  "failed_tests": 86,
+  "skipped_tests": 0,
+  "categories": {
+    "client_interface": {
+      "score": 0.0,
+      "percentage": 0.0,
+      "weighted": 0.0,
+      "weight": 0.35
+    },
+    "admin_interface": {
+      "score": 0.0,
+      "percentage": 0.0,
+      "weighted": 0.0,
+      "weight": 0.25
+    },
+    "api_functionality": {
+      "score": 0.011494252873563218,
+      "percentage": 1.1494252873563218,
+      "weighted": 0.0028735632183908046,
+      "weight": 0.25
+    },
+    "data_integrity": {
+      "score": 0.0,
+      "percentage": 0.0,
+      "weighted": 0.0,
+      "weight": 0.15
+    }
+  },
+  "issues": {
+    "critical": 0,
+    "high": 0,
+    "medium": 86,
+    "low": 0
+  },
+  "test_results": [
+    {
+      "id": "/api/auth/register",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "auth",
+      "description": "auth: POST /register",
+      "error_message": "Expected None, got 422",
+      "timestamp": "2025-12-16T13:23:39.119834",
+      "response_time": 7.971286773681641,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/auth/login",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "auth",
+      "description": "auth: POST /login",
+      "error_message": "Expected None, got 422",
+      "timestamp": "2025-12-16T13:23:39.125909",
+      "response_time": 5.876064300537109,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/auth/logout",
+      "status": "passed",
+      "category": "api_functionality",
+      "module": "auth",
+      "description": "auth: POST /logout",
+      "error_message": null,
+      "timestamp": "2025-12-16T13:23:39.131016",
+      "response_time": 4.945993423461914
+    },
+    {
+      "id": "/api/auth/refresh",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "auth",
+      "description": "auth: POST /refresh",
+      "error_message": "Expected None, got 401",
+      "timestamp": "2025-12-16T13:23:39.135214",
+      "response_time": 4.03285026550293,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/auth/verify",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "auth",
+      "description": "auth: POST /verify",
+      "error_message": "Expected None, got 405",
+      "timestamp": "2025-12-16T13:23:39.139928",
+      "response_time": 4.5757293701171875,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/auth/forgot-password",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "auth",
+      "description": "auth: POST /forgot-password",
+      "error_message": "Expected None, got 422",
+      "timestamp": "2025-12-16T13:23:39.147403",
+      "response_time": 7.189750671386719,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/client/profile",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "client",
+      "description": "client: GET /profile",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.152834",
+      "response_time": 5.110263824462891,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/client/profile",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "client",
+      "description": "client: PUT /profile",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.159317",
+      "response_time": 6.271600723266602,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/client/settings",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "client",
+      "description": "client: GET /settings",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.166637",
+      "response_time": 6.961822509765625,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/client/settings",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "client",
+      "description": "client: PUT /settings",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.172749",
+      "response_time": 5.92494010925293,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/client/preferences",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "client",
+      "description": "client: GET /preferences",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.177977",
+      "response_time": 5.012989044189453,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/client/preferences",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "client",
+      "description": "client: PUT /preferences",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.183046",
+      "response_time": 4.893302917480469,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/client/onboarding/status",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "client",
+      "description": "client: GET /onboarding/status",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.187276",
+      "response_time": 4.047870635986328,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/client/onboarding/complete",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "client",
+      "description": "client: POST /onboarding/complete",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.191879",
+      "response_time": 4.42814826965332,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/admin/dashboard",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "admin",
+      "description": "admin: GET /dashboard",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.196933",
+      "response_time": 4.75621223449707,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/admin/users",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "admin",
+      "description": "admin: GET /users",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.201438",
+      "response_time": 4.236936569213867,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/admin/users/{user_id}",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "admin",
+      "description": "admin: GET /users/{user_id}",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.205837",
+      "response_time": 4.236698150634766,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/admin/users/{user_id}",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "admin",
+      "description": "admin: PUT /users/{user_id}",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.210532",
+      "response_time": 4.542350769042969,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/admin/settings",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "admin",
+      "description": "admin: GET /settings",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.215006",
+      "response_time": 4.308938980102539,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/admin/settings",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "admin",
+      "description": "admin: PUT /settings",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.220453",
+      "response_time": 5.223989486694336,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/admin/analytics",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "admin",
+      "description": "admin: GET /analytics",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.227314",
+      "response_time": 6.64520263671875,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/admin/reports",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "admin",
+      "description": "admin: POST /reports",
+      "error_message": "Expected None, got 405",
+      "timestamp": "2025-12-16T13:23:39.233481",
+      "response_time": 5.976200103759766,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/admin/reports/{report_id}/download",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "admin",
+      "description": "admin: GET /reports/{report_id}/download",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.240722",
+      "response_time": 7.050514221191406,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/admin/logs",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "admin",
+      "description": "admin: GET /logs",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.250340",
+      "response_time": 9.400367736816406,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/financial/transactions",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "financial",
+      "description": "financial: GET /transactions",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.259529",
+      "response_time": 8.795976638793945,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/financial/deposit",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "financial",
+      "description": "financial: POST /deposit",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.267550",
+      "response_time": 7.757902145385742,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/financial/withdraw",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "financial",
+      "description": "financial: POST /withdraw",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.275932",
+      "response_time": 8.172750473022461,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/financial/balance",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "financial",
+      "description": "financial: GET /balance",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.286777",
+      "response_time": 8.941888809204102,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/financial/reports",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "financial",
+      "description": "financial: GET /reports",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.300581",
+      "response_time": 13.102531433105469,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/financial/exchange",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "financial",
+      "description": "financial: POST /exchange",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.315348",
+      "response_time": 14.379024505615234,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/financial/payments/{payment_id}/status",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "financial",
+      "description": "financial: GET /payments/{payment_id}/status",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.332104",
+      "response_time": 16.349077224731445,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/financial/payments/{payment_id}/process",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "financial",
+      "description": "financial: POST /payments/{payment_id}/process",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.347149",
+      "response_time": 13.283729553222656,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/financial/payments/{payment_id}/cancel",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "financial",
+      "description": "financial: POST /payments/{payment_id}/cancel",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.359881",
+      "response_time": 12.453079223632812,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/financial/payment-history",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "financial",
+      "description": "financial: GET /payment-history",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.371704",
+      "response_time": 11.52944564819336,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/market-data/{symbol}",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: GET /market-data/{symbol}",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.386843",
+      "response_time": 14.636516571044922,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/orders",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: POST /orders",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.400336",
+      "response_time": 13.020038604736328,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/orders",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: GET /orders",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.414405",
+      "response_time": 13.707876205444336,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/orders/{order_id}",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: DELETE /orders/{order_id}",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.421202",
+      "response_time": 6.596803665161133,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/orders/{order_id}",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: PUT /orders/{order_id}",
+      "error_message": "Expected None, got 405",
+      "timestamp": "2025-12-16T13:23:39.428679",
+      "response_time": 7.147550582885742,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/positions/{symbol}",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: GET /positions/{symbol}",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.437690",
+      "response_time": 8.658409118652344,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/positions/{position_id}",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: DELETE /positions/{position_id}",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.445251",
+      "response_time": 7.324934005737305,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/account",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: GET /account",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.452932",
+      "response_time": 7.3871612548828125,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/statistics",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: GET /statistics",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.459683",
+      "response_time": 6.509304046630859,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/orderbook/{symbol}",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: GET /orderbook/{symbol}",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.468275",
+      "response_time": 8.389472961425781,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/trades",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: GET /trades",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.479492",
+      "response_time": 11.021614074707031,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/pairs",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: GET /pairs",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.488461",
+      "response_time": 8.637428283691406,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/rules",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: GET /rules",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.496129",
+      "response_time": 7.436037063598633,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/algorithms",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: GET /algorithms",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.503744",
+      "response_time": 7.369041442871094,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/trading/risk-assessment",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "trading",
+      "description": "trading: GET /risk-assessment",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.515433",
+      "response_time": 11.358022689819336,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/market/prices",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "market",
+      "description": "market: GET /prices",
+      "error_message": "Expected None, got 500",
+      "timestamp": "2025-12-16T13:23:39.963453",
+      "response_time": 447.54981994628906,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/market/summary",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "market",
+      "description": "market: GET /summary",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.970001",
+      "response_time": 6.34002685546875,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/market/data/{symbol}",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "market",
+      "description": "market: GET /data/{symbol}",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.977039",
+      "response_time": 6.5670013427734375,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/market/history/{symbol}",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "market",
+      "description": "market: GET /history/{symbol}",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.982333",
+      "response_time": 5.105733871459961,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/market/analysis/{symbol}",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "market",
+      "description": "market: GET /analysis/{symbol}",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:39.986893",
+      "response_time": 4.395008087158203,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/portfolio/overview",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "portfolio",
+      "description": "portfolio: GET /overview",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:39.993113",
+      "response_time": 5.504608154296875,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/portfolio/holdings",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "portfolio",
+      "description": "portfolio: GET /holdings",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.000823",
+      "response_time": 7.510185241699219,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/portfolio/holdings",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "portfolio",
+      "description": "portfolio: PUT /holdings",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.007309",
+      "response_time": 6.208181381225586,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/portfolio/performance",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "portfolio",
+      "description": "portfolio: GET /performance",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.013709",
+      "response_time": 6.160974502563477,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/portfolio/rebalance",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "portfolio",
+      "description": "portfolio: POST /rebalance",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.024367",
+      "response_time": 10.362625122070312,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/portfolio/analytics",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "portfolio",
+      "description": "portfolio: GET /analytics",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:40.040038",
+      "response_time": 15.366792678833008,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/compliance/kyc/status",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "compliance",
+      "description": "compliance: GET /kyc/status",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.050610",
+      "response_time": 9.935379028320312,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/compliance/kyc/documents",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "compliance",
+      "description": "compliance: POST /kyc/documents",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.057442",
+      "response_time": 6.533145904541016,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/compliance/aml/status",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "compliance",
+      "description": "compliance: GET /aml/status",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.063197",
+      "response_time": 5.577325820922852,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/compliance/requirements",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "compliance",
+      "description": "compliance: GET /requirements",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.067776",
+      "response_time": 4.394292831420898,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/compliance/history",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "compliance",
+      "description": "compliance: GET /history",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.072706",
+      "response_time": 4.768610000610352,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/compliance/reports",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "compliance",
+      "description": "compliance: POST /reports",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:40.078990",
+      "response_time": 6.071805953979492,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/compliance/dashboard",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "compliance",
+      "description": "compliance: GET /dashboard",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:40.084309",
+      "response_time": 5.101680755615234,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/risk/metrics",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "risk",
+      "description": "risk: GET /metrics",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.090023",
+      "response_time": 5.414724349975586,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/risk/exposure",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "risk",
+      "description": "risk: GET /exposure",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.096349",
+      "response_time": 6.148338317871094,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/risk/scoring",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "risk",
+      "description": "risk: GET /scoring",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.101981",
+      "response_time": 5.398035049438477,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/risk/mitigation",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "risk",
+      "description": "risk: GET /mitigation",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.108082",
+      "response_time": 5.873918533325195,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/risk/monitoring",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "risk",
+      "description": "risk: GET /monitoring",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.113755",
+      "response_time": 5.47480583190918,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/staff/referrals",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "staff",
+      "description": "staff: GET /referrals",
+      "error_message": "Expected None, got 403",
+      "timestamp": "2025-12-16T13:23:40.119149",
+      "response_time": 5.1288604736328125,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/staff/referrals",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "staff",
+      "description": "staff: POST /referrals",
+      "error_message": "Expected None, got 405",
+      "timestamp": "2025-12-16T13:23:40.125548",
+      "response_time": 6.14476203918457,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/staff/commission",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "staff",
+      "description": "staff: GET /commission",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.131372",
+      "response_time": 5.623817443847656,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/users/",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "users",
+      "description": "users: GET /",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.137445",
+      "response_time": 5.769491195678711,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/users/{user_id}",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "users",
+      "description": "users: GET /{user_id}",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.145041",
+      "response_time": 7.386445999145508,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/users/{user_id}/role",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "users",
+      "description": "users: PUT /{user_id}/role",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.150795",
+      "response_time": 5.569934844970703,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/users/{user_id}/activity",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "users",
+      "description": "users: GET /{user_id}/activity",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.156752",
+      "response_time": 5.792856216430664,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/advanced/dashboard",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "advanced",
+      "description": "advanced: GET /dashboard",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.163003",
+      "response_time": 5.869865417480469,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/advanced/indicators/{symbol}",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "advanced",
+      "description": "advanced: GET /indicators/{symbol}",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.168802",
+      "response_time": 5.575656890869141,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/advanced/algorithms",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "advanced",
+      "description": "advanced: GET /algorithms",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.175274",
+      "response_time": 6.294727325439453,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/advanced/strategies",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "advanced",
+      "description": "advanced: GET /strategies",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.180283",
+      "response_time": 4.859209060668945,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/advanced/strategies",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "advanced",
+      "description": "advanced: POST /strategies",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.186335",
+      "response_time": 5.85484504699707,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/advanced/backtest",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "advanced",
+      "description": "advanced: POST /backtest",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.191603",
+      "response_time": 5.07044792175293,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/advanced/backtest/{backtest_id}/results",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "advanced",
+      "description": "advanced: GET /backtest/{backtest_id}/results",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.197671",
+      "response_time": 5.821704864501953,
+      "severity": "medium"
+    },
+    {
+      "id": "/api/advanced/live-trade",
+      "status": "failed",
+      "category": "api_functionality",
+      "module": "advanced",
+      "description": "advanced: POST /live-trade",
+      "error_message": "Expected None, got 404",
+      "timestamp": "2025-12-16T13:23:40.203458",
+      "response_time": 5.61976432800293,
+      "severity": "medium"
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "critical",
+      "title": "Overall completion below threshold",
+      "description": "Overall completion is 0.29%, below the required 85%",
+      "action_items": [
+        "Review failed test cases",
+        "Fix critical and high priority issues",
+        "Re-run acceptance tests"
+      ]
+    },
+    {
+      "priority": "high",
+      "title": "Client Interface below threshold",
+      "description": "Client Interface completion is 0.00%, below 80% threshold",
+      "action_items": [
+        "Review client_interface test results",
+        "Fix issues in client_interface",
+        "Re-test affected modules"
+      ]
+    },
+    {
+      "priority": "high",
+      "title": "Admin Interface below threshold",
+      "description": "Admin Interface completion is 0.00%, below 80% threshold",
+      "action_items": [
+        "Review admin_interface test results",
+        "Fix issues in admin_interface",
+        "Re-test affected modules"
+      ]
+    },
+    {
+      "priority": "high",
+      "title": "Api Functionality below threshold",
+      "description": "Api Functionality completion is 1.15%, below 80% threshold",
+      "action_items": [
+        "Review api_functionality test results",
+        "Fix issues in api_functionality",
+        "Re-test affected modules"
+      ]
+    },
+    {
+      "priority": "high",
+      "title": "Data Integrity below threshold",
+      "description": "Data Integrity completion is 0.00%, below 80% threshold",
+      "action_items": [
+        "Review data_integrity test results",
+        "Fix issues in data_integrity",
+        "Re-test affected modules"
+      ]
+    }
+  ],
+  "metadata": {
+    "tester_name": "Automated Test System",
+    "system_version": "1.0",
+    "test_duration": 0
+  }
+}

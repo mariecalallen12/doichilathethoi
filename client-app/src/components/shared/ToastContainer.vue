@@ -1,208 +1,111 @@
 <template>
-  <div class="fixed top-4 right-4 z-50 space-y-2">
-    <TransitionGroup name="toast" tag="div">
+  <div class="toast-container fixed top-4 right-4 z-50 space-y-2">
+    <transition-group name="toast" tag="div">
       <div
         v-for="toast in toasts"
         :key="toast.id"
         :class="[
-          'glass-panel rounded-lg p-4 min-w-[300px] max-w-[400px] shadow-lg',
-          getToastClass(toast.type)
+          'toast-item px-6 py-4 rounded-lg shadow-lg backdrop-blur-sm border',
+          'max-w-sm transform transition-all duration-300',
+          toastClasses[toast.type]
         ]"
       >
-        <div class="flex items-start space-x-3">
-          <i :class="[getToastIcon(toast.type), 'mt-0.5']"></i>
-          <div class="flex-1">
-            <div class="text-white text-sm">{{ translateMessage(toast.message) }}</div>
+        <div class="flex items-start gap-3">
+          <div class="flex-shrink-0">
+            <component :is="toastIcons[toast.type]" class="w-5 h-5" />
+          </div>
+          <div class="flex-1 min-w-0">
+            <p v-if="toast.title" class="font-semibold text-sm mb-1">{{ toast.title }}</p>
+            <p class="text-sm">{{ toast.message }}</p>
           </div>
           <button
             @click="removeToast(toast.id)"
-            class="text-purple-300 hover:text-white transition-colors"
+            class="flex-shrink-0 text-current opacity-70 hover:opacity-100 transition-opacity"
           >
-            <i class="fas fa-times"></i>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
         </div>
       </div>
-    </TransitionGroup>
+    </transition-group>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-import { getToasts, removeToast as removeToastUtil } from '../../services/utils/toast';
+import { ref, onMounted, onUnmounted } from 'vue'
 
-const toasts = ref([]);
+const toasts = ref([])
+let toastId = 0
 
-function updateToasts() {
-  const allToasts = getToasts();
-  // #region agent log
-  allToasts.forEach(toast => {
-    if (toast.message === 'Not Found' || toast.message?.includes('Not Found')) {
-      console.log('[DEBUG] ToastContainer: Found "Not Found" toast:', toast);
-      fetch('http://localhost:7242/ingest/a94652aa-f954-45ed-8dd8-1c88a5bdb78d',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'ToastContainer.vue:36',message:'Not Found toast detected',data:{toast},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'G'})}).catch(()=>{});
-    }
-  });
-  // #endregion
-  toasts.value = allToasts;
+const toastClasses = {
+  success: 'bg-green-500/20 border-green-500/50 text-green-100',
+  error: 'bg-red-500/20 border-red-500/50 text-red-100',
+  warning: 'bg-yellow-500/20 border-yellow-500/50 text-yellow-100',
+  info: 'bg-blue-500/20 border-blue-500/50 text-blue-100'
 }
 
-function handleToastEvent(event) {
-  updateToasts();
-}
-
-function getToastClass(type) {
-  const classes = {
-    success: 'bg-green-500/20 border border-green-500/30',
-    error: 'bg-red-500/20 border border-red-500/30',
-    warning: 'bg-yellow-500/20 border border-yellow-500/30',
-    info: 'bg-blue-500/20 border border-blue-500/30',
-  };
-  return classes[type] || classes.info;
-}
-
-function getToastIcon(type) {
-  const icons = {
-    success: 'fas fa-check-circle text-green-400',
-    error: 'fas fa-exclamation-circle text-red-400',
-    warning: 'fas fa-exclamation-triangle text-yellow-400',
-    info: 'fas fa-info-circle text-blue-400',
-  };
-  return icons[type] || icons.info;
-}
-
-function translateMessage(message) {
-  // Final safety net: Translate "Not Found" at display time
-  if (!message) return message;
-  
-  // Normalize the message for comparison
-  const normalized = typeof message === 'string' 
-    ? message.trim().toLowerCase().replace(/\s+/g, ' ')
-    : String(message).trim().toLowerCase();
-  
-  // Check for various forms of "Not Found"
-  const notFoundPatterns = [
-    'not found',
-    'notfound',
-    'not-found',
-    'not_found',
-    'notfound',
-  ];
-  
-  if (notFoundPatterns.some(pattern => normalized === pattern || normalized.includes(pattern))) {
-    console.log('[DEBUG] ToastContainer: Translating message at display time:', message, '-> normalized:', normalized);
-    return 'Không tìm thấy tài nguyên yêu cầu';
+const toastIcons = {
+  success: {
+    template: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>'
+  },
+  error: {
+    template: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" /></svg>'
+  },
+  warning: {
+    template: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>'
+  },
+  info: {
+    template: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" /></svg>'
   }
+}
+
+function addToast(toast) {
+  const id = ++toastId
+  const duration = toast.duration || 5000
   
-  return message;
+  toasts.value.push({
+    id,
+    type: toast.type || 'info',
+    title: toast.title,
+    message: toast.message,
+    duration
+  })
+
+  if (duration > 0) {
+    setTimeout(() => {
+      removeToast(id)
+    }, duration)
+  }
 }
 
 function removeToast(id) {
-  removeToastUtil(id);
-  updateToasts();
+  const index = toasts.value.findIndex(t => t.id === id)
+  if (index !== -1) {
+    toasts.value.splice(index, 1)
+  }
+}
+
+function handleToastEvent(event) {
+  addToast(event.detail)
 }
 
 onMounted(() => {
-  updateToasts();
-  window.addEventListener('toast', handleToastEvent);
-  // Poll for updates (in case toasts are added directly)
-  const interval = setInterval(updateToasts, 100);
-  onUnmounted(() => clearInterval(interval));
-  
-  // MutationObserver to catch "Not Found" text in DOM as final safety net
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      // Check added nodes
-      mutation.addedNodes.forEach((node) => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          const element = node;
-          // Check if this is a toast element or contains toast
-          const toastElement = element.classList?.contains('glass-panel') 
-            ? element 
-            : element.querySelector?.('.glass-panel');
-          
-          if (toastElement) {
-            const textNodes = toastElement.querySelectorAll('.text-white, div');
-            textNodes.forEach((textNode) => {
-              const text = textNode.textContent?.trim() || '';
-              if (text === 'Not Found' || text === 'Not found' || 
-                  text.toLowerCase() === 'not found') {
-                console.log('[DEBUG] MutationObserver: Found "Not Found" in DOM, translating:', text);
-                textNode.textContent = 'Không tìm thấy tài nguyên yêu cầu';
-              }
-            });
-          }
-        } else if (node.nodeType === Node.TEXT_NODE) {
-          // Check text nodes directly
-          const text = node.textContent?.trim() || '';
-          if (text === 'Not Found' || text === 'Not found' || 
-              text.toLowerCase() === 'not found') {
-            console.log('[DEBUG] MutationObserver: Found "Not Found" in text node, translating');
-            node.textContent = 'Không tìm thấy tài nguyên yêu cầu';
-          }
-        }
-      });
-      
-      // Also check for character data changes
-      if (mutation.type === 'characterData') {
-        const text = mutation.target.textContent?.trim() || '';
-        if (text === 'Not Found' || text === 'Not found' || 
-            text.toLowerCase() === 'not found') {
-          console.log('[DEBUG] MutationObserver: Found "Not Found" in characterData, translating');
-          mutation.target.textContent = 'Không tìm thấy tài nguyên yêu cầu';
-        }
-      }
-    });
-    
-    // Also do a sweep of all toast elements periodically
-    const allToasts = document.querySelectorAll('.glass-panel');
-    allToasts.forEach((toast) => {
-      const textElements = toast.querySelectorAll('.text-white, div');
-      textElements.forEach((el) => {
-        const text = el.textContent?.trim() || '';
-        if (text === 'Not Found' || text === 'Not found' || 
-            text.toLowerCase() === 'not found') {
-          console.log('[DEBUG] MutationObserver: Found "Not Found" in existing toast, translating');
-          el.textContent = 'Không tìm thấy tài nguyên yêu cầu';
-        }
-      });
-    });
-  });
-  
-  // Observe the toast container and document body
-  const container = document.querySelector('.fixed.top-4.right-4') || document.body;
-  if (container) {
-    observer.observe(container, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: false
-    });
-  }
-  
-  // Also set up a periodic check as backup
-  const periodicCheck = setInterval(() => {
-    const allToasts = document.querySelectorAll('.glass-panel');
-    allToasts.forEach((toast) => {
-      const textElements = toast.querySelectorAll('.text-white');
-      textElements.forEach((el) => {
-        const text = el.textContent?.trim() || '';
-        if (text === 'Not Found' || text === 'Not found' || 
-            text.toLowerCase() === 'not found') {
-          console.log('[DEBUG] Periodic check: Found "Not Found", translating');
-          el.textContent = 'Không tìm thấy tài nguyên yêu cầu';
-        }
-      });
-    });
-  }, 100);
-  
-  onUnmounted(() => {
-    observer.disconnect();
-    clearInterval(periodicCheck);
-  });
-});
+  window.addEventListener('show-toast', handleToastEvent)
+})
 
 onUnmounted(() => {
-  window.removeEventListener('toast', handleToastEvent);
-});
+  window.removeEventListener('show-toast', handleToastEvent)
+})
+
+// Global toast helper
+if (typeof window !== 'undefined') {
+  window.showToast = (message, type = 'info', title = null, duration = 5000) => {
+    window.dispatchEvent(new CustomEvent('show-toast', {
+      detail: { message, type, title, duration }
+    }))
+  }
+}
 </script>
 
 <style scoped>
@@ -213,11 +116,11 @@ onUnmounted(() => {
 
 .toast-enter-from {
   opacity: 0;
-  transform: translateX(100%);
+  transform: translateX(100px);
 }
 
 .toast-leave-to {
   opacity: 0;
-  transform: translateX(100%);
+  transform: translateX(100px) scale(0.95);
 }
 </style>

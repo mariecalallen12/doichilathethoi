@@ -1,0 +1,2158 @@
+{
+  "timestamp": "2025-12-16T13:26:29.336659",
+  "environment": {
+    "api_url": "http://localhost:8000",
+    "client_url": "http://localhost:3002",
+    "admin_url": "http://localhost:3001"
+  },
+  "total_tests": 127,
+  "results": [
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/auth/register",
+      "url": "http://localhost:8000/api/auth/register",
+      "status_code": 422,
+      "expected_status": null,
+      "success": false,
+      "description": "Register test client user",
+      "response_time": 0.006618022918701172,
+      "response_size": 507,
+      "has_response": true,
+      "response_data": {
+        "detail": [
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "phoneNumber"
+            ],
+            "msg": "Field required",
+            "input": {
+              "phone": "+84901234567",
+              "email": "test.client@example.com",
+              "password": "TestClient123!",
+              "full_name": "Test Client User"
+            },
+            "url": "https://errors.pydantic.dev/2.5/v/missing"
+          },
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "agreeToTerms"
+            ],
+            "msg": "Field required",
+            "input": {
+              "phone": "+84901234567",
+              "email": "test.client@example.com",
+              "password": "TestClient123!",
+              "full_name": "Test Client User"
+            },
+            "url": "https://errors.pydantic.dev/2.5/v/missing"
+          }
+        ]
+      },
+      "timestamp": "2025-12-16T13:26:27.911832",
+      "error": "Expected None, got 422"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/auth/register",
+      "url": "http://localhost:8000/api/auth/register",
+      "status_code": 422,
+      "expected_status": null,
+      "success": false,
+      "description": "auth: POST /register",
+      "response_time": 0.007893085479736328,
+      "response_size": 132,
+      "has_response": true,
+      "response_data": {
+        "detail": [
+          {
+            "type": "missing",
+            "loc": [
+              "body"
+            ],
+            "msg": "Field required",
+            "input": null,
+            "url": "https://errors.pydantic.dev/2.5/v/missing"
+          }
+        ]
+      },
+      "timestamp": "2025-12-16T13:26:27.926338",
+      "error": "Expected None, got 422"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "url": "http://localhost:8000/api/auth/login",
+      "status_code": 422,
+      "expected_status": null,
+      "success": false,
+      "description": "auth: POST /login",
+      "response_time": 0.004933357238769531,
+      "response_size": 132,
+      "has_response": true,
+      "response_data": {
+        "detail": [
+          {
+            "type": "missing",
+            "loc": [
+              "body"
+            ],
+            "msg": "Field required",
+            "input": null,
+            "url": "https://errors.pydantic.dev/2.5/v/missing"
+          }
+        ]
+      },
+      "timestamp": "2025-12-16T13:26:27.931435",
+      "error": "Expected None, got 422"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/auth/logout",
+      "url": "http://localhost:8000/api/auth/logout",
+      "status_code": 200,
+      "expected_status": null,
+      "success": true,
+      "description": "auth: POST /logout",
+      "response_time": 0.011590242385864258,
+      "response_size": 55,
+      "has_response": true,
+      "response_data": {
+        "success": true,
+        "message": "\u0110\u0103ng xu\u1ea5t th\u00e0nh c\u00f4ng"
+      },
+      "timestamp": "2025-12-16T13:26:27.943233"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/auth/refresh",
+      "url": "http://localhost:8000/api/auth/refresh",
+      "status_code": 401,
+      "expected_status": null,
+      "success": false,
+      "description": "auth: POST /refresh",
+      "response_time": 0.00986933708190918,
+      "response_size": 116,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Kh\u00f4ng t\u00ecm th\u1ea5y refresh token",
+        "status_code": 401,
+        "timestamp": "2025-12-16T12:26:27.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:27.953421",
+      "error": "Expected None, got 401"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/auth/verify",
+      "url": "http://localhost:8000/api/auth/verify",
+      "status_code": 405,
+      "expected_status": null,
+      "success": false,
+      "description": "auth: POST /verify",
+      "response_time": 0.0058596134185791016,
+      "response_size": 31,
+      "has_response": true,
+      "response_data": {
+        "detail": "Method Not Allowed"
+      },
+      "timestamp": "2025-12-16T13:26:27.959445",
+      "error": "Expected None, got 405"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/auth/forgot-password",
+      "url": "http://localhost:8000/api/auth/forgot-password",
+      "status_code": 422,
+      "expected_status": null,
+      "success": false,
+      "description": "auth: POST /forgot-password",
+      "response_time": 0.006575345993041992,
+      "response_size": 141,
+      "has_response": true,
+      "response_data": {
+        "detail": [
+          {
+            "type": "missing",
+            "loc": [
+              "query",
+              "email"
+            ],
+            "msg": "Field required",
+            "input": null,
+            "url": "https://errors.pydantic.dev/2.5/v/missing"
+          }
+        ]
+      },
+      "timestamp": "2025-12-16T13:26:27.966221",
+      "error": "Expected None, got 422"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/client/profile",
+      "url": "http://localhost:8000/api/client/profile",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "client: GET /profile",
+      "response_time": 0.005483865737915039,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:27.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:27.972004",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "PUT",
+      "path": "/api/client/profile",
+      "url": "http://localhost:8000/api/client/profile",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "client: PUT /profile",
+      "response_time": 0.00579524040222168,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:27.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:27.978013",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/client/settings",
+      "url": "http://localhost:8000/api/client/settings",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "client: GET /settings",
+      "response_time": 0.006515026092529297,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:27.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:27.984755",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "PUT",
+      "path": "/api/client/settings",
+      "url": "http://localhost:8000/api/client/settings",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "client: PUT /settings",
+      "response_time": 0.006476402282714844,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:27.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:27.991524",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/client/preferences",
+      "url": "http://localhost:8000/api/client/preferences",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "client: GET /preferences",
+      "response_time": 0.005594015121459961,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:27.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:27.997388",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "PUT",
+      "path": "/api/client/preferences",
+      "url": "http://localhost:8000/api/client/preferences",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "client: PUT /preferences",
+      "response_time": 0.0057985782623291016,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.003381",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/client/onboarding/status",
+      "url": "http://localhost:8000/api/client/onboarding/status",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "client: GET /onboarding/status",
+      "response_time": 0.005635499954223633,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.009243",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/client/onboarding/complete",
+      "url": "http://localhost:8000/api/client/onboarding/complete",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "client: POST /onboarding/complete",
+      "response_time": 0.00519871711730957,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.014651",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/admin/dashboard",
+      "url": "http://localhost:8000/api/admin/dashboard",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "admin: GET /dashboard",
+      "response_time": 0.004851102828979492,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.019768",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/admin/users",
+      "url": "http://localhost:8000/api/admin/users",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "admin: GET /users",
+      "response_time": 0.004734039306640625,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.024709",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/admin/users/{user_id}",
+      "url": "http://localhost:8000/api/admin/users/{user_id}",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "admin: GET /users/{user_id}",
+      "response_time": 0.005671501159667969,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.030542",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "PUT",
+      "path": "/api/admin/users/{user_id}",
+      "url": "http://localhost:8000/api/admin/users/{user_id}",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "admin: PUT /users/{user_id}",
+      "response_time": 0.004500389099121094,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.035303",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/admin/settings",
+      "url": "http://localhost:8000/api/admin/settings",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "admin: GET /settings",
+      "response_time": 0.004270792007446289,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.039760",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "PUT",
+      "path": "/api/admin/settings",
+      "url": "http://localhost:8000/api/admin/settings",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "admin: PUT /settings",
+      "response_time": 0.0044705867767333984,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.044398",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/admin/analytics",
+      "url": "http://localhost:8000/api/admin/analytics",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "admin: GET /analytics",
+      "response_time": 0.004173755645751953,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.048756",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/admin/reports",
+      "url": "http://localhost:8000/api/admin/reports",
+      "status_code": 405,
+      "expected_status": null,
+      "success": false,
+      "description": "admin: POST /reports",
+      "response_time": 0.005210161209106445,
+      "response_size": 31,
+      "has_response": true,
+      "response_data": {
+        "detail": "Method Not Allowed"
+      },
+      "timestamp": "2025-12-16T13:26:28.054114",
+      "error": "Expected None, got 405"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/admin/reports/{report_id}/download",
+      "url": "http://localhost:8000/api/admin/reports/{report_id}/download",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "admin: GET /reports/{report_id}/download",
+      "response_time": 0.005766391754150391,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.060091",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/admin/logs",
+      "url": "http://localhost:8000/api/admin/logs",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "admin: GET /logs",
+      "response_time": 0.005144834518432617,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.065530",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/financial/transactions",
+      "url": "http://localhost:8000/api/financial/transactions",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "financial: GET /transactions",
+      "response_time": 0.005577802658081055,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.071434",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/financial/deposit",
+      "url": "http://localhost:8000/api/financial/deposit",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "financial: POST /deposit",
+      "response_time": 0.008756160736083984,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.080501",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/financial/withdraw",
+      "url": "http://localhost:8000/api/financial/withdraw",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "financial: POST /withdraw",
+      "response_time": 0.00879979133605957,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.089637",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/financial/balance",
+      "url": "http://localhost:8000/api/financial/balance",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "financial: GET /balance",
+      "response_time": 0.0074269771575927734,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.097293",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/financial/reports",
+      "url": "http://localhost:8000/api/financial/reports",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "financial: GET /reports",
+      "response_time": 0.009919404983520508,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.107548",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/financial/exchange",
+      "url": "http://localhost:8000/api/financial/exchange",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "financial: POST /exchange",
+      "response_time": 0.007235288619995117,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.115177",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/financial/payments/{payment_id}/status",
+      "url": "http://localhost:8000/api/financial/payments/{payment_id}/status",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "financial: GET /payments/{payment_id}/status",
+      "response_time": 0.009863615036010742,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.125370",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/financial/payments/{payment_id}/process",
+      "url": "http://localhost:8000/api/financial/payments/{payment_id}/process",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "financial: POST /payments/{payment_id}/process",
+      "response_time": 0.01157236099243164,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.137393",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/financial/payments/{payment_id}/cancel",
+      "url": "http://localhost:8000/api/financial/payments/{payment_id}/cancel",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "financial: POST /payments/{payment_id}/cancel",
+      "response_time": 0.011140823364257812,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.148956",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/financial/payment-history",
+      "url": "http://localhost:8000/api/financial/payment-history",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "financial: GET /payment-history",
+      "response_time": 0.009449481964111328,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.159071",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/trading/market-data/{symbol}",
+      "url": "http://localhost:8000/api/trading/market-data/{symbol}",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: GET /market-data/{symbol}",
+      "response_time": 0.006388187408447266,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.165806",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/trading/orders",
+      "url": "http://localhost:8000/api/trading/orders",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: POST /orders",
+      "response_time": 0.0068852901458740234,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.172954",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/trading/orders",
+      "url": "http://localhost:8000/api/trading/orders",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: GET /orders",
+      "response_time": 0.005567789077758789,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.178765",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "DELETE",
+      "path": "/api/trading/orders/{order_id}",
+      "url": "http://localhost:8000/api/trading/orders/{order_id}",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: DELETE /orders/{order_id}",
+      "response_time": 0.008319377899169922,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.187372",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "PUT",
+      "path": "/api/trading/orders/{order_id}",
+      "url": "http://localhost:8000/api/trading/orders/{order_id}",
+      "status_code": 405,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: PUT /orders/{order_id}",
+      "response_time": 0.007350444793701172,
+      "response_size": 31,
+      "has_response": true,
+      "response_data": {
+        "detail": "Method Not Allowed"
+      },
+      "timestamp": "2025-12-16T13:26:28.194941",
+      "error": "Expected None, got 405"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/trading/positions/{symbol}",
+      "url": "http://localhost:8000/api/trading/positions/{symbol}",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: GET /positions/{symbol}",
+      "response_time": 0.00784921646118164,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.203003",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "DELETE",
+      "path": "/api/trading/positions/{position_id}",
+      "url": "http://localhost:8000/api/trading/positions/{position_id}",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: DELETE /positions/{position_id}",
+      "response_time": 0.008126497268676758,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.211390",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/trading/account",
+      "url": "http://localhost:8000/api/trading/account",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: GET /account",
+      "response_time": 0.014663219451904297,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.226327",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/trading/statistics",
+      "url": "http://localhost:8000/api/trading/statistics",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: GET /statistics",
+      "response_time": 0.010239362716674805,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.236880",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/trading/orderbook/{symbol}",
+      "url": "http://localhost:8000/api/trading/orderbook/{symbol}",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: GET /orderbook/{symbol}",
+      "response_time": 0.013303756713867188,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.250423",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/trading/trades",
+      "url": "http://localhost:8000/api/trading/trades",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: GET /trades",
+      "response_time": 0.0088043212890625,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.259481",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/trading/pairs",
+      "url": "http://localhost:8000/api/trading/pairs",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: GET /pairs",
+      "response_time": 0.008193254470825195,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.267958",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/trading/rules",
+      "url": "http://localhost:8000/api/trading/rules",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: GET /rules",
+      "response_time": 0.006947517395019531,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.275147",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/trading/algorithms",
+      "url": "http://localhost:8000/api/trading/algorithms",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: GET /algorithms",
+      "response_time": 0.01663517951965332,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.292003",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/trading/risk-assessment",
+      "url": "http://localhost:8000/api/trading/risk-assessment",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "trading: GET /risk-assessment",
+      "response_time": 0.012465953826904297,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.304920",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/market/prices",
+      "url": "http://localhost:8000/api/market/prices",
+      "status_code": 500,
+      "expected_status": null,
+      "success": false,
+      "description": "market: GET /prices",
+      "response_time": 0.547260046005249,
+      "response_size": 111,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Failed to fetch market data",
+        "status_code": 500,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.852752",
+      "error": "Expected None, got 500"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/market/summary",
+      "url": "http://localhost:8000/api/market/summary",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "market: GET /summary",
+      "response_time": 0.006925106048583984,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.859923",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/market/data/{symbol}",
+      "url": "http://localhost:8000/api/market/data/{symbol}",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "market: GET /data/{symbol}",
+      "response_time": 0.0073053836822509766,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.867446",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/market/history/{symbol}",
+      "url": "http://localhost:8000/api/market/history/{symbol}",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "market: GET /history/{symbol}",
+      "response_time": 0.005897045135498047,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.873514",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/market/analysis/{symbol}",
+      "url": "http://localhost:8000/api/market/analysis/{symbol}",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "market: GET /analysis/{symbol}",
+      "response_time": 0.005887269973754883,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.879608",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/portfolio/overview",
+      "url": "http://localhost:8000/api/portfolio/overview",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "portfolio: GET /overview",
+      "response_time": 0.006140232086181641,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.886038",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/portfolio/holdings",
+      "url": "http://localhost:8000/api/portfolio/holdings",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "portfolio: GET /holdings",
+      "response_time": 0.006336688995361328,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.892539",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "PUT",
+      "path": "/api/portfolio/holdings",
+      "url": "http://localhost:8000/api/portfolio/holdings",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "portfolio: PUT /holdings",
+      "response_time": 0.005861520767211914,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.898604",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/portfolio/performance",
+      "url": "http://localhost:8000/api/portfolio/performance",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "portfolio: GET /performance",
+      "response_time": 0.005837440490722656,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.904638",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/portfolio/rebalance",
+      "url": "http://localhost:8000/api/portfolio/rebalance",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "portfolio: POST /rebalance",
+      "response_time": 0.005620002746582031,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.910447",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/portfolio/analytics",
+      "url": "http://localhost:8000/api/portfolio/analytics",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "portfolio: GET /analytics",
+      "response_time": 0.0056035518646240234,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.916338",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/compliance/kyc/status",
+      "url": "http://localhost:8000/api/compliance/kyc/status",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "compliance: GET /kyc/status",
+      "response_time": 0.0062863826751708984,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.922982",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/compliance/kyc/documents",
+      "url": "http://localhost:8000/api/compliance/kyc/documents",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "compliance: POST /kyc/documents",
+      "response_time": 0.00572514533996582,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.928920",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/compliance/aml/status",
+      "url": "http://localhost:8000/api/compliance/aml/status",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "compliance: GET /aml/status",
+      "response_time": 0.006872653961181641,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.935973",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/compliance/requirements",
+      "url": "http://localhost:8000/api/compliance/requirements",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "compliance: GET /requirements",
+      "response_time": 0.006230831146240234,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.942410",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/compliance/history",
+      "url": "http://localhost:8000/api/compliance/history",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "compliance: GET /history",
+      "response_time": 0.008493423461914062,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.951136",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/compliance/reports",
+      "url": "http://localhost:8000/api/compliance/reports",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "compliance: POST /reports",
+      "response_time": 0.006020545959472656,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.957400",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/compliance/dashboard",
+      "url": "http://localhost:8000/api/compliance/dashboard",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "compliance: GET /dashboard",
+      "response_time": 0.006543397903442383,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:28.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:28.964177",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/risk/metrics",
+      "url": "http://localhost:8000/api/risk/metrics",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "risk: GET /metrics",
+      "response_time": 0.0066339969635009766,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.971160",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/risk/exposure",
+      "url": "http://localhost:8000/api/risk/exposure",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "risk: GET /exposure",
+      "response_time": 0.005278110504150391,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.976655",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/risk/scoring",
+      "url": "http://localhost:8000/api/risk/scoring",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "risk: GET /scoring",
+      "response_time": 0.008615493774414062,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.985518",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/risk/mitigation",
+      "url": "http://localhost:8000/api/risk/mitigation",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "risk: GET /mitigation",
+      "response_time": 0.009607076644897461,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:28.995472",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/risk/monitoring",
+      "url": "http://localhost:8000/api/risk/monitoring",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "risk: GET /monitoring",
+      "response_time": 0.011991262435913086,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:29.007740",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/staff/referrals",
+      "url": "http://localhost:8000/api/staff/referrals",
+      "status_code": 403,
+      "expected_status": null,
+      "success": false,
+      "description": "staff: GET /referrals",
+      "response_time": 0.00598454475402832,
+      "response_size": 101,
+      "has_response": true,
+      "response_data": {
+        "error": true,
+        "message": "Not authenticated",
+        "status_code": 403,
+        "timestamp": "2025-12-16T12:26:29.000Z"
+      },
+      "timestamp": "2025-12-16T13:26:29.014208",
+      "error": "Expected None, got 403"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/staff/referrals",
+      "url": "http://localhost:8000/api/staff/referrals",
+      "status_code": 405,
+      "expected_status": null,
+      "success": false,
+      "description": "staff: POST /referrals",
+      "response_time": 0.005297422409057617,
+      "response_size": 31,
+      "has_response": true,
+      "response_data": {
+        "detail": "Method Not Allowed"
+      },
+      "timestamp": "2025-12-16T13:26:29.019695",
+      "error": "Expected None, got 405"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/staff/commission",
+      "url": "http://localhost:8000/api/staff/commission",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "staff: GET /commission",
+      "response_time": 0.005927562713623047,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:29.025824",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/users/",
+      "url": "http://localhost:8000/api/users/",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "users: GET /",
+      "response_time": 0.006906270980834961,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:29.033076",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/users/{user_id}",
+      "url": "http://localhost:8000/api/users/{user_id}",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "users: GET /{user_id}",
+      "response_time": 0.006787538528442383,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:29.040080",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "PUT",
+      "path": "/api/users/{user_id}/role",
+      "url": "http://localhost:8000/api/users/{user_id}/role",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "users: PUT /{user_id}/role",
+      "response_time": 0.00719761848449707,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:29.047476",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/users/{user_id}/activity",
+      "url": "http://localhost:8000/api/users/{user_id}/activity",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "users: GET /{user_id}/activity",
+      "response_time": 0.0066297054290771484,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:29.054559",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/advanced/dashboard",
+      "url": "http://localhost:8000/api/advanced/dashboard",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "advanced: GET /dashboard",
+      "response_time": 0.0062367916107177734,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:29.061163",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/advanced/indicators/{symbol}",
+      "url": "http://localhost:8000/api/advanced/indicators/{symbol}",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "advanced: GET /indicators/{symbol}",
+      "response_time": 0.006068706512451172,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:29.067569",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/advanced/algorithms",
+      "url": "http://localhost:8000/api/advanced/algorithms",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "advanced: GET /algorithms",
+      "response_time": 0.00620579719543457,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:29.073964",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/advanced/strategies",
+      "url": "http://localhost:8000/api/advanced/strategies",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "advanced: GET /strategies",
+      "response_time": 0.005631685256958008,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:29.079808",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/advanced/strategies",
+      "url": "http://localhost:8000/api/advanced/strategies",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "advanced: POST /strategies",
+      "response_time": 0.005624294281005859,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:29.085638",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/advanced/backtest",
+      "url": "http://localhost:8000/api/advanced/backtest",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "advanced: POST /backtest",
+      "response_time": 0.005311250686645508,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:29.091126",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "GET",
+      "path": "/api/advanced/backtest/{backtest_id}/results",
+      "url": "http://localhost:8000/api/advanced/backtest/{backtest_id}/results",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "advanced: GET /backtest/{backtest_id}/results",
+      "response_time": 0.005800724029541016,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:29.097091",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "api",
+      "method": "POST",
+      "path": "/api/advanced/live-trade",
+      "url": "http://localhost:8000/api/advanced/live-trade",
+      "status_code": 404,
+      "expected_status": null,
+      "success": false,
+      "description": "advanced: POST /live-trade",
+      "response_time": 0.005669116973876953,
+      "response_size": 22,
+      "has_response": true,
+      "response_data": {
+        "detail": "Not Found"
+      },
+      "timestamp": "2025-12-16T13:26:29.103004",
+      "error": "Expected None, got 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: Home",
+      "response_time": 0.0049343109130859375,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.108227"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/register",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: Register",
+      "response_time": 0.005144596099853516,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.113570"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/login",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: Login",
+      "response_time": 0.002927541732788086,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.116668"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/forgot-password",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: ForgotPassword",
+      "response_time": 0.003234386444091797,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.120035"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/market",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: Market",
+      "response_time": 0.003089427947998047,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.123284"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/trading",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: OpexTradingDashboard",
+      "response_time": 0.003013134002685547,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.126467"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/education",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: Education",
+      "response_time": 0.0026161670684814453,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.129217"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/analysis",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: Analysis",
+      "response_time": 0.002804279327392578,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.132170"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/help",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: HelpCenter",
+      "response_time": 0.004141092300415039,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.136435"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/contact",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: Contact",
+      "response_time": 0.00596308708190918,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.142700"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/faq",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: FAQ",
+      "response_time": 0.0056285858154296875,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.148700"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/terms",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: TermsOfService",
+      "response_time": 0.0038666725158691406,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.152810"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/privacy",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: PrivacyPolicy",
+      "response_time": 0.0037186145782470703,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.156759"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/risk-warning",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: RiskWarning",
+      "response_time": 0.0033278465270996094,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.160261"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/complaints",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: Complaints",
+      "response_time": 0.002903461456298828,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.163297"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/personal/overview",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: PersonalOverview",
+      "response_time": 0.0032355785369873047,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.166672"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/personal/dashboard",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: PersonalDashboard",
+      "response_time": 0.003415822982788086,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.170229"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/personal/deposit",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: Deposit",
+      "response_time": 0.003219127655029297,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.173580"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/personal/withdraw",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: Withdraw",
+      "response_time": 0.003473520278930664,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.177310"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/personal/wallet",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: Wallet",
+      "response_time": 0.003297090530395508,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.180794"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/personal/profile",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: Profile",
+      "response_time": 0.0033752918243408203,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.184344"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/personal/rates",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: ExchangeRates",
+      "response_time": 0.0032765865325927734,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.187802"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3002/personal/transactions",
+      "status_code": 200,
+      "success": true,
+      "description": "Client: TransactionHistory",
+      "response_time": 0.003158092498779297,
+      "content_length": 3030,
+      "timestamp": "2025-12-16T13:26:29.191179"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/",
+      "status_code": null,
+      "success": false,
+      "description": "Admin: RootLogin",
+      "response_time": 0.09770727157592773,
+      "error": "HTTPSConnectionPool(host='localhost', port=443): Max retries exceeded with url: /admin/ (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'localhost'. (_ssl.c:1007)\")))",
+      "timestamp": "2025-12-16T13:26:29.289138"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/login",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: Login",
+      "response_time": 0.00478816032409668,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.293963",
+      "error": "HTTP 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/dashboard",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: Dashboard",
+      "response_time": 0.0035758018493652344,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.297690",
+      "error": "HTTP 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/users",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: UserManagement",
+      "response_time": 0.002690553665161133,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.300562",
+      "error": "HTTP 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/trading",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: OpexTradingManagement",
+      "response_time": 0.002811908721923828,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.303479",
+      "error": "HTTP 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/financial",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: FinancialManagement",
+      "response_time": 0.0033288002014160156,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.307015",
+      "error": "HTTP 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/analytics",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: AnalyticsReports",
+      "response_time": 0.0026848316192626953,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.309889",
+      "error": "HTTP 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/settings",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: SystemSettings",
+      "response_time": 0.0028438568115234375,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.312937",
+      "error": "HTTP 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/diagnostics",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: DiagnosticsManagement",
+      "response_time": 0.002835512161254883,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.315916",
+      "error": "HTTP 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/alerts",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: AlertManagement",
+      "response_time": 0.0030660629272460938,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.319118",
+      "error": "HTTP 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/scenario-builder",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: ScenarioBuilder",
+      "response_time": 0.003427743911743164,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.322715",
+      "error": "HTTP 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/session-manager",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: SessionManager",
+      "response_time": 0.002352476119995117,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.325202",
+      "error": "HTTP 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/monitoring-hub",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: MonitoringHub",
+      "response_time": 0.002411365509033203,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.327718",
+      "error": "HTTP 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/educational-hub",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: EducationalHub",
+      "response_time": 0.002213001251220703,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.330058",
+      "error": "HTTP 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/audit-logs",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: AuditLogViewer",
+      "response_time": 0.0028531551361083984,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.333006",
+      "error": "HTTP 404"
+    },
+    {
+      "type": "page",
+      "url": "http://localhost:3001/admin-controls",
+      "status_code": 404,
+      "success": false,
+      "description": "Admin: AdminTradingControls",
+      "response_time": 0.003224611282348633,
+      "content_length": 153,
+      "timestamp": "2025-12-16T13:26:29.336407",
+      "error": "HTTP 404"
+    }
+  ]
+}

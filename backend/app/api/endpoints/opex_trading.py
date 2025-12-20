@@ -138,6 +138,27 @@ async def place_order(
                 detail="Stop price is required and must be greater than 0 for stop orders"
             )
     
+    # 7. Risk validation (pre-trade checks)
+    try:
+        from ...services.risk_validation_service import get_risk_validation_service
+        risk_service = get_risk_validation_service()
+        risk_result = await risk_service.validate_order(
+            user_id=user.id,
+            symbol=normalized_symbol,
+            side=side_lower,
+            order_type=type_lower,
+            quantity=Decimal(str(request.quantity)),
+            price=Decimal(str(request.price)) if request.price else None
+        )
+        # Log warnings if any
+        if risk_result.get("warnings"):
+            logger.warning(f"Risk validation warnings for user {user.id}: {risk_result['warnings']}")
+    except HTTPException:
+        raise  # Re-raise risk validation errors
+    except Exception as risk_error:
+        # Don't block order on risk validation errors - log and continue
+        logger.warning(f"Risk validation failed (non-blocking): {risk_error}")
+    
     try:
         result = await trading_service.place_order(
             user_id=user.id,

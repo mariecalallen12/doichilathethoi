@@ -1,0 +1,980 @@
+{
+  "verified_endpoints": [
+    {
+      "module": "auth",
+      "method": "POST",
+      "path": "/api/auth/register",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "auth",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "auth",
+      "method": "POST",
+      "path": "/api/auth/logout",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "auth",
+      "method": "POST",
+      "path": "/api/auth/refresh",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "auth",
+      "method": "POST",
+      "path": "/api/auth/forgot-password",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "client",
+      "method": "GET",
+      "path": "/api/client/profile",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "client",
+      "method": "PUT",
+      "path": "/api/client/profile",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "client",
+      "method": "GET",
+      "path": "/api/client/settings",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "client",
+      "method": "PUT",
+      "path": "/api/client/settings",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "client",
+      "method": "GET",
+      "path": "/api/client/preferences",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "client",
+      "method": "PUT",
+      "path": "/api/client/preferences",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "client",
+      "method": "GET",
+      "path": "/api/client/onboarding/status",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "client",
+      "method": "POST",
+      "path": "/api/client/onboarding/complete",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "admin",
+      "method": "GET",
+      "path": "/api/admin/dashboard",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "admin",
+      "method": "GET",
+      "path": "/api/admin/users",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "admin",
+      "method": "GET",
+      "path": "/api/admin/users/{user_id}",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "admin",
+      "method": "PUT",
+      "path": "/api/admin/users/{user_id}",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "admin",
+      "method": "GET",
+      "path": "/api/admin/settings",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "admin",
+      "method": "PUT",
+      "path": "/api/admin/settings",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "admin",
+      "method": "GET",
+      "path": "/api/admin/analytics",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "admin",
+      "method": "GET",
+      "path": "/api/admin/logs",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "financial",
+      "method": "GET",
+      "path": "/api/financial/transactions",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "financial",
+      "method": "GET",
+      "path": "/api/financial/balance",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "financial",
+      "method": "GET",
+      "path": "/api/financial/reports",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "financial",
+      "method": "POST",
+      "path": "/api/financial/exchange",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "trading",
+      "method": "POST",
+      "path": "/api/trading/orders",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/orders",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "trading",
+      "method": "DELETE",
+      "path": "/api/trading/orders/{order_id}",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/statistics",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "market",
+      "method": "GET",
+      "path": "/api/market/prices",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "market",
+      "method": "GET",
+      "path": "/api/market/summary",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "market",
+      "method": "GET",
+      "path": "/api/market/analysis/{symbol}",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "portfolio",
+      "method": "GET",
+      "path": "/api/portfolio/analytics",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "compliance",
+      "method": "POST",
+      "path": "/api/compliance/reports",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "compliance",
+      "method": "GET",
+      "path": "/api/compliance/dashboard",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    },
+    {
+      "module": "staff",
+      "method": "GET",
+      "path": "/api/staff/referrals",
+      "exists": true,
+      "message": "Found in OpenAPI spec"
+    }
+  ],
+  "missing_endpoints": [
+    {
+      "module": "auth",
+      "method": "POST",
+      "path": "/api/auth/verify",
+      "exists": false,
+      "message": "Path exists but method POST not found. Available: ['get']"
+    },
+    {
+      "module": "admin",
+      "method": "POST",
+      "path": "/api/admin/reports",
+      "exists": false,
+      "message": "Path exists but method POST not found. Available: ['get']"
+    },
+    {
+      "module": "admin",
+      "method": "GET",
+      "path": "/api/admin/reports/{report_id}/download",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/reports', '/api/admin/reports/scheduled/{report_id}']"
+    },
+    {
+      "module": "financial",
+      "method": "POST",
+      "path": "/api/financial/deposit",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/client/crypto-deposit-address', '/api/admin/deposits']"
+    },
+    {
+      "module": "financial",
+      "method": "POST",
+      "path": "/api/financial/withdraw",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/withdrawals', '/api/admin/withdrawals/{withdrawal_id}']"
+    },
+    {
+      "module": "financial",
+      "method": "GET",
+      "path": "/api/financial/payments/{payment_id}/status",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/client/onboarding/status', '/api/admin/payments']"
+    },
+    {
+      "module": "financial",
+      "method": "POST",
+      "path": "/api/financial/payments/{payment_id}/process",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/payments', '/api/admin/payments/{payment_id}']"
+    },
+    {
+      "module": "financial",
+      "method": "POST",
+      "path": "/api/financial/payments/{payment_id}/cancel",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/payments', '/api/admin/payments/{payment_id}']"
+    },
+    {
+      "module": "financial",
+      "method": "GET",
+      "path": "/api/financial/payment-history",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/trading-adjustments/history']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/market-data/{symbol}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/market-preview/{symbol}', '/api/admin/trading/prices/{symbol}']"
+    },
+    {
+      "module": "trading",
+      "method": "PUT",
+      "path": "/api/trading/orders/{order_id}",
+      "exists": false,
+      "message": "Path exists but method PUT not found. Available: ['delete']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/positions/{symbol}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/market-preview/{symbol}', '/api/admin/trading/prices/{symbol}']"
+    },
+    {
+      "module": "trading",
+      "method": "DELETE",
+      "path": "/api/trading/positions/{position_id}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/trading/positions/{position_id}', '/api/admin/trading/positions/{position_id}/force-close']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/account",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/orderbook/{symbol}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/market-preview/{symbol}', '/api/admin/trading/prices/{symbol}']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/trades",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/trades', '/api/admin/trades/{trade_id}/approve']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/pairs",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/rules",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/compliance/rules', '/api/compliance/rules/{rule_id}']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/algorithms",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/risk-assessment",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/risk-management/assessment']"
+    },
+    {
+      "module": "market",
+      "method": "GET",
+      "path": "/api/market/data/{symbol}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/market-preview/{symbol}', '/api/admin/trading/prices/{symbol}']"
+    },
+    {
+      "module": "market",
+      "method": "GET",
+      "path": "/api/market/history/{symbol}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/trading-adjustments/history', '/api/admin/market-preview/{symbol}']"
+    },
+    {
+      "module": "portfolio",
+      "method": "GET",
+      "path": "/api/portfolio/overview",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "portfolio",
+      "method": "GET",
+      "path": "/api/portfolio/holdings",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "portfolio",
+      "method": "PUT",
+      "path": "/api/portfolio/holdings",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "portfolio",
+      "method": "GET",
+      "path": "/api/portfolio/performance",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/users/{user_id}/performance', '/api/admin/analytics/performance']"
+    },
+    {
+      "module": "portfolio",
+      "method": "POST",
+      "path": "/api/portfolio/rebalance",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/financial/balance']"
+    },
+    {
+      "module": "compliance",
+      "method": "GET",
+      "path": "/api/compliance/kyc/status",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/client/onboarding/status', '/api/compliance/kyc']"
+    },
+    {
+      "module": "compliance",
+      "method": "POST",
+      "path": "/api/compliance/kyc/documents",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/compliance/kyc']"
+    },
+    {
+      "module": "compliance",
+      "method": "GET",
+      "path": "/api/compliance/aml/status",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/client/onboarding/status', '/api/compliance/aml']"
+    },
+    {
+      "module": "compliance",
+      "method": "GET",
+      "path": "/api/compliance/requirements",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "compliance",
+      "method": "GET",
+      "path": "/api/compliance/history",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/trading-adjustments/history', '/api/market/trade-history/{symbol}']"
+    },
+    {
+      "module": "risk",
+      "method": "GET",
+      "path": "/api/risk/metrics",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/portfolio/metrics', '/api/portfolio/metrics/recalculate']"
+    },
+    {
+      "module": "risk",
+      "method": "GET",
+      "path": "/api/risk/exposure",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "risk",
+      "method": "GET",
+      "path": "/api/risk/scoring",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "risk",
+      "method": "GET",
+      "path": "/api/risk/mitigation",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "risk",
+      "method": "GET",
+      "path": "/api/risk/monitoring",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/simulator/monitoring', '/api/compliance/aml/monitor']"
+    },
+    {
+      "module": "staff",
+      "method": "POST",
+      "path": "/api/staff/referrals",
+      "exists": false,
+      "message": "Path exists but method POST not found. Available: ['get']"
+    },
+    {
+      "module": "staff",
+      "method": "GET",
+      "path": "/api/staff/commission",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "users",
+      "method": "GET",
+      "path": "/api/users/",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/test', '/api/health']"
+    },
+    {
+      "module": "users",
+      "method": "GET",
+      "path": "/api/users/{user_id}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/users', '/api/admin/users/{user_id}']"
+    },
+    {
+      "module": "users",
+      "method": "PUT",
+      "path": "/api/users/{user_id}/role",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/users', '/api/admin/users/{user_id}']"
+    },
+    {
+      "module": "users",
+      "method": "GET",
+      "path": "/api/users/{user_id}/activity",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/users', '/api/admin/users/{user_id}']"
+    },
+    {
+      "module": "advanced",
+      "method": "GET",
+      "path": "/api/advanced/dashboard",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/client/dashboard', '/api/admin/dashboard']"
+    },
+    {
+      "module": "advanced",
+      "method": "GET",
+      "path": "/api/advanced/indicators/{symbol}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/market-preview/{symbol}', '/api/admin/trading/prices/{symbol}']"
+    },
+    {
+      "module": "advanced",
+      "method": "GET",
+      "path": "/api/advanced/algorithms",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "advanced",
+      "method": "GET",
+      "path": "/api/advanced/strategies",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "advanced",
+      "method": "POST",
+      "path": "/api/advanced/strategies",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "advanced",
+      "method": "POST",
+      "path": "/api/advanced/backtest",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/test', '/api/analysis/backtest']"
+    },
+    {
+      "module": "advanced",
+      "method": "GET",
+      "path": "/api/advanced/backtest/{backtest_id}/results",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/test', '/api/analysis/backtest']"
+    },
+    {
+      "module": "advanced",
+      "method": "POST",
+      "path": "/api/advanced/live-trade",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    }
+  ],
+  "invalid_paths": [
+    {
+      "module": "auth",
+      "method": "POST",
+      "path": "/api/auth/verify",
+      "exists": false,
+      "message": "Path exists but method POST not found. Available: ['get']"
+    },
+    {
+      "module": "admin",
+      "method": "POST",
+      "path": "/api/admin/reports",
+      "exists": false,
+      "message": "Path exists but method POST not found. Available: ['get']"
+    },
+    {
+      "module": "admin",
+      "method": "GET",
+      "path": "/api/admin/reports/{report_id}/download",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/reports', '/api/admin/reports/scheduled/{report_id}']"
+    },
+    {
+      "module": "financial",
+      "method": "POST",
+      "path": "/api/financial/deposit",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/client/crypto-deposit-address', '/api/admin/deposits']"
+    },
+    {
+      "module": "financial",
+      "method": "POST",
+      "path": "/api/financial/withdraw",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/withdrawals', '/api/admin/withdrawals/{withdrawal_id}']"
+    },
+    {
+      "module": "financial",
+      "method": "GET",
+      "path": "/api/financial/payments/{payment_id}/status",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/client/onboarding/status', '/api/admin/payments']"
+    },
+    {
+      "module": "financial",
+      "method": "POST",
+      "path": "/api/financial/payments/{payment_id}/process",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/payments', '/api/admin/payments/{payment_id}']"
+    },
+    {
+      "module": "financial",
+      "method": "POST",
+      "path": "/api/financial/payments/{payment_id}/cancel",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/payments', '/api/admin/payments/{payment_id}']"
+    },
+    {
+      "module": "financial",
+      "method": "GET",
+      "path": "/api/financial/payment-history",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/trading-adjustments/history']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/market-data/{symbol}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/market-preview/{symbol}', '/api/admin/trading/prices/{symbol}']"
+    },
+    {
+      "module": "trading",
+      "method": "PUT",
+      "path": "/api/trading/orders/{order_id}",
+      "exists": false,
+      "message": "Path exists but method PUT not found. Available: ['delete']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/positions/{symbol}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/market-preview/{symbol}', '/api/admin/trading/prices/{symbol}']"
+    },
+    {
+      "module": "trading",
+      "method": "DELETE",
+      "path": "/api/trading/positions/{position_id}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/trading/positions/{position_id}', '/api/admin/trading/positions/{position_id}/force-close']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/account",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/orderbook/{symbol}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/market-preview/{symbol}', '/api/admin/trading/prices/{symbol}']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/trades",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/trades', '/api/admin/trades/{trade_id}/approve']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/pairs",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/rules",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/compliance/rules', '/api/compliance/rules/{rule_id}']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/algorithms",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "trading",
+      "method": "GET",
+      "path": "/api/trading/risk-assessment",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/risk-management/assessment']"
+    },
+    {
+      "module": "market",
+      "method": "GET",
+      "path": "/api/market/data/{symbol}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/market-preview/{symbol}', '/api/admin/trading/prices/{symbol}']"
+    },
+    {
+      "module": "market",
+      "method": "GET",
+      "path": "/api/market/history/{symbol}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/trading-adjustments/history', '/api/admin/market-preview/{symbol}']"
+    },
+    {
+      "module": "portfolio",
+      "method": "GET",
+      "path": "/api/portfolio/overview",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "portfolio",
+      "method": "GET",
+      "path": "/api/portfolio/holdings",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "portfolio",
+      "method": "PUT",
+      "path": "/api/portfolio/holdings",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "portfolio",
+      "method": "GET",
+      "path": "/api/portfolio/performance",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/users/{user_id}/performance', '/api/admin/analytics/performance']"
+    },
+    {
+      "module": "portfolio",
+      "method": "POST",
+      "path": "/api/portfolio/rebalance",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/financial/balance']"
+    },
+    {
+      "module": "compliance",
+      "method": "GET",
+      "path": "/api/compliance/kyc/status",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/client/onboarding/status', '/api/compliance/kyc']"
+    },
+    {
+      "module": "compliance",
+      "method": "POST",
+      "path": "/api/compliance/kyc/documents",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/compliance/kyc']"
+    },
+    {
+      "module": "compliance",
+      "method": "GET",
+      "path": "/api/compliance/aml/status",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/client/onboarding/status', '/api/compliance/aml']"
+    },
+    {
+      "module": "compliance",
+      "method": "GET",
+      "path": "/api/compliance/requirements",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "compliance",
+      "method": "GET",
+      "path": "/api/compliance/history",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/trading-adjustments/history', '/api/market/trade-history/{symbol}']"
+    },
+    {
+      "module": "risk",
+      "method": "GET",
+      "path": "/api/risk/metrics",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/portfolio/metrics', '/api/portfolio/metrics/recalculate']"
+    },
+    {
+      "module": "risk",
+      "method": "GET",
+      "path": "/api/risk/exposure",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "risk",
+      "method": "GET",
+      "path": "/api/risk/scoring",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "risk",
+      "method": "GET",
+      "path": "/api/risk/mitigation",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "risk",
+      "method": "GET",
+      "path": "/api/risk/monitoring",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/simulator/monitoring', '/api/compliance/aml/monitor']"
+    },
+    {
+      "module": "staff",
+      "method": "POST",
+      "path": "/api/staff/referrals",
+      "exists": false,
+      "message": "Path exists but method POST not found. Available: ['get']"
+    },
+    {
+      "module": "staff",
+      "method": "GET",
+      "path": "/api/staff/commission",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "users",
+      "method": "GET",
+      "path": "/api/users/",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/test', '/api/health']"
+    },
+    {
+      "module": "users",
+      "method": "GET",
+      "path": "/api/users/{user_id}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/users', '/api/admin/users/{user_id}']"
+    },
+    {
+      "module": "users",
+      "method": "PUT",
+      "path": "/api/users/{user_id}/role",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/users', '/api/admin/users/{user_id}']"
+    },
+    {
+      "module": "users",
+      "method": "GET",
+      "path": "/api/users/{user_id}/activity",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/users', '/api/admin/users/{user_id}']"
+    },
+    {
+      "module": "advanced",
+      "method": "GET",
+      "path": "/api/advanced/dashboard",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/client/dashboard', '/api/admin/dashboard']"
+    },
+    {
+      "module": "advanced",
+      "method": "GET",
+      "path": "/api/advanced/indicators/{symbol}",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/api/admin/market-preview/{symbol}', '/api/admin/trading/prices/{symbol}']"
+    },
+    {
+      "module": "advanced",
+      "method": "GET",
+      "path": "/api/advanced/algorithms",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "advanced",
+      "method": "GET",
+      "path": "/api/advanced/strategies",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "advanced",
+      "method": "POST",
+      "path": "/api/advanced/strategies",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    },
+    {
+      "module": "advanced",
+      "method": "POST",
+      "path": "/api/advanced/backtest",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/test', '/api/analysis/backtest']"
+    },
+    {
+      "module": "advanced",
+      "method": "GET",
+      "path": "/api/advanced/backtest/{backtest_id}/results",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/', '/test', '/api/analysis/backtest']"
+    },
+    {
+      "module": "advanced",
+      "method": "POST",
+      "path": "/api/advanced/live-trade",
+      "exists": false,
+      "message": "Path not found. Similar paths: ['/']"
+    }
+  ],
+  "summary": {
+    "total": 87,
+    "verified": 36,
+    "missing": 51,
+    "invalid_paths": 51
+  }
+}
