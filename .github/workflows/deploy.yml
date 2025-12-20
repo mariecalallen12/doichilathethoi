@@ -1,0 +1,76 @@
+name: Deploy to Production
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ${{ github.repository }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: 
+      name: ${{ github.event.inputs.environment || 'production' }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set environment variables
+      run: |
+        if [ "${{ github.event.inputs.environment }}" == "staging" ]; then
+          echo "ENV_FILE=.env.staging" >> $GITHUB_ENV
+        else
+          echo "ENV_FILE=.env.production" >> $GITHUB_ENV
+        fi
+        
+    - name: Create deployment package
+      run: |
+        mkdir -p deployment
+        cp docker-compose.yml deployment/
+        cp ${{ env.ENV_FILE }} deployment/.env
+        cp deploy.sh deployment/
+        cp -r nginx deployment/
+        cp -r scripts deployment/
+        tar -czf deployment.tar.gz deployment/
+        
+    - name: Upload deployment artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: deployment-package
+        path: deployment.tar.gz
+        retention-days: 30
+        
+    - name: Deploy notification
+      run: |
+        echo "🚀 Deployment prepared for ${{ github.event.inputs.environment || 'production' }}"
+        echo "📦 Package created: deployment.tar.gz"
+        echo "🏷️ Version: ${{ github.ref_name }}"
+        
+    # Uncomment and configure for actual server deployment
+    # - name: Deploy to server
+    #   uses: appleboy/ssh-action@master
+    #   with:
+    #     host: ${{ secrets.DEPLOY_HOST }}
+    #     username: ${{ secrets.DEPLOY_USER }}
+    #     key: ${{ secrets.DEPLOY_SSH_KEY }}
+    #     script: |
+    #       cd /opt/forexxx
+    #       wget ${{ github.server_url }}/${{ github.repository }}/releases/download/${{ github.ref_name }}/deployment.tar.gz
+    #       tar -xzf deployment.tar.gz
+    #       cd deployment
+    #       chmod +x deploy.sh
+    #       ./deploy.sh

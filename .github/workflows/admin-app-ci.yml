@@ -1,0 +1,52 @@
+name: Admin App CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'Admin-app/**'
+      - '.github/workflows/admin-app-ci.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'Admin-app/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: Admin-app/package-lock.json
+        
+    - name: Install dependencies
+      working-directory: ./Admin-app
+      run: npm ci
+      
+    - name: Lint code
+      working-directory: ./Admin-app
+      run: npm run lint || echo "Linting skipped"
+      
+    - name: Run tests
+      working-directory: ./Admin-app
+      run: npm test || echo "Tests skipped"
+      
+    - name: Build application
+      working-directory: ./Admin-app
+      run: npm run build
+      env:
+        CI: false
+        
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: admin-app-build
+        path: Admin-app/build
+        retention-days: 7

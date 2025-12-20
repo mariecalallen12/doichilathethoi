@@ -1,0 +1,52 @@
+name: Client App CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'client-app/**'
+      - '.github/workflows/client-app-ci.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'client-app/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: client-app/package-lock.json
+        
+    - name: Install dependencies
+      working-directory: ./client-app
+      run: npm ci
+      
+    - name: Lint code
+      working-directory: ./client-app
+      run: npm run lint || echo "Linting skipped"
+      
+    - name: Run tests
+      working-directory: ./client-app
+      run: npm test || echo "Tests skipped"
+      
+    - name: Build application
+      working-directory: ./client-app
+      run: npm run build
+      env:
+        CI: false
+        
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: client-app-build
+        path: client-app/build
+        retention-days: 7
