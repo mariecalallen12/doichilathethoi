@@ -172,6 +172,8 @@ jobs:
     - name: Build and push Core-Main services
       run: |
         cd core-main
+        # Set TAG environment variable for docker-compose
+        export TAG=latest
         # Build images using docker compose
         docker compose -f docker-compose.yml -f docker-compose.build.yml build
         # Tag and push images
