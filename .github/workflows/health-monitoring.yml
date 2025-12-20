@@ -22,21 +22,34 @@ jobs:
     if: ${{ github.event.inputs.environment == 'production' || github.event.inputs.environment == 'both' || github.event_name == 'schedule' }}
     
     steps:
+      - name: Check if production URL is configured
+        id: check
+        run: |
+          if [ -z "${{ secrets.PRODUCTION_URL }}" ]; then
+            echo "configured=false" >> $GITHUB_OUTPUT
+            echo "⚠️ PRODUCTION_URL not configured, skipping health checks"
+          else
+            echo "configured=true" >> $GITHUB_OUTPUT
+          fi
+      
       - name: Health Check - Production Backend
+        if: steps.check.outputs.configured == 'true'
         run: |
           curl -f ${{ secrets.PRODUCTION_URL }}/api/health || exit 1
       
       - name: Health Check - Production Core-Main
+        if: steps.check.outputs.configured == 'true'
         run: |
           curl -f ${{ secrets.PRODUCTION_URL }}/core/health || exit 1
       
       - name: Check Trading Data Flow
+        if: steps.check.outputs.configured == 'true'
         run: |
           response=$(curl -s ${{ secrets.PRODUCTION_URL }}/api/trading/stats)
           echo "Production stats: $response"
       
       - name: Alert on failure
-        if: failure()
+        if: failure() && steps.check.outputs.configured == 'true'
         run: |
           echo "🚨 Production health check failed!"
 
@@ -46,20 +59,33 @@ jobs:
     if: ${{ github.event.inputs.environment == 'staging' || github.event.inputs.environment == 'both' }}
     
     steps:
+      - name: Check if staging URL is configured
+        id: check
+        run: |
+          if [ -z "${{ secrets.STAGING_URL }}" ]; then
+            echo "configured=false" >> $GITHUB_OUTPUT
+            echo "⚠️ STAGING_URL not configured, skipping health checks"
+          else
+            echo "configured=true" >> $GITHUB_OUTPUT
+          fi
+      
       - name: Health Check - Staging Backend
+        if: steps.check.outputs.configured == 'true'
         run: |
           curl -f ${{ secrets.STAGING_URL }}/api/health || exit 1
       
       - name: Health Check - Staging Core-Main
+        if: steps.check.outputs.configured == 'true'
         run: |
           curl -f ${{ secrets.STAGING_URL }}/core/health || exit 1
       
       - name: Check Trading Data Flow
+        if: steps.check.outputs.configured == 'true'
         run: |
           response=$(curl -s ${{ secrets.STAGING_URL }}/api/trading/stats)
           echo "Staging stats: $response"
       
       - name: Alert on failure
-        if: failure()
+        if: failure() && steps.check.outputs.configured == 'true'
         run: |
           echo "⚠️ Staging health check failed!"
