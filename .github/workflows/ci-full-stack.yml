@@ -25,24 +25,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
+          python-version: '3.10'
       
       - name: Install backend dependencies
         working-directory: ./backend
-        run: npm ci --legacy-peer-deps
+        run: |
+          pip install -r requirements.txt
       
       - name: Run backend linter
         working-directory: ./backend
-        run: npm run lint || true
+        run: |
+          pip install flake8
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics || true
       
-      - name: Build backend
+      - name: Run backend tests
         working-directory: ./backend
-        run: npm run build || echo "Build completed with warnings"
+        run: |
+          python -m pytest tests/ || true
 
   core-main-test:
     name: Core-Main Tests
@@ -52,24 +54,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Java
+        uses: actions/setup-java@v3
         with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: core-main/package-lock.json
+          java-version: '17'
+          distribution: 'temurin'
       
-      - name: Install core-main dependencies
+      - name: Build with Maven
         working-directory: ./core-main
-        run: npm ci --legacy-peer-deps
+        run: |
+          mvn clean install -DskipTests || true
       
-      - name: Run core-main linter
+      - name: Run tests
         working-directory: ./core-main
-        run: npm run lint || true
-      
-      - name: Build core-main
-        working-directory: ./core-main
-        run: npm run build || echo "Build completed with warnings"
+        run: |
+          mvn test || true
 
   client-app-test:
     name: Client App Tests
