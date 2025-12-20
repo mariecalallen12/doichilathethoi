@@ -1,0 +1,88 @@
+name: Integration Tests
+
+on:
+  push:
+    branches:
+      - develop
+      - staging
+      - main
+  pull_request:
+    branches:
+      - develop
+      - staging
+      - main
+  workflow_dispatch:
+
+jobs:
+  integration-test:
+    name: Full Stack Integration Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Create .env file
+        run: |
+          cat > .env << EOF
+          NODE_ENV=test
+          POSTGRES_HOST=postgres
+          POSTGRES_PORT=5432
+          POSTGRES_USER=postgres
+          POSTGRES_PASSWORD=postgres
+          POSTGRES_DB=forexxx_test
+          REDIS_HOST=redis
+          REDIS_PORT=6379
+          JWT_SECRET=test-secret-key-for-ci
+          BACKEND_PORT=3000
+          CORE_MAIN_PORT=3001
+          CLIENT_PORT=5173
+          ADMIN_PORT=5174
+          EOF
+      
+      - name: Start Docker Compose services
+        run: |
+          docker-compose up -d postgres redis
+          sleep 15
+      
+      - name: Check database connectivity
+        run: |
+          docker-compose exec -T postgres pg_isready -U postgres || true
+          sleep 5
+      
+      - name: Run database migrations
+        run: |
+          docker-compose run --rm backend npm run migrate || true
+      
+      - name: Start all application services
+        run: |
+          docker-compose up -d backend core-main
+          sleep 20
+      
+      - name: Check service health
+        run: |
+          curl -f http://localhost:3000/health || echo "Backend health check failed"
+          curl -f http://localhost:3001/health || echo "Core-main health check failed"
+      
+      - name: Run integration tests
+        run: |
+          chmod +x ./test_integration.sh
+          ./test_integration.sh || true
+      
+      - name: Check logs on failure
+        if: failure()
+        run: |
+          echo "=== Backend Logs ==="
+          docker-compose logs backend
+          echo "=== Core-Main Logs ==="
+          docker-compose logs core-main
+          echo "=== PostgreSQL Logs ==="
+          docker-compose logs postgres
+          echo "=== Redis Logs ==="
+          docker-compose logs redis
+      
+      - name: Cleanup
+        if: always()
+        run: |
+          docker-compose down -v

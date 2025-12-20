@@ -1,0 +1,65 @@
+name: Health Monitoring
+
+on:
+  schedule:
+    # Run every 30 minutes
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to monitor'
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+          - both
+
+jobs:
+  monitor-production:
+    name: Monitor Production
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.environment == 'production' || github.event.inputs.environment == 'both' || github.event_name == 'schedule' }}
+    
+    steps:
+      - name: Health Check - Production Backend
+        run: |
+          curl -f ${{ secrets.PRODUCTION_URL }}/api/health || exit 1
+      
+      - name: Health Check - Production Core-Main
+        run: |
+          curl -f ${{ secrets.PRODUCTION_URL }}/core/health || exit 1
+      
+      - name: Check Trading Data Flow
+        run: |
+          response=$(curl -s ${{ secrets.PRODUCTION_URL }}/api/trading/stats)
+          echo "Production stats: $response"
+      
+      - name: Alert on failure
+        if: failure()
+        run: |
+          echo "🚨 Production health check failed!"
+
+  monitor-staging:
+    name: Monitor Staging
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.environment == 'staging' || github.event.inputs.environment == 'both' }}
+    
+    steps:
+      - name: Health Check - Staging Backend
+        run: |
+          curl -f ${{ secrets.STAGING_URL }}/api/health || exit 1
+      
+      - name: Health Check - Staging Core-Main
+        run: |
+          curl -f ${{ secrets.STAGING_URL }}/core/health || exit 1
+      
+      - name: Check Trading Data Flow
+        run: |
+          response=$(curl -s ${{ secrets.STAGING_URL }}/api/trading/stats)
+          echo "Staging stats: $response"
+      
+      - name: Alert on failure
+        if: failure()
+        run: |
+          echo "⚠️ Staging health check failed!"

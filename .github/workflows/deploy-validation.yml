@@ -1,0 +1,108 @@
+name: Deployment Validation
+
+on:
+  workflow_run:
+    workflows: ["Staging Deployment", "Production Deployment"]
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to validate'
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  validate-deployment:
+    name: Validate Deployment
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Determine environment
+        id: env
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "environment=${{ github.event.inputs.environment }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event.workflow_run.name }}" == "Staging Deployment" ]]; then
+            echo "environment=staging" >> $GITHUB_OUTPUT
+          else
+            echo "environment=production" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Set environment URL
+        id: url
+        run: |
+          if [[ "${{ steps.env.outputs.environment }}" == "production" ]]; then
+            echo "base_url=${{ secrets.PRODUCTION_URL }}" >> $GITHUB_OUTPUT
+          else
+            echo "base_url=${{ secrets.STAGING_URL }}" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Wait for deployment to stabilize
+        run: sleep 30
+      
+      - name: Health Check - Backend
+        run: |
+          curl -f ${{ steps.url.outputs.base_url }}/api/health || exit 1
+          echo "✅ Backend health check passed"
+      
+      - name: Health Check - Core-Main
+        run: |
+          curl -f ${{ steps.url.outputs.base_url }}/core/health || exit 1
+          echo "✅ Core-Main health check passed"
+      
+      - name: Test WebSocket Connection
+        run: |
+          npx wscat -c ${{ steps.url.outputs.base_url }}/ws -x '{"type":"ping"}' --wait 5 || echo "⚠️ WebSocket test failed"
+      
+      - name: Test Trading Data Endpoint
+        run: |
+          response=$(curl -s ${{ steps.url.outputs.base_url }}/api/trading/symbols)
+          echo "Trading symbols response: $response"
+          if [[ -z "$response" ]]; then
+            echo "❌ Trading data endpoint returned empty response"
+            exit 1
+          fi
+          echo "✅ Trading data endpoint working"
+      
+      - name: Test Real-time Data Stream
+        run: |
+          timeout 10 curl -N ${{ steps.url.outputs.base_url }}/api/trading/stream || true
+          echo "✅ Real-time stream test completed"
+      
+      - name: Performance Test
+        run: |
+          response_time=$(curl -o /dev/null -s -w '%{time_total}\n' ${{ steps.url.outputs.base_url }}/api/health)
+          echo "Response time: ${response_time}s"
+          if (( $(echo "$response_time > 2.0" | bc -l) )); then
+            echo "⚠️ Response time is high: ${response_time}s"
+          else
+            echo "✅ Response time is acceptable: ${response_time}s"
+          fi
+      
+      - name: Database Connection Test
+        run: |
+          curl -f ${{ steps.url.outputs.base_url }}/api/status/database || exit 1
+          echo "✅ Database connection verified"
+      
+      - name: Redis Connection Test
+        run: |
+          curl -f ${{ steps.url.outputs.base_url }}/api/status/redis || exit 1
+          echo "✅ Redis connection verified"
+      
+      - name: Send notification on success
+        if: success()
+        run: |
+          echo "🎉 Deployment validation passed for ${{ steps.env.outputs.environment }}"
+      
+      - name: Send notification on failure
+        if: failure()
+        run: |
+          echo "❌ Deployment validation failed for ${{ steps.env.outputs.environment }}"

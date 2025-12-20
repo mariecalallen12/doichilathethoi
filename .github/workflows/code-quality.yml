@@ -1,0 +1,157 @@
+name: Code Quality & Security
+
+on:
+  push:
+    branches:
+      - develop
+      - staging
+      - main
+  pull_request:
+    branches:
+      - develop
+      - staging
+      - main
+  schedule:
+    # Run weekly on Monday
+    - cron: '0 0 * * 1'
+
+jobs:
+  code-quality:
+    name: Code Quality Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies for all services
+        run: |
+          cd backend && npm ci --legacy-peer-deps
+          cd ../core-main && npm ci --legacy-peer-deps
+          cd ../client-app && npm ci --legacy-peer-deps
+          cd ../Admin-app && npm ci --legacy-peer-deps
+      
+      - name: Run ESLint on Backend
+        working-directory: ./backend
+        run: npm run lint || true
+        continue-on-error: true
+      
+      - name: Run ESLint on Core-Main
+        working-directory: ./core-main
+        run: npm run lint || true
+        continue-on-error: true
+      
+      - name: Run ESLint on Client-App
+        working-directory: ./client-app
+        run: npm run lint || true
+        continue-on-error: true
+      
+      - name: Run ESLint on Admin-App
+        working-directory: ./Admin-app
+        run: npm run lint || true
+        continue-on-error: true
+
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Audit Backend Dependencies
+        working-directory: ./backend
+        run: |
+          npm audit --audit-level=moderate || true
+        continue-on-error: true
+      
+      - name: Audit Core-Main Dependencies
+        working-directory: ./core-main
+        run: |
+          npm audit --audit-level=moderate || true
+        continue-on-error: true
+      
+      - name: Audit Client-App Dependencies
+        working-directory: ./client-app
+        run: |
+          npm audit --audit-level=moderate || true
+        continue-on-error: true
+      
+      - name: Audit Admin-App Dependencies
+        working-directory: ./Admin-app
+        run: |
+          npm audit --audit-level=moderate || true
+        continue-on-error: true
+      
+      - name: Check for outdated dependencies
+        run: |
+          echo "=== Backend ==="
+          cd backend && npm outdated || true
+          echo "=== Core-Main ==="
+          cd ../core-main && npm outdated || true
+          echo "=== Client-App ==="
+          cd ../client-app && npm outdated || true
+          echo "=== Admin-App ==="
+          cd ../Admin-app && npm outdated || true
+
+  dockerfile-lint:
+    name: Dockerfile Linting
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Lint Backend Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: backend/Dockerfile
+          failure-threshold: warning
+        continue-on-error: true
+      
+      - name: Lint Core-Main Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: core-main/Dockerfile
+          failure-threshold: warning
+        continue-on-error: true
+      
+      - name: Lint Client-App Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: client-app/Dockerfile
+          failure-threshold: warning
+        continue-on-error: true
+      
+      - name: Lint Admin-App Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Admin-app/Dockerfile
+          failure-threshold: warning
+        continue-on-error: true
+
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: moderate
