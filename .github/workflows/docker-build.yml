@@ -148,6 +148,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Build with Maven
+      run: |
+        cd core-main
+        mvn clean package -DskipTests
+        
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
       
@@ -158,24 +169,17 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         
-    - name: Extract metadata
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/core-main
-        tags: |
-          type=ref,event=branch
-          type=ref,event=pr
-          type=semver,pattern={{version}}
-          type=semver,pattern={{major}}.{{minor}}
-          type=sha
-          
-    - name: Build and push Core-Main image
-      uses: docker/build-push-action@v5
-      with:
-        context: ./core-main
-        push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+    - name: Build and push Core-Main services
+      run: |
+        cd core-main
+        # Build images using docker-compose
+        docker-compose -f docker-compose.build.yml build
+        # Tag and push images
+        for service in api-app wallet-app market-app matching-engine-app; do
+          if docker images | grep -q $service; then
+            docker tag $service:latest ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/core-main-$service:${{ github.sha }}
+            docker tag $service:latest ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/core-main-$service:main
+            docker push ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/core-main-$service:${{ github.sha }}
+            docker push ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/core-main-$service:main
+          fi
+        done
