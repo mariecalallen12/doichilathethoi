@@ -27,7 +27,7 @@ jobs:
       
       - name: Start services
         run: |
-          docker-compose up -d postgres redis
+          docker compose up -d postgres redis
           sleep 10
       
       - name: Run schema verification
@@ -48,5 +48,5 @@ jobs:
       - name: Cleanup
         if: always()
         run: |
-          docker-compose down
+          docker compose down
 
