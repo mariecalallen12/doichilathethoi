@@ -3,6 +3,11 @@
     <!-- Trading Header -->
     <TradingHeader :connectionStatus="connectionStatus" />
     
+    <!-- TradingView Chart Widget - REAL-TIME CHART -->
+    <div class="chart-container">
+      <TradingViewChart :symbol="selectedSymbol" />
+    </div>
+    
     <!-- Binary Sentiment Display -->
     <BinarySentimentBoard 
       :binaryArray="binaryArray"
@@ -13,6 +18,7 @@
     <TradingSignalsGrid 
       :signals="tradingSignals"
       :loading="isLoadingSignals"
+      @symbolSelect="onSymbolSelect"
     />
     
     <!-- Asset Class Performance -->
@@ -24,6 +30,7 @@
     <TopMovers 
       :gainers="topGainers"
       :losers="topLosers"
+      @symbolSelect="onSymbolSelect"
     />
     
     <!-- Trading Recommendations -->
@@ -46,6 +53,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 import TradingHeader from '../components/trading/TradingHeader.vue';
+import TradingViewChart from '../components/trading/TradingViewChart.vue';
 import BinarySentimentBoard from '../components/trading/BinarySentimentBoard.vue';
 import TradingSignalsGrid from '../components/trading/TradingSignalsGrid.vue';
 import AssetClassPerformance from '../components/trading/AssetClassPerformance.vue';
@@ -63,6 +71,8 @@ const connectionStatus = ref({
   binary: false
 });
 
+const selectedSymbol = ref('BTCUSDT'); // Default symbol
+
 const binaryArray = computed(() => tradingStore.binaryArray);
 const marketSentiment = computed(() => tradingStore.marketSentiment);
 const tradingSignals = computed(() => tradingStore.signals);
@@ -73,6 +83,12 @@ const topLosers = computed(() => tradingStore.topLosers);
 const recommendations = computed(() => tradingStore.recommendations);
 const marketAnalysis = computed(() => tradingStore.analysis);
 const signalStream = computed(() => tradingStore.signalStream);
+
+// Handle symbol selection from components
+function onSymbolSelect(symbol) {
+  selectedSymbol.value = symbol;
+  console.log('[TradingView] Symbol selected:', symbol);
+}
 
 onMounted(async () => {
   console.log('[TradingView] Initializing...');
@@ -105,5 +121,13 @@ onUnmounted(() => {
   min-height: 100vh;
   background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
   padding: 20px;
+}
+
+.chart-container {
+  margin: 20px 0;
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 </style>

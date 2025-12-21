@@ -9,7 +9,7 @@ FastAPI endpoints for market data display (Luồng 1)
 import asyncio
 import logging
 from typing import List, Dict, Any, Optional
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from datetime import datetime
@@ -48,20 +48,8 @@ class MarketSummaryResponse(BaseModel):
     market_data: Dict[str, PriceResponse]
     overview: MarketOverviewResponse
 
-# Initialize FastAPI app
-market_app = FastAPI(
-    title="Trading System API - Market Data",
-    description="Real-time market data and price information",
-    version="1.0.0"
-)
-
-market_app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Initialize APIRouter
+market_app = APIRouter()
 
 # Global aggregator instance
 market_aggregator = MarketDataAggregator()

@@ -9,7 +9,7 @@ FastAPI endpoints for trading features and signals (Luồng 2)
 import asyncio
 import logging
 from typing import List, Dict, Any, Optional
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, APIRouter, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from datetime import datetime
@@ -69,20 +69,8 @@ class MarketAnalysisResponse(BaseModel):
     top_losers: List[Dict[str, Any]]
     high_confidence_signals: List[Dict[str, Any]]
 
-# Initialize FastAPI app
-trading_app = FastAPI(
-    title="Trading System API - Trading Features",
-    description="Binary trading signals and analysis",
-    version="1.0.0"
-)
-
-trading_app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Initialize APIRouter
+trading_app = APIRouter()
 
 # Global instances
 signals_generator = TradingSignalsGenerator()

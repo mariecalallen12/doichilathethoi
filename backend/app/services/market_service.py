@@ -6,7 +6,7 @@ import logging
 from typing import Dict, Any, List
 from datetime import datetime
 from ..services.market_data_service import fetch_market_data
-from ..services.market_providers import get_provider
+from ..services.market_providers_simple import BinanceProvider, ExchangeRateProvider, MetalsProvider
 from ..core.config import settings
 
 logger = logging.getLogger(__name__)
@@ -14,29 +14,15 @@ logger = logging.getLogger(__name__)
 
 async def update_all_market_data():
     """
-    Update all market data from configured providers
+    Update all market data from configured providers (delegated to TradingSystemAPI)
     """
     try:
-        # Get all active market data providers
-        providers = ['binance', 'coinbase', 'mock']  # Configurable
-        
-        updated_count = 0
-        for provider_name in providers:
-            try:
-                provider = get_provider(provider_name)
-                if provider:
-                    # Fetch latest data
-                    data = await provider.fetch_market_data()
-                    updated_count += len(data)
-                    logger.debug(f"Updated {len(data)} markets from {provider_name}")
-            except Exception as e:
-                logger.error(f"Failed to update data from {provider_name}: {e}")
-                continue
-        
-        logger.info(f"Market data update completed: {updated_count} items updated")
+        # NOTE: Market data is now handled by TradingSystemAPI (port 8001)
+        # Backend just provides pass-through or uses cached data
+        logger.info("Market data update delegated to TradingSystemAPI")
         return {
             "success": True,
-            "updated_count": updated_count,
+            "message": "Market data handled by TradingSystemAPI microservice",
             "timestamp": datetime.utcnow().isoformat()
         }
         
