@@ -4,6 +4,7 @@ import RegisterPage from '../views/RegisterPage.vue';
 import LoginPage from '../views/LoginPage.vue';
 import ForgotPasswordPage from '../views/ForgotPasswordPage.vue';
 import MarketView from '../views/MarketView.vue';
+import TradingView from '../views/TradingView.vue';
 import TestPage from '../views/TestPage.vue';
 import PersonalAreaLayout from '../layouts/PersonalAreaLayout.vue';
 
@@ -62,6 +63,11 @@ const routes = [
     path: '/market',
     name: 'Market',
     component: MarketView,
+  },
+  {
+    path: '/trading',
+    name: 'Trading',
+    component: TradingView,
   },
   {
     path: '/education',

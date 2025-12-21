@@ -276,7 +276,67 @@ export const useMarketStore = defineStore('market', () => {
   // Removed simulatePriceUpdate() - now using WebSocket real-time updates only
   // All price updates come from WebSocket 'prices' channel via setupRealtimeSubscriptions()
 
-  // Setup WebSocket listeners
+  // Setup WebSocket listeners for TradingSystemAPI Market Data
+  function setupWebSocketListeners() {
+    console.log('[MarketStore] Setting up TradingSystemAPI WebSocket...');
+    
+    // Connect to market data stream from TradingSystemAPI
+    tradingSystemWs.connectMarket((message) => {
+      if (message.type === 'market_update') {
+        const data = message.data;
+        
+        // Update price data for all symbols in the update
+        if (data.prices) {
+          Object.entries(data.prices).forEach(([symbol, priceInfo]) => {
+            const price = parseFloat(priceInfo.current_price?.replace(/[^0-9.-]/g, '')) || priceInfo.price;
+            const changePercent = parseFloat(priceInfo.price_change_24h?.replace(/[^0-9.-]/g, '')) || 0;
+            const change = (price * changePercent) / 100;
+            
+            priceData.value.set(symbol, {
+              price,
+              change,
+              changePercent,
+              timestamp: Date.now(),
+              source: priceInfo.source
+            });
+            
+            // Update instrument in list
+            const idx = instruments.value.findIndex(i => i.symbol === symbol);
+            if (idx !== -1) {
+              instruments.value[idx] = {
+                ...instruments.value[idx],
+                price,
+                change,
+                changePercent,
+                timestamp: Date.now()
+              };
+            }
+          });
+          
+          console.log('[MarketStore] Market data updated via WebSocket');
+        }
+      }
+    });
+    
+    // Connection status callback
+    tradingSystemWs.onConnectionChange = (stream, status) => {
+      console.log(`[MarketStore] ${stream} WebSocket:`, status ? 'CONNECTED ✅' : 'DISCONNECTED ❌');
+    };
+  }
+
+  // Start real-time updates
+  function startRealTimeUpdates() {
+    console.log('[MarketStore] Starting real-time market updates...');
+    setupWebSocketListeners();
+  }
+
+  // Stop real-time updates
+  function stopRealTimeUpdates() {
+    console.log('[MarketStore] Stopping real-time market updates...');
+    tradingSystemWs.disconnectAll();
+  }
+
+  // Setup WebSocket listeners (old backend)
   function setupRealtimeSubscriptions() {
     // Prices
     wsStore.subscribe('prices', (message) => {
@@ -386,7 +446,9 @@ export const useMarketStore = defineStore('market', () => {
     setCategory,
     setSort,
     fetchInstruments,
-    setupWebSocketListeners: setupRealtimeSubscriptions,
+    setupWebSocketListeners,
+    startRealTimeUpdates,
+    stopRealTimeUpdates,
     setupRealtimeSubscriptions,
   };
 });

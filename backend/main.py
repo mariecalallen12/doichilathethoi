@@ -387,6 +387,7 @@ from app.api.endpoints import (
     support,
     legal,
     chat as chat_http,
+    trading,
 )
 from app.api.endpoints import admin_trading
 from app.api.endpoints import admin_scenarios
@@ -422,6 +423,9 @@ app.include_router(financial.router, prefix="/api/financial", tags=["financial"]
 
 # Phase 1: Market data endpoints (migrated from Next.js)
 app.include_router(market.router, prefix="/api/market", tags=["market"])
+
+# Trading endpoints (TradingSystemAPI integration)
+app.include_router(trading.router, prefix="/api/trading", tags=["trading"])
 
 # Phase 1: Portfolio endpoints (migrated from Next.js)
 app.include_router(portfolio.router, prefix="/api/portfolio", tags=["portfolio"])
