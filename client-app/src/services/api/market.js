@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getApiBaseUrl } from '../../utils/runtimeConfig';
+import { marketDataApi } from './tradingSystem';
 
 const API_BASE_URL = getApiBaseUrl();
 
@@ -11,12 +12,31 @@ const api = axios.create({
 });
 
 export const marketApi = {
+  /**
+   * Get market prices - Uses TradingSystemAPI MarketData
+   * @param {Array} symbols - Array of symbols (optional, gets all if empty)
+   * @returns {Promise} Market prices data
+   */
   async getPrices(symbols = []) {
     try {
-      const response = await api.get('/market/prices', {
-        params: { symbols: symbols.join(',') },
-      });
-      return response.data;
+      // Use TradingSystemAPI MarketData endpoint
+      const response = await marketDataApi.getAllPrices();
+      
+      // Filter by symbols if requested
+      if (symbols.length > 0 && response.data?.prices) {
+        const filteredPrices = {};
+        symbols.forEach(symbol => {
+          if (response.data.prices[symbol]) {
+            filteredPrices[symbol] = response.data.prices[symbol];
+          }
+        });
+        return {
+          ...response.data,
+          prices: filteredPrices
+        };
+      }
+      
+      return response.data || response;
     } catch (error) {
       // Return empty prices instead of throwing to prevent crash
       console.warn('Market prices API error:', error.message);

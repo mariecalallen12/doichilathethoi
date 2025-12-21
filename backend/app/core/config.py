@@ -128,21 +128,13 @@ class Settings(BaseSettings):
     REDIS_SOCKET_TIMEOUT: int = 5  # Socket timeout in seconds
     REDIS_SOCKET_CONNECT_TIMEOUT: int = 5  # Connection timeout in seconds
     
-    # =============== OPEX Core Configuration ===============
-    OPEX_API_URL: str = os.getenv("OPEX_API_URL", "http://core-main-api-1:8080")  # OPEX API service URL
-    OPEX_MARKET_URL: str = os.getenv("OPEX_MARKET_URL", "http://core-main-market-1:8080")  # OPEX Market service URL
-    OPEX_API_KEY: Optional[str] = os.getenv("OPEX_API_KEY", None)  # OPEX API key for authentication
-    OPEX_API_SECRET: Optional[str] = os.getenv("OPEX_API_SECRET", None)  # OPEX API secret for X-API-SECRET auth
-    OPEX_TIMEOUT: int = int(os.getenv("OPEX_TIMEOUT", "30"))  # OPEX API request timeout in seconds
-    OPEX_WS_URL: str = os.getenv("OPEX_WS_URL", "ws://core-main-api-1:8080/ws")  # OPEX WebSocket URL
-    
     # Monitoring and health check
     HEALTH_CHECK_INTERVAL: int = 30  # Health check interval in seconds
     METRICS_ENABLED: bool = True  # Enable metrics collection
     
     # =============== Nguồn dữ liệu thị trường ===============
-    # external | opex (OPEX integration is primary, external APIs as fallback)
-    MARKET_DATA_SOURCE: str = "external"  # Changed from "simulator" - simulator removed, using OPEX + external APIs
+    # external (using external APIs)
+    MARKET_DATA_SOURCE: str = "external"  # Using external APIs
     ALLOW_EXTERNAL_FEEDS: bool = True
     
     @property

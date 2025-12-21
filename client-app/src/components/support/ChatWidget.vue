@@ -10,78 +10,59 @@
       leave-to-class="opacity-0 translate-y-4 scale-95"
     >
       <ChatWindow
-        v-if="isOpen"
-        @close="closeChat"
+        v-if="clientChatStore.isChatOpen"
+        @close="clientChatStore.setChatOpen(false)"
       />
     </Transition>
 
     <!-- Floating Button -->
     <button
-      @click="toggleChat"
+      @click="clientChatStore.setChatOpen(!clientChatStore.isChatOpen)"
       class="w-16 h-16 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:scale-110 flex items-center justify-center text-white relative"
-      :class="{ 'rotate-180': isOpen }"
+      :class="{ 'rotate-180': clientChatStore.isChatOpen }"
       aria-label="Mở chat hỗ trợ"
     >
-      <i v-if="!isOpen" class="fas fa-comments text-2xl"></i>
+      <i v-if="!clientChatStore.isChatOpen" class="fas fa-comments text-2xl"></i>
       <i v-else class="fas fa-times text-2xl"></i>
       
       <!-- Unread Badge -->
       <span
-        v-if="unreadCount > 0 && !isOpen"
+        v-if="clientChatStore.unreadCount > 0 && !clientChatStore.isChatOpen"
         class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center animate-pulse"
       >
-        {{ unreadCount > 9 ? '9+' : unreadCount }}
+        {{ clientChatStore.unreadCount > 9 ? '9+' : clientChatStore.unreadCount }}
       </span>
     </button>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { useChatStore } from '../../stores/chat';
+import { onMounted, onUnmounted } from 'vue';
+import { useClientChatStore } from '../../stores/chat'; // Use the specific client chat store
 import ChatWindow from './ChatWindow.vue';
 
-const chatStore = useChatStore();
-const isOpen = ref(false);
-
-const unreadCount = computed(() => chatStore.unreadCount);
-
-const toggleChat = () => {
-  isOpen.value = !isOpen.value;
-  if (isOpen.value) {
-    chatStore.markAsRead();
-    chatStore.connect();
-  } else {
-    // Keep connection but mark as read
-    chatStore.markAsRead();
-  }
-};
-
-const closeChat = () => {
-  isOpen.value = false;
-  chatStore.markAsRead();
-};
+const clientChatStore = useClientChatStore();
 
 // Handle keyboard shortcut (Ctrl/Cmd + /)
 const handleKeyDown = (event) => {
   if ((event.ctrlKey || event.metaKey) && event.key === '/') {
     event.preventDefault();
-    toggleChat();
+    clientChatStore.setChatOpen(!clientChatStore.isChatOpen);
   }
 };
 
 onMounted(() => {
   document.addEventListener('keydown', handleKeyDown);
-  // Connect to chat on mount
-  chatStore.connect();
+  // Fetch or create conversation and connect WebSocket on mount
+  clientChatStore.fetchOrCreateConversation();
 });
 
 onUnmounted(() => {
   document.removeEventListener('keydown', handleKeyDown);
+  clientChatStore.disconnectWebSocket(); // Disconnect when component is unmounted
 });
 </script>
 
 <style scoped>
 /* Chat widget styles */
 </style>
-

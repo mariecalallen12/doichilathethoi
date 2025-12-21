@@ -1,6 +1,6 @@
 """
 Mock Market Data Endpoint for Testing
-Provides fallback market data when OPEX is not available
+Provides fallback market data when external sources are not available
 """
 from fastapi import APIRouter, Query
 from typing import Optional

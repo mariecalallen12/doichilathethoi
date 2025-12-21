@@ -62,6 +62,15 @@ onMounted(() => {
   marketStore.setupWebSocketListeners();
   newsStore.fetchNews();
   indicatorsStore.fetchIndicators();
+  
+  // Start real-time updates
+  marketStore.startRealTimeUpdates();
+});
+
+// Clean up on unmount
+import { onUnmounted } from 'vue';
+onUnmounted(() => {
+  marketStore.stopRealTimeUpdates();
 });
 </script>
 

@@ -9,7 +9,7 @@
         <div>
           <h3 class="text-white font-bold">Hỗ Trợ Trực Tuyến</h3>
           <p class="text-white/80 text-xs">
-            <span v-if="isOnline" class="flex items-center">
+            <span v-if="clientChatStore.isConnected" class="flex items-center">
               <span class="w-2 h-2 bg-green-400 rounded-full mr-1 animate-pulse"></span>
               Đang trực tuyến
             </span>
@@ -33,10 +33,9 @@
     <div
       ref="messagesContainer"
       class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-900/50"
-      @scroll="handleScroll"
     >
       <!-- Loading State -->
-      <div v-if="chatStore.isLoading && messages.length === 0" class="flex items-center justify-center h-full">
+      <div v-if="clientChatStore.isLoading && clientChatStore.messages.length === 0" class="flex items-center justify-center h-full">
         <div class="text-center">
           <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-400 mb-2"></div>
           <p class="text-purple-200 text-sm">Đang tải tin nhắn...</p>
@@ -44,7 +43,7 @@
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="messages.length === 0" class="flex items-center justify-center h-full">
+      <div v-else-if="clientChatStore.messages.length === 0 && !clientChatStore.isLoading" class="flex items-center justify-center h-full">
         <div class="text-center">
           <i class="fas fa-comments text-4xl text-purple-400/50 mb-4"></i>
           <p class="text-gray-400">Chưa có tin nhắn nào</p>
@@ -54,49 +53,33 @@
 
       <!-- Messages -->
       <ChatMessage
-        v-for="message in messages"
+        v-for="message in clientChatStore.messages"
         :key="message.id"
         :message="message"
+        :is-mine="message.sender_type === 'user'"
       />
-    </div>
-
-    <!-- Typing Indicator -->
-    <div v-if="isTyping" class="px-4 py-2 bg-slate-800/50 border-t border-purple-500/20">
-      <div class="flex items-center space-x-2 text-gray-400 text-sm">
-        <div class="flex space-x-1">
-          <span class="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style="animation-delay: 0s"></span>
-          <span class="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
-          <span class="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></span>
-        </div>
-        <span>Đang soạn tin nhắn...</span>
-      </div>
     </div>
 
     <!-- Input -->
     <ChatInput
       @send="handleSend"
-      @typing="handleTyping"
     />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, watch, nextTick, onMounted } from 'vue';
-import { useChatStore } from '../../stores/chat';
+import { useClientChatStore } from '../../stores/chat';
 import ChatMessage from './ChatMessage.vue';
 import ChatInput from './ChatInput.vue';
 
 const emit = defineEmits(['close']);
 
-const chatStore = useChatStore();
+const clientChatStore = useClientChatStore();
 const messagesContainer = ref(null);
-const isTyping = ref(false);
-
-const messages = computed(() => chatStore.messages);
-const isOnline = computed(() => chatStore.isConnected);
 
 // Auto-scroll to bottom when new messages arrive
-watch(messages, async () => {
+watch(() => clientChatStore.messages, async () => {
   await nextTick();
   scrollToBottom();
 }, { deep: true });
@@ -107,28 +90,17 @@ const scrollToBottom = () => {
   }
 };
 
-const handleScroll = () => {
-  // Load more messages when scrolling to top
-  if (messagesContainer.value && messagesContainer.value.scrollTop === 0) {
-    chatStore.loadMoreMessages();
-  }
-};
-
-const handleSend = async (content, files) => {
-  await chatStore.sendMessage(content, files);
+const handleSend = async (content) => {
+  await clientChatStore.sendMessage(content);
   await nextTick();
   scrollToBottom();
 };
 
-const handleTyping = (typing) => {
-  isTyping.value = typing;
-  chatStore.sendTypingIndicator(typing);
-};
-
 onMounted(() => {
-  chatStore.loadMessages();
-  scrollToBottom();
+  clientChatStore.setChatOpen(true); // Mark chat as open
+  scrollToBottom(); // Scroll to bottom initially
 });
+
 </script>
 
 <style scoped>

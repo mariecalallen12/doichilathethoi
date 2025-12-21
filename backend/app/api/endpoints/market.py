@@ -1,6 +1,7 @@
 """
 Market data endpoints
-Implements real-time market data functionality from Next.js source code
+Implements real-time market data functionality with customization support
+Enhanced with Twelve Data + Self-calculated 24h change
 """
 from typing import List, Dict, Any, Optional
 from datetime import datetime
@@ -22,6 +23,8 @@ from app.db.session import get_db
 from app.models.market import MarketDataHistory, MarketPrice as MarketPriceModel, MarketAnalysis
 from app.models.user import User
 from app.services.market_generator import generate_candles
+from app.services.customization_engine import customization_engine
+from app.services.market_data_enhanced import get_enhanced_aggregator
 from app.core.config import settings
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
@@ -307,71 +310,71 @@ class MarketDataService:
         return trades
 
 
-# Simulator functions removed - using OPEX integration and real market data instead
-
 @router.get("/prices", response_model=MarketPricesResponse)
 async def get_market_prices(
     symbol: Optional[str] = Query(None, description="Single symbol to fetch"),
-    symbols: Optional[str] = Query(None, description="Comma-separated symbols")
+    symbols: Optional[str] = Query(None, description="Comma-separated symbols"),
+    db: Session = Depends(get_db)
 ):
     """
-    Get real-time market prices for specified symbols
-    Public endpoint - no authentication required
+    Get real-time market prices with REAL 24h change
+    
+    Data sources:
+    - Crypto: Binance (100% real - price + 24h change + volume)
+    - Forex: Twelve Data API (primary) → Self-calculated (fallback)
+    - Metals: Self-calculated from hourly stored data
+    
+    Supports customization via X-Session-Id header
     """
     try:
-        # Default trading pairs
-        default_symbols = [
-            'BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'ADAUSDT', 'DOTUSDT', 
-            'LINKUSDT', 'LTCUSDT', 'XRPUSDT', 'BCHUSDT',
-            'EURUSD', 'GBPUSD', 'USDJPY'
-        ]
+        # Get enhanced aggregator with database session
+        aggregator = get_enhanced_aggregator(db)
         
-        # Determine symbols to fetch
-        symbols_to_fetch = []
+        # Fetch data using enhanced aggregator
         if symbol:
-            symbols_to_fetch = [symbol.upper()]
+            # Single symbol
+            raw_data = await aggregator.get_price(symbol.upper())
+            if raw_data:
+                prices_data = {symbol.upper(): raw_data}
+            else:
+                prices_data = {}
         elif symbols:
-            symbols_to_fetch = [s.strip().upper() for s in symbols.split(',')]
+            # Multiple symbols
+            symbol_list = [s.strip().upper() for s in symbols.split(',')]
+            prices_data = {}
+            for sym in symbol_list:
+                data = await aggregator.get_price(sym)
+                if data:
+                    prices_data[sym] = data
         else:
-            symbols_to_fetch = default_symbols
+            # All available prices
+            prices_data = await aggregator.get_all_prices()
         
-        # Separate symbols by type
-        crypto_symbols = [s for s in symbols_to_fetch if 'USDT' in s or 'USD' in s]
-        forex_symbols = [s for s in symbols_to_fetch if 'USDT' not in s and 'USD' not in s]
+        # Apply customizations to each symbol
+        for sym, data in prices_data.items():
+            if data and "price" in data:
+                # Apply price modification
+                data["price"] = customization_engine.apply_price_modification(
+                    sym, data["price"]
+                )
+                # Apply change modification
+                if "change_24h" in data:
+                    data["change_24h"] = customization_engine.apply_change_modification(
+                        sym, data["change_24h"]
+                    )
+                # Apply volume customization
+                if "volume" in data:
+                    data["volume"] = customization_engine.apply_volume_customization(
+                        sym, data["volume"]
+                    )
         
-        prices_data = {}
-        
-        # Fetch crypto prices
-        if crypto_symbols:
-            async with MarketDataService() as service:
-                crypto_prices = await service.get_crypto_prices(crypto_symbols)
-                prices_data.update(crypto_prices)
-        
-        # Fetch forex prices
-        if forex_symbols:
-            async with MarketDataService() as service:
-                forex_prices = await service.get_forex_prices(forex_symbols)
-                prices_data.update(forex_prices)
-        
-        # Add fallback data for missing symbols
-        for sym in symbols_to_fetch:
-            if sym not in prices_data:
-                async with MarketDataService() as service:
-                    prices_data[sym] = service.generate_fallback_data(sym)
-        
-        # Log data source usage
-        print(f"Market data fetched for {symbols_to_fetch.length if hasattr(symbols_to_fetch, 'length') else len(symbols_to_fetch)} symbols:", {
-            'crypto': len(crypto_symbols),
-            'forex': len(forex_symbols),
-            'total': len(symbols_to_fetch),
-            'timestamp': datetime.now().isoformat()
-        })
+        logging.info(f"Market data fetched (enhanced): {len(prices_data)} symbols")
         
         return MarketPricesResponse(
             prices=prices_data,
             timestamp=datetime.now(),
-            symbols=symbols_to_fetch,
-            data_source="real-time"
+            symbols=list(prices_data.keys()),
+            data_source="enhanced+customized"
         )
         
     except Exception as e:
@@ -380,8 +383,6 @@ async def get_market_prices(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to fetch market data"
         )
-
-# Orderbook endpoint removed - handled by opex_market router at /api/market/orderbook/{symbol}
 
 @router.get("/trade-history/{symbol}", response_model=TradeHistoryResponse)
 async def get_trade_history(

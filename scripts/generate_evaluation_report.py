@@ -93,27 +93,21 @@ def generate_report():
         f.write("\n---\n\n")
         
         # Trading Integration
-        f.write("## 3. Kiểm Tra Tích Hợp Trading với core-main\n\n")
-        f.write("### 3.1 Kết Nối OPEX API\n\n")
+        f.write("## 3. Kiểm Tra Tích Hợp Trading\n\n")
+        f.write("### 3.1 Trading Features\n\n")
         f.write("**Cấu hình:**\n")
-        f.write("- OPEX_API_URL được cấu hình trong `backend/app/core/config.py`\n")
-        f.write("- OPEX client service: `backend/app/services/opex_client.py`\n")
+        f.write("- Trading configuration in `backend/app/core/config.py`\n")
         f.write("- Trading endpoints: `/api/trading/*`\n")
-        f.write("- Market endpoints: `/api/market/*` (OPEX)\n\n")
+        f.write("- Market endpoints: `/api/market/*`\n\n")
         
         f.write("**Để kiểm tra chi tiết, chạy:**\n")
         f.write("```bash\n")
-        f.write("bash scripts/verify_trading_integration.sh\n")
         f.write("```\n\n")
         
         f.write("### 3.2 Real-time Data\n\n")
         f.write("**WebSocket:**\n")
-        f.write("- Client WebSocket: `client-app/src/services/opex_websocket.js`\n")
-        f.write("- Backend WebSocket: `backend/app/api/websocket_opex.py`\n")
-        f.write("- Path: `/ws/opex`\n\n")
         
         f.write("**Trading Dashboard:**\n")
-        f.write("- Component: `client-app/src/views/OpexTradingDashboard.vue`\n")
         f.write("- Components: MarketWatch, OrderBook, TradingChart, PositionList, OrderHistory\n\n")
         
         f.write("### 3.3 Trading Operations\n\n")
@@ -132,7 +126,6 @@ def generate_report():
         f.write("**Routes chính:**\n")
         f.write("- Dashboard\n")
         f.write("- UserManagement\n")
-        f.write("- OpexTradingManagement\n")
         f.write("- FinancialManagement\n")
         f.write("- AnalyticsReports\n")
         f.write("- SystemSettings\n")
@@ -190,7 +183,6 @@ def generate_report():
         f.write("- [ ] Tất cả endpoints hoạt động đúng\n\n")
         
         f.write("### 5.2 Trading Integration\n\n")
-        f.write("- [ ] OPEX API kết nối được\n")
         f.write("- [ ] WebSocket real-time hoạt động\n")
         f.write("- [ ] Trading dashboard hiển thị dữ liệu\n")
         f.write("- [ ] Trading operations hoạt động (place order, cancel, etc.)\n\n")
@@ -216,7 +208,6 @@ def generate_report():
         # Recommendations
         f.write("## 6. Đề Xuất (Recommendations)\n\n")
         f.write("1. **Chạy test tự động:** `python3 scripts/test_all_apis.py`\n")
-        f.write("2. **Kiểm tra OPEX connection:** `bash scripts/verify_trading_integration.sh`\n")
         f.write("3. **Kiểm tra Admin-app:** `bash scripts/verify_admin_app.sh`\n")
         f.write("4. **Test trading operations:** Tạo test user và thực hiện các trading operations\n")
         f.write("5. **Test Admin-app functionality:** Đăng nhập admin và test từng view\n\n")

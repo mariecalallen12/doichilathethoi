@@ -1,0 +1,158 @@
+# Trading System API Configuration
+# Configuration file for dual-stream architecture
+
+api:
+  title: "Trading System API"
+  version: "1.0.0"
+  description: "Dual-stream trading system with market data and trading features"
+  host: "0.0.0.0"
+  port: 8000
+
+data_sources:
+  binance:
+    base_url: "https://data-api.binance.vision"
+    rate_limit: 0.1  # seconds
+    free_tier: true
+    no_auth_required: true
+    coverage: "1000+ crypto pairs"
+    
+  forex:
+    base_url: "https://api.exchangerate-api.com/v4/latest"
+    rate_limit: 1.0  # seconds
+    free_tier: true
+    monthly_limit: 1500
+    coverage: "Major currency pairs"
+    
+  metals:
+    base_url: "https://api.metals-api.com/v1"
+    rate_limit: 10.0  # seconds
+    free_tier: true
+    monthly_limit: 100
+    coverage: "Gold, Silver, Platinum"
+
+cache:
+  ttl: 30  # seconds
+  enabled: true
+  max_size: 1000
+
+trading:
+  signal_thresholds:
+    weak: 0.5      # 0.5% change
+    moderate: 1.0  # 1% change
+    strong: 2.0    # 2% change
+    extreme: 5.0   # 5% change
+    
+  confidence_factors:
+    base: 50.0           # Base confidence
+    high_volume: 20.0    # High volume boost
+    strong_move: 15.0    # Strong move boost
+    high_price: 10.0     # High price boost
+    
+  timeframes:
+    - "1M"
+    - "5M"
+    - "15M"
+    - "1H"
+    - "4H"
+    - "1D"
+
+binary_format:
+  bullish_code: "1"
+  bearish_code: "0"
+  meaning:
+    "1": "BULLISH - UP/BUY signal"
+    "0": "BEARISH - DOWN/SELL signal"
+
+asset_classes:
+  - "CRYPTO"
+  - "FOREX" 
+  - "METALS"
+  - "COMMODITIES"
+
+supported_symbols:
+  crypto:
+    - "BTC"
+    - "ETH"
+    - "BNB"
+    - "SOL"
+    - "XRP"
+    - "ADA"
+    - "DOT"
+    - "AVAX"
+    - "LINK"
+    - "DOGE"
+    - "MATIC"
+    - "UNI"
+    - "LTC"
+    - "ATOM"
+    
+  forex:
+    - "EUR/USD"
+    - "GBP/USD"
+    - "USD/JPY"
+    - "USD/CHF"
+    - "AUD/USD"
+    - "USD/CAD"
+    - "NZD/USD"
+    
+  metals:
+    - "XAU/USD"
+    - "XAG/USD"
+
+architecture:
+  stream_1:
+    name: "Market Data"
+    path: "/market"
+    description: "Real-time market information display"
+    endpoints:
+      - "/prices"
+      - "/prices/{symbol}"
+      - "/overview"
+      - "/summary"
+      - "/supported-symbols"
+      
+  stream_2:
+    name: "Trading Features"
+    path: "/trading"
+    description: "Binary signals and trading recommendations"
+    endpoints:
+      - "/signals"
+      - "/binary"
+      - "/binary/{symbol}"
+      - "/analysis"
+      - "/recommendations"
+      - "/performance"
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  handlers:
+    - "console"
+    - "file"
+
+security:
+  cors:
+    enabled: true
+    allow_origins: ["*"]
+    allow_credentials: true
+    allow_methods: ["*"]
+    allow_headers: ["*"]
+    
+  rate_limiting:
+    enabled: false  # For free tier
+    
+  authentication:
+    required: false  # Public APIs only
+
+performance:
+  response_time_target: 2.0  # seconds
+  concurrent_requests: 10
+  timeout: 10  # seconds
+  
+features:
+  real_time_updates: true
+  binary_signals: true
+  multi_asset_support: true
+  free_tier_optimized: true
+  caching: true
+  error_handling: true

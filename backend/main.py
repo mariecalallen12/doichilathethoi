@@ -66,6 +66,27 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.error(f"❌ Trade broadcaster initialization error: {e}")
 
+    # Initialize market data collector
+    try:
+        from app.tasks.market_data_collector import start_collector, collector
+        import asyncio
+        
+        # Start background task for market data collection
+        collector_task = asyncio.create_task(start_collector(interval_hours=1))
+        app.state.market_data_collector = collector
+        app.state.collector_task = collector_task
+        logger.info("✅ Market data collector started (interval: 1 hour)")
+    except Exception as e:
+        logger.error(f"❌ Market data collector initialization error: {e}")
+    
+    # Initialize automated scheduler
+    try:
+        from app.tasks.scheduler import start_scheduler
+        start_scheduler()
+        logger.info("✅ Automated scheduler started")
+    except Exception as e:
+        logger.error(f"❌ Scheduler initialization error: {e}")
+
     # Setup authentication
     # Load configuration
     
@@ -91,6 +112,22 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.error(f"Error stopping trading data simulator: {e}")
     
+    # Stop market data collector
+    try:
+        from app.tasks.market_data_collector import stop_collector
+        collector_task = getattr(app.state, "collector_task", None)
+        
+        if collector_task and not collector_task.done():
+            stop_collector()
+            collector_task.cancel()
+            try:
+                await collector_task
+            except asyncio.CancelledError:
+                pass
+            logger.info("✅ Market data collector stopped")
+    except Exception as e:
+        logger.error(f"Error stopping market data collector: {e}")
+    
     # Stop trade broadcaster
     try:
         from app.services.trade_broadcaster import get_trade_broadcaster
@@ -99,6 +136,14 @@ async def lifespan(app: FastAPI):
         logger.info("Trade broadcaster stopped")
     except Exception as e:
         logger.error(f"Error stopping trade broadcaster: {e}")
+    
+    # Stop scheduler
+    try:
+        from app.tasks.scheduler import stop_scheduler
+        stop_scheduler()
+        logger.info("✅ Automated scheduler stopped")
+    except Exception as e:
+        logger.error(f"Error stopping scheduler: {e}")
 
 # Create FastAPI application
 app = FastAPI(
@@ -214,6 +259,20 @@ async def add_security_headers(request, call_next):
     response.headers["Content-Security-Policy"] = "default-src 'self'"
     return response
 
+# Session customization middleware
+@app.middleware("http")
+async def session_customization_middleware(request, call_next):
+    """Handle X-Session-Id header for customized data"""
+    from app.services.customization_engine import customization_engine
+    
+    session_id = request.headers.get("X-Session-Id")
+    if session_id:
+        customization_engine.set_active_session(session_id)
+        logger.debug(f"Session customization activated: {session_id}")
+    
+    response = await call_next(request)
+    return response
+
 # GZip Middleware
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 
@@ -323,13 +382,14 @@ from app.api.endpoints import (
     analysis,
     support,
     legal,
+    chat as chat_http,
 )
 from app.api.endpoints import admin_trading
 from app.api.endpoints import admin_scenarios
 from app.api.endpoints import admin_simulation
-from app.api.endpoints import opex_trading
-from app.api.endpoints import opex_market
+from app.api.endpoints import admin_customizations
 from app.api.endpoints import market_mock
+from app.api.endpoints import chat_ws
 from app.api.websocket import websocket_endpoint
 
 # Phase 1: Authentication endpoints (migrated from Next.js)
@@ -341,7 +401,7 @@ app.include_router(client.router, prefix="/api/client", tags=["client"])
 # Phase 1: Admin endpoints (migrated from Next.js)
 app.include_router(admin.router, prefix="/api/admin", tags=["admin"])
 
-# Admin Trading endpoints (OPEX)
+# Admin Trading endpoints
 app.include_router(admin_trading.router, prefix="/api/admin", tags=["admin-trading"])
 
 # Admin Scenarios endpoints
@@ -350,17 +410,14 @@ app.include_router(admin_scenarios.router, prefix="/api/admin", tags=["admin-sce
 # Admin Simulation Control endpoints
 app.include_router(admin_simulation.router, prefix="/api/admin", tags=["admin-simulation"])
 
+# Admin Customization endpoints
+app.include_router(admin_customizations.router, prefix="/api/admin", tags=["admin-customizations"])
+
 # Phase 1: Financial endpoints (migrated from Next.js)
 app.include_router(financial.router, prefix="/api/financial", tags=["financial"])
 
-# OPEX Market Data endpoints (register first to handle orderbook, trades, ticker)
-app.include_router(opex_market.router, prefix="/api/market", tags=["market"])
-
-# Phase 1: Market data endpoints (migrated from Next.js) - non-conflicting routes only
+# Phase 1: Market data endpoints (migrated from Next.js)
 app.include_router(market.router, prefix="/api/market", tags=["market"])
-
-# OPEX Trading endpoints
-app.include_router(opex_trading.router, prefix="/api/trading", tags=["trading"])
 
 # Phase 1: Portfolio endpoints (migrated from Next.js)
 app.include_router(portfolio.router, prefix="/api/portfolio", tags=["portfolio"])
@@ -400,6 +457,8 @@ app.include_router(analysis.router, prefix="/api/analysis", tags=["analysis"])
 
 # Support endpoints
 app.include_router(support.router, prefix="/api/support", tags=["support"])
+app.include_router(chat_http.router, prefix="/api", tags=["Chat (HTTP)"])
+
 
 # Legal endpoints
 app.include_router(legal.router, prefix="/api/legal", tags=["legal"])
@@ -408,12 +467,15 @@ app.include_router(legal.router, prefix="/api/legal", tags=["legal"])
 from app.api.endpoints import simulator
 app.include_router(simulator.router, prefix="/api/sim", tags=["simulator"])
 
-# WebSocket endpoint for real-time updates
-app.websocket("/ws")(websocket_endpoint)
+# Monitoring endpoints
+from app.api import monitoring_router, websocket_api_router, scheduler_router
+app.include_router(monitoring_router, prefix="/api", tags=["monitoring"])
+app.include_router(websocket_api_router, prefix="/api", tags=["websocket-api"])
+app.include_router(scheduler_router, prefix="/api", tags=["scheduler"])
 
-# OPEX WebSocket endpoint
-from app.api.websocket_opex import router as opex_websocket_router
-app.include_router(opex_websocket_router)
+# WebSocket endpoints
+app.include_router(chat_ws.router, tags=["Chat (WebSocket)"])
+app.websocket("/ws")(websocket_endpoint)
 
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request, exc):

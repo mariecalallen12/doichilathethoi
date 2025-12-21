@@ -8,6 +8,7 @@ import ParticleCanvas from "../components/ParticleCanvas.vue";
 import LoginModal from "../components/shared/LoginModal.vue";
 import AOS from "aos";
 import { useAccountStore } from "../stores/account";
+import ChatWidget from "../components/support/ChatWidget.vue"; // Import ChatWidget
 
 const { t, locale } = useI18n();
 const router = useRouter();
@@ -279,11 +280,7 @@ onBeforeUnmount(() => {
                 <span class="text-sm font-semibold text-white">{{ formattedAvailable }} USD</span>
               </div>
             </router-link>
-            <button class="hidden md:flex items-center relative text-purple-100 hover:text-white cursor-pointer group">
-              <i class="fas fa-headset mr-2 text-purple-400 group-hover:text-white transition-colors"></i>
-              <span class="relative">{{ t("cta.support") }}</span>
-              <div class="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full animate-pulse"></div>
-            </button>
+            <ChatWidget />
             <select
               class="bg-slate-800/70 text-sm px-3 py-2 rounded-lg border border-purple-400/30 text-white focus:outline-none"
               :value="currentLang"

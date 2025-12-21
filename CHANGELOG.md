@@ -5,46 +5,19 @@ Tất cả các thay đổi đáng chú ý trong dự án ForEx Trading Platform
 ## [2.1.0] - 2025-12-20
 
 ### ✅ Production Status
-- **Core-Main Engine**: 8/9 services healthy (Vault needs attention)
 - **Backend API**: 30+ endpoints running on port 8000
 - **Frontend Apps**: Built and ready (Client-app 3002, Admin-app 3001)
-- **Database**: TimescaleDB + 5 PostgreSQL instances running
-- **Message Queue**: 3 Kafka brokers + Zookeeper operational
-- **Cache Layer**: 3 Redis instances active
+- **Database**: TimescaleDB + PostgreSQL running
+- **Cache Layer**: Redis active
 
 ### Current System State
 
-#### Running Microservices (Core-Main)
-1. **matching-engine** - Order matching với price-time priority (✅ Healthy)
-2. **market** - Market data service (✅ Healthy)
-3. **auth** - Authentication service (✅ Healthy)
-4. **api** - API gateway (✅ Healthy)
-5. **wallet** - Wallet management (✅ Healthy)
-6. **accountant** - Financial accounting (✅ Healthy)
-7. **bc-gateway** - Blockchain gateway (✅ Healthy)
-8. **eventlog** - Event logging (✅ Healthy)
-9. **vault** - Secret management (⚠️ Unhealthy - needs fix)
-
 #### Infrastructure Services
-- **Kafka Cluster**: 3 brokers (kafka-1, kafka-2, kafka-3) - ✅ Running
-- **Zookeeper**: Coordination service - ✅ Running  
-- **PostgreSQL Databases**: 
-  - postgres-auth (✅)
-  - postgres-api (✅)
-  - postgres-wallet (✅)
-  - postgres-accountant (✅)
-  - postgres-market (✅)
-  - postgres-eventlog (✅)
-  - postgres-bc-gateway (✅)
-- **Redis Instances**:
-  - redis-cache (✅)
-  - redis-duo (✅)
-  - redis (✅)
-- **Consul**: Service discovery (✅)
+- **PostgreSQL Databases**: ✅ Running
+- **Redis Instances**: ✅ Running  
 - **Mailpit**: Email testing (✅)
 
-### Outstanding Items (25% Remaining)
-- [ ] Fix Vault service health
+### Outstanding Items
 - [ ] Create unified docker-compose for full stack
 - [ ] Setup Nginx reverse proxy
 - [ ] Configure SSL/TLS

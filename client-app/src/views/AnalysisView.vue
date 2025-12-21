@@ -35,6 +35,15 @@ onMounted(() => {
   analysisStore.fetchFundamentalAnalysis();
   analysisStore.fetchSentiment();
   analysisStore.fetchSignals();
+  
+  // Start real-time updates
+  analysisStore.startRealTimeUpdates();
+});
+
+// Clean up on unmount
+import { onUnmounted } from 'vue';
+onUnmounted(() => {
+  analysisStore.stopRealTimeUpdates();
 });
 </script>
 

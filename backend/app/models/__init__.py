@@ -18,7 +18,10 @@ from .diagnostics import TradingDiagnosticReport
 from .alert_rules import AlertRule, AlertHistory
 from .notifications import Notification, NotificationPreference
 from .education import EducationVideo, EducationEbook, EconomicCalendar, MarketReport, EducationProgress
-from .support import SupportArticle, SupportCategory, SupportContact, SupportOffice, SupportChannel, FAQ
+from .support import (
+    SupportArticle, SupportCategory, SupportContact, SupportOffice, 
+    SupportChannel, FAQ, Conversation, ChatMessage
+)
 from .legal import TermsOfService, PrivacyPolicy, RiskWarning, Complaint
 
 __all__ = [
@@ -94,10 +97,13 @@ __all__ = [
     "SupportOffice",
     "SupportChannel",
     "FAQ",
-    
+    "Conversation",
+    "ChatMessage",
+
     # Legal
     "TermsOfService",
     "PrivacyPolicy",
     "RiskWarning",
     "Complaint"
 ]
+

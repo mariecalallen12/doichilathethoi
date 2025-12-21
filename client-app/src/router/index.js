@@ -64,11 +64,6 @@ const routes = [
     component: MarketView,
   },
   {
-    path: '/trading',
-    name: 'OpexTradingDashboard',
-    component: () => import('../views/OpexTradingDashboard.vue'),
-  },
-  {
     path: '/education',
     name: 'Education',
     component: EducationView,

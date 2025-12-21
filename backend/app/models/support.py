@@ -2,12 +2,12 @@
 Support Models
 Digital Utopia Platform
 
-Models cho Support module: Articles, Categories, Contact, Offices, Channels, FAQ
+Models cho Support module: Articles, Categories, Contact, Offices, Channels, FAQ, and Chat
 """
 
 from sqlalchemy import (
     Column, Integer, String, Boolean, DateTime, Text, 
-    ForeignKey, Index
+    ForeignKey, Index, Enum
 )
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import JSONB
@@ -15,6 +15,52 @@ from datetime import datetime
 
 from .base import Base, TimestampMixin
 
+# New models for Chat Feature
+
+class Conversation(Base, TimestampMixin):
+    """
+    Bảng conversations - Phiên trò chuyện giữa người dùng và admin
+    """
+    __tablename__ = "conversations"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    admin_id = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True, index=True)
+    
+    status = Column(String(50), default="open", nullable=False, index=True) # open, closed, pending
+    
+    # Relationships
+    user = relationship("User", foreign_keys=[user_id], backref="conversations")
+    admin = relationship("User", foreign_keys=[admin_id], backref="admin_conversations")
+    messages = relationship("ChatMessage", back_populates="conversation", cascade="all, delete-orphan")
+
+    def __repr__(self):
+        return f"<Conversation(id={self.id}, user_id={self.user_id}, status='{self.status}')>"
+
+
+class ChatMessage(Base, TimestampMixin):
+    """
+    Bảng chat_messages - Lưu trữ các tin nhắn trong một phiên trò chuyện
+    """
+    __tablename__ = "chat_messages"
+
+    id = Column(Integer, primary_key=True, index=True)
+    conversation_id = Column(Integer, ForeignKey("conversations.id", ondelete="CASCADE"), nullable=False, index=True)
+    sender_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    
+    sender_type = Column(String(50), nullable=False, index=True) # 'user' or 'admin'
+    content = Column(Text, nullable=False)
+    read = Column(Boolean, default=False)
+    
+    # Relationships
+    conversation = relationship("Conversation", back_populates="messages")
+    sender = relationship("User", back_populates="sent_messages", foreign_keys=[sender_id])
+
+    def __repr__(self):
+        return f"<ChatMessage(id={self.id}, conversation_id={self.conversation_id}, sender_type='{self.sender_type}')>"
+
+
+# Existing models below
 
 class SupportCategory(Base, TimestampMixin):
     """

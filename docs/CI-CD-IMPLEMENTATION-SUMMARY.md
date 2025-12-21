@@ -16,12 +16,12 @@
 ### ✅ 1. CI - Full Stack Build & Test
 - **File:** `.github/workflows/ci-full-stack.yml`
 - **Status:** Active
-- **Purpose:** Build và test tất cả 4 services (backend, core-main, client-app, admin-app)
+- **Purpose:** Build and test all 3 services (backend, client-app, admin-app)
 - **Features:**
-  - Parallel testing cho tất cả services
+  - Parallel testing for all services
   - Docker build validation
-  - Build caching với GitHub Actions cache
-  - Fail-fast disabled để xem tất cả lỗi
+  - Build caching with GitHub Actions cache
+  - Fail-fast disabled to see all errors
 
 ### ✅ 2. Integration Tests
 - **File:** `.github/workflows/integration-tests.yml`
@@ -210,7 +210,6 @@ PRODUCTION_WS_URL - WebSocket URL
 | Service | Build | Test | Lint | Security | Docker | Deploy |
 |---------|-------|------|------|----------|--------|--------|
 | Backend | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Core-Main | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Client-App | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Admin-App | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Database | - | ✅ | - | - | - | ✅ |

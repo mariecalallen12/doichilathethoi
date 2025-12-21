@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getApiBaseUrl } from '../../utils/runtimeConfig';
+import { tradingFeaturesApi } from './tradingSystem';
 
 const API_BASE_URL = getApiBaseUrl();
 
@@ -46,8 +47,9 @@ export const analysisApi = {
 
   async getSentiment() {
     try {
-      const response = await api.get('/analysis/sentiment');
-      return response.data;
+      // Use TradingSystemAPI binary-array as sentiment indicator
+      const response = await tradingFeaturesApi.getBinaryArray();
+      return response.data || response;
     } catch (error) {
       if (error.response) {
         throw new Error(error.response.data.detail || 'Failed to fetch sentiment');
@@ -58,11 +60,60 @@ export const analysisApi = {
 
   async getSignals(params = {}) {
     try {
-      const response = await api.get('/analysis/signals', { params });
-      return response.data;
+      // Call TradingSystemAPI signals endpoint
+      const response = await tradingFeaturesApi.getAllSignals();
+      return response.data || response;
     } catch (error) {
       if (error.response) {
         throw new Error(error.response.data.detail || 'Failed to fetch signals');
+      }
+      throw error;
+    }
+  },
+
+  async getSignalForSymbol(symbol) {
+    try {
+      const response = await tradingFeaturesApi.getSignalForSymbol(symbol);
+      return response.data || response;
+    } catch (error) {
+      if (error.response) {
+        throw new Error(error.response.data.detail || 'Failed to fetch signal');
+      }
+      throw error;
+    }
+  },
+
+  async getBinaryArray() {
+    try {
+      const response = await tradingFeaturesApi.getBinaryArray();
+      return response.data || response;
+    } catch (error) {
+      if (error.response) {
+        throw new Error(error.response.data.detail || 'Failed to fetch binary array');
+      }
+      throw error;
+    }
+  },
+
+  async getMarketAnalysis() {
+    try {
+      const response = await tradingFeaturesApi.getMarketAnalysis();
+      return response.data || response;
+    } catch (error) {
+      if (error.response) {
+        throw new Error(error.response.data.detail || 'Failed to fetch market analysis');
+      }
+      throw error;
+    }
+  },
+
+  async getRecommendations(symbols = []) {
+    try {
+      const response = await tradingFeaturesApi.getRecommendations();
+      return response.data || response;
+    } catch (error) {
+      if (error.response) {
+        throw new Error(error.response.data.detail || 'Failed to fetch recommendations');
       }
       throw error;
     }

@@ -77,11 +77,6 @@ jobs:
           npm audit --audit-level=moderate || true
         continue-on-error: true
       
-      - name: Audit Core-Main Dependencies
-        working-directory: ./core-main
-        run: |
-          npm audit --audit-level=moderate || true
-        continue-on-error: true
       
       - name: Audit Client-App Dependencies
         working-directory: ./client-app
@@ -95,12 +90,8 @@ jobs:
           npm audit --audit-level=moderate || true
         continue-on-error: true
       
-      - name: Check for outdated dependencies
-        run: |
           echo "=== Backend ==="
           cd backend && npm outdated || true
-          echo "=== Core-Main ==="
-          cd ../core-main && npm outdated || true
           echo "=== Client-App ==="
           cd ../client-app && npm outdated || true
           echo "=== Admin-App ==="
@@ -121,19 +112,6 @@ jobs:
           failure-threshold: warning
         continue-on-error: true
       
-      - name: Lint Core-Main Dockerfile
-        uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: core-main/Dockerfile
-          failure-threshold: warning
-        continue-on-error: true
-      
-      - name: Lint Client-App Dockerfile
-        uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: client-app/Dockerfile
-          failure-threshold: warning
-        continue-on-error: true
       
       - name: Lint Admin-App Dockerfile
         uses: hadolint/hadolint-action@v3.1.0

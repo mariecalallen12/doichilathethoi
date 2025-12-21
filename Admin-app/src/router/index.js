@@ -10,13 +10,15 @@ const FinancialManagement = () => import("../views/FinancialManagement.vue");
 const AnalyticsReports = () => import("../views/AnalyticsReports.vue");
 const SystemSettings = () => import("../views/SystemSettings.vue");
 const AdminTradingControls = () => import("../views/AdminTradingControls.vue");
-const OpexTradingManagement = () => import("../views/OpexTradingManagement.vue");
 const DiagnosticsManagement = () => import("../views/DiagnosticsManagement.vue");
 const AlertManagement = () => import("../views/AlertManagement.vue");
 const ScenarioBuilder = () => import("../views/ScenarioBuilder.vue");
 const MarketPreview = () => import("../views/MarketPreview.vue");
+const MarketRealityControl = () => import("../views/MarketRealityControl.vue");
 const EducationalHub = () => import("../components/educational/EducationalHub.vue");
 const AuditLogViewer = () => import("../views/AuditLogViewer.vue");
+const MicroservicesMonitor = () => import("../views/MicroservicesMonitor.vue");
+const ChatView = () => import("../views/ChatView.vue");
 
 const routes = [
   {
@@ -57,14 +59,14 @@ const routes = [
     ],
   },
   {
-    path: "/trading",
+    path: "/chat",
     component: Layout,
-    meta: { requiresAuth: true, permission: "trade:read" },
+    meta: { requiresAuth: true, permission: "support:chat" },
     children: [
       {
         path: "",
-        name: "OpexTradingManagement",
-        component: OpexTradingManagement,
+        name: "Chat",
+        component: ChatView,
       },
     ],
   },
@@ -153,6 +155,18 @@ const routes = [
     ],
   },
   {
+    path: "/market-reality-control",
+    component: Layout,
+    meta: { requiresAuth: true, permission: "market:manipulate" },
+    children: [
+      {
+        path: "",
+        name: "MarketRealityControl",
+        component: MarketRealityControl,
+      },
+    ],
+  },
+  {
     path: "/session-manager",
     component: Layout,
     meta: { requiresAuth: true, permission: "system:read" },
@@ -172,7 +186,7 @@ const routes = [
       {
         path: "",
         name: "MonitoringHub",
-        component: ScenarioBuilder,
+        component: MicroservicesMonitor,
       },
     ],
   },

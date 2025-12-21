@@ -220,7 +220,7 @@
     },
     {
       "path": "/trading",
-      "name": "OpexTradingDashboard",
+      "name": "TradingDashboard",
       "requires_auth": false
     },
     {
@@ -334,7 +334,7 @@
     },
     {
       "path": "/trading",
-      "name": "OpexTradingManagement",
+      "name": "TradingManagement",
       "requires_auth": true,
       "permission": "trade:read"
     },

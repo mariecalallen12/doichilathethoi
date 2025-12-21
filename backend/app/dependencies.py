@@ -260,3 +260,35 @@ def rate_limit(limit: int = 60, window: int = 60):
         return None
     
     return check_rate_limit
+
+
+# =============== WebSocket Authentication ===============
+
+async def get_current_user_ws(token: str) -> dict:
+    """
+    Dependency để verify user từ WebSocket token
+    
+    Sử dụng trong WebSocket endpoints
+    """
+    # Verify token
+    payload = verify_access_token(token)
+    if not payload:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token không hợp lệ hoặc đã hết hạn"
+        )
+    
+    # Get user_id from token
+    user_id = payload.get("sub")
+    if not user_id:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token không chứa thông tin người dùng"
+        )
+    
+    # Return minimal user info for WebSocket
+    return {
+        "id": user_id,
+        "email": payload.get("email"),
+        "is_admin": payload.get("is_admin", False)
+    }

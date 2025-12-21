@@ -23,10 +23,10 @@ const menuItems = computed(() => {
       permission: 'user:read',
     },
     {
-      title: 'Quản lý giao dịch',
-      icon: 'fas fa-exchange-alt',
-      path: '/trading',
-      permission: 'trade:read',
+      title: 'Chat Hỗ trợ',
+      icon: 'ri-customer-service-2-line',
+      path: '/chat',
+      permission: 'support:chat',
     },
     {
       title: 'Quản lý tài chính',

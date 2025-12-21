@@ -29,26 +29,6 @@ scrape_configs:
     metrics_path: '/metrics'
     scrape_interval: 10s
 
-  # OPEX API
-  - job_name: 'opex-api'
-    static_configs:
-      - targets: ['opex-api:8080']
-    metrics_path: '/actuator/prometheus'
-    scrape_interval: 15s
-
-  # OPEX Market
-  - job_name: 'opex-market'
-    static_configs:
-      - targets: ['opex-market:8080']
-    metrics_path: '/actuator/prometheus'
-    scrape_interval: 15s
-
-  # OPEX Matching Engine
-  - job_name: 'opex-matching-engine'
-    static_configs:
-      - targets: ['opex-matching-engine:8080']
-    metrics_path: '/actuator/prometheus'
-    scrape_interval: 15s
 
   # PostgreSQL (via postgres_exporter if available)
   - job_name: 'postgres'

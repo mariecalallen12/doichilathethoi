@@ -1,6 +1,0 @@
-FROM eclipse-temurin:11-jre
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-COPY target/classes/opex-master-realm.json opex-master-realm.json
-ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar /app.jar"]
-HEALTHCHECK --interval=45s --start-period=30s --retries=5 CMD curl -sf 'http://localhost:8080/actuator/health' >/dev/null || exit 1

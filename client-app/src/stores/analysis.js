@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { analysisApi } from '../services/api/analysis';
+import realTimeUpdates from '../services/realTimeUpdates';
 
 export const useAnalysisStore = defineStore('analysis', () => {
   // State
@@ -195,6 +196,27 @@ export const useAnalysisStore = defineStore('analysis', () => {
     ];
   }
 
+  // Start real-time updates
+  function startRealTimeUpdates() {
+    // Start signals updates
+    realTimeUpdates.startSignalsUpdates((newSignals) => {
+      signals.value = newSignals;
+      console.log(`[Analysis Store] Real-time signals update: ${newSignals.length} signals`);
+    });
+    
+    // Start sentiment updates
+    realTimeUpdates.startSentimentUpdates((newSentiment) => {
+      sentiment.value = newSentiment;
+      console.log(`[Analysis Store] Real-time sentiment update: ${newSentiment.market_sentiment}`);
+    });
+  }
+  
+  // Stop real-time updates
+  function stopRealTimeUpdates() {
+    realTimeUpdates.stopSignalsUpdates();
+    realTimeUpdates.stopSentimentUpdates();
+  }
+
   return {
     // State
     technicalData,
@@ -217,7 +239,9 @@ export const useAnalysisStore = defineStore('analysis', () => {
     runBacktest,
     setSelectedSymbol,
     setSignalType,
-    setTimeFrame
+    setTimeFrame,
+    startRealTimeUpdates,
+    stopRealTimeUpdates
   };
 });
 

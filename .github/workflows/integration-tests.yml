@@ -36,7 +36,6 @@ jobs:
           REDIS_PORT=6379
           JWT_SECRET=test-secret-key-for-ci
           BACKEND_PORT=3000
-          CORE_MAIN_PORT=3001
           CLIENT_PORT=5173
           ADMIN_PORT=5174
           EOF
@@ -57,13 +56,12 @@ jobs:
       
       - name: Start all application services
         run: |
-          docker compose -f docker-compose.yml up -d backend core-main
+          docker compose -f docker-compose.yml up -d backend
           sleep 20
       
       - name: Check service health
         run: |
           curl -f http://localhost:3000/health || echo "Backend health check failed"
-          curl -f http://localhost:3001/health || echo "Core-main health check failed"
       
       - name: Run integration tests
         run: |
@@ -75,8 +73,6 @@ jobs:
         run: |
           echo "=== Backend Logs ==="
           docker compose -f docker-compose.yml logs backend
-          echo "=== Core-Main Logs ==="
-          docker compose -f docker-compose.yml logs core-main
           echo "=== PostgreSQL Logs ==="
           docker compose -f docker-compose.yml logs postgres
           echo "=== Redis Logs ==="

@@ -9,42 +9,22 @@ ForEx Trading Platform là một hệ thống trading hoàn chỉnh với kiến
 
 ## 📈 Completion Status
 
-### ✅ Hoàn Thành 100%
+### ✅ Hoàn Thành 90%
 
-#### 1. Core Trading Engine (core-main)
-- **Status**: ✅ Running (9/9 microservices)
-- **Services**:
-  - Matching Engine (Order matching với price-time priority)
-  - Market Service (Market data management)
-  - Auth Service (Authentication & authorization)
-  - API Gateway (External API interface)
-  - Wallet Service (Wallet management)
-  - Accountant Service (Financial accounting)
-  - BC-Gateway Service (Blockchain gateway)
-  - EventLog Service (Event logging & audit)
-  - 9th service name pending verification
-- **Infrastructure**:
-  - Kafka cluster: 3 brokers (running)
-  - Zookeeper: 1 instance (running)
-  - PostgreSQL: 5 separate databases (1 per service)
-  - Redis: 3 instances (cache, duo, main)
-  - Vault: Secret management (unhealthy - needs attention)
-  - Consul: Service discovery (running)
-
-#### 2. Backend API Services
+#### 1. Backend API Services
 - **Status**: ✅ Deployed (FastAPI)
 - **API Endpoints**: 30+ endpoints
 - **Service Modules**: 27+ services
 - **Key Features**:
-  - Trading Simulator với Brownian Motion + Jump-Diffusion
+  - Trading Simulator with Brownian Motion + Jump-Diffusion
   - WebSocket real-time streaming
   - Admin scenarios & session management
   - Diagnostic system
-  - Market mock data
+  - Market data integration
   - Portfolio management
   - Compliance & audit trails
 
-#### 3. Frontend Applications
+#### 2. Frontend Applications
 - **Client App (Vue.js 3)**: ✅ Built & Ready
   - Port: 3002
   - Features: Trading dashboard, Market viewer, Portfolio
@@ -125,17 +105,16 @@ ForEx Trading Platform là một hệ thống trading hoàn chỉnh với kiến
   - Diagnostic API endpoints
   - Console commands
 
-## 🚧 Cần Hoàn Thiện (25%)
+## 🚧 Cần Hoàn Thiện (10%)
 
 ### 1. Production Deployment Optimization
-- [ ] Docker Compose cho main project (hiện chỉ có core-main)
+- [ ] Docker Compose optimization
 - [ ] Nginx reverse proxy configuration
 - [ ] SSL/TLS certificates setup
 - [ ] Environment variables consolidation
 - [ ] Deployment scripts automation
 
 ### 2. Integration Testing
-- [ ] Backend ↔ Core-main integration tests
 - [ ] End-to-end trading flow tests
 - [ ] WebSocket stress testing
 - [ ] Load testing (1000+ concurrent users)
@@ -149,7 +128,6 @@ ForEx Trading Platform là một hệ thống trading hoàn chỉnh với kiến
 - [ ] Add troubleshooting guides
 
 ### 4. Security Hardening
-- [ ] Fix Vault service (currently unhealthy)
 - [ ] Implement API rate limiting
 - [ ] Setup firewall rules
 - [ ] Security audit & penetration testing
@@ -179,12 +157,10 @@ ForEx Trading Platform là một hệ thống trading hoàn chỉnh với kiến
 ## 📊 Metrics & Statistics
 
 ### Service Availability
-- **Core-Main Services**: 8/9 healthy (Vault unhealthy)
 - **Backend API**: Running (port 8000)
 - **Frontend Apps**: Built (not deployed in containers)
-- **Databases**: 5/5 running
-- **Message Queue**: 3/3 Kafka brokers active
-- **Cache Layer**: 3/3 Redis instances active
+- **Databases**: PostgreSQL + TimescaleDB running
+- **Cache Layer**: Redis active
 
 ### Code Statistics
 - **Backend API Endpoints**: 30+
@@ -225,11 +201,10 @@ ForEx Trading Platform là một hệ thống trading hoàn chỉnh với kiến
 
 ## 📝 Notes
 
-- **Infrastructure**: Core-main microservices đang chạy ổn định từ 3 ngày trước
-- **Development**: Backend API và Frontend apps đã built nhưng chưa containerized
-- **Database**: TimescaleDB extension đã được tích hợp thành công
-- **Trading**: Market simulator đang hoạt động với real-time data
-- **Admin**: Scenario Builder và Session Manager đã functional
+- **Development**: Backend API and Frontend apps built and ready
+- **Database**: TimescaleDB extension successfully integrated
+- **Trading**: Market simulator running with real-time data
+- **Admin**: Scenario Builder and Session Manager functional
 
 ## 🔗 Related Documents
 

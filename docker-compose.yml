@@ -57,38 +57,16 @@ services:
       timeout: 10s
       retries: 3
 
-  core-main:
-    build:
-      context: ./core-main
-      dockerfile: Dockerfile
-    environment:
-      NODE_ENV: ${NODE_ENV:-development}
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      PORT: ${CORE_MAIN_PORT:-3001}
-    ports:
-      - "${CORE_MAIN_PORT:-3001}:3001"
-    depends_on:
-      redis:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
   client-app:
     build:
       context: ./client-app
       dockerfile: Dockerfile
       args:
         VITE_API_URL: ${VITE_API_URL:-http://localhost:3000}
-        VITE_CORE_MAIN_URL: ${VITE_CORE_MAIN_URL:-http://localhost:3001}
     ports:
       - "${CLIENT_PORT:-5173}:80"
     depends_on:
       - backend
-      - core-main
 
   admin-app:
     build:

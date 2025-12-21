@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { useWebSocketStore } from './websocket';
 import { marketApi } from '../services/api/market';
+import tradingSystemWs from '../services/tradingSystemWebSocket';
+import { mapMarketPrice } from '../utils/tradingSystemMappers';
 
 export const useMarketStore = defineStore('market', () => {
   const instruments = ref([]);
@@ -52,80 +54,93 @@ export const useMarketStore = defineStore('market', () => {
   async function fetchInstruments() {
     isLoadingInstruments.value = true;
     try {
-      // Get list of symbols to fetch
-      const symbolsToFetch = initialInstruments.map(inst => {
-        // Convert symbol format: EUR/USD -> EURUSD, BTC/USD -> BTCUSDT
-        let symbol = inst.symbol.replace('/', '');
-        if (symbol.includes('USD') && !symbol.endsWith('USDT') && inst.type === 'crypto') {
-          symbol = symbol.replace('USD', 'USDT');
-        }
-        return symbol;
-      });
+      // Define symbols matching backend format EXACTLY
+      const symbolsToFetch = [
+        // Crypto - backend expects: BTC, ETH, BNB, SOL, etc.
+        'BTC', 'ETH', 'BNB', 'SOL', 'XRP', 'ADA', 'DOT', 'AVAX', 'LINK',
+        // Forex - backend expects: EUR/USD, GBP/USD, etc.
+        'EUR/USD', 'GBP/USD', 'USD/JPY', 'AUD/USD', 'USD/CHF', 'USD/CAD', 'NZD/USD',
+        // Metals - backend expects: XAU, XAG (Gold, Silver)
+        'XAU', 'XAG'
+      ];
 
-      // Fetch prices from API
+      // Fetch prices from backend
       const response = await marketApi.getPrices(symbolsToFetch);
-      const pricesData = response.prices || response.data?.prices || response;
+      const pricesData = response.prices || response.data?.prices || {};
 
-      // Map API response to instruments format
+      console.log('Backend response:', response);
+
+      // Map backend response to instruments format
       const fetchedInstruments = [];
-      for (const [symbolKey, priceData] of Object.entries(pricesData)) {
-        // Find matching initial instrument to get type and other metadata
-        const originalSymbol = symbolKey.replace('USDT', '/USD').replace(/([A-Z]{3})([A-Z]{3})/, '$1/$2');
-        const originalInst = initialInstruments.find(inst => {
-          const instSymbol = inst.symbol.replace('/', '');
-          const keySymbol = symbolKey.replace('USDT', 'USD');
-          return instSymbol === keySymbol || inst.symbol === originalSymbol;
-        });
-
-        // Determine instrument type
-        let instrumentType = 'forex';
-        if (symbolKey.includes('USDT') || symbolKey.includes('BTC') || symbolKey.includes('ETH')) {
-          instrumentType = 'crypto';
-        } else if (['GOLD', 'OIL', 'SILVER'].some(c => symbolKey.includes(c))) {
-          instrumentType = 'commodity';
-        } else if (['SPX', 'NAS', 'DJ'].some(c => symbolKey.includes(c))) {
-          instrumentType = 'index';
+      
+      for (const [symbol, data] of Object.entries(pricesData)) {
+        // Keep original symbol for API calls
+        const originalSymbol = symbol;
+        
+        // Detect instrument type and create display name
+        let type = 'forex';
+        let displayName = symbol;
+        
+        if (['BTC', 'ETH', 'BNB', 'SOL', 'XRP', 'ADA', 'DOT', 'AVAX', 'LINK'].includes(symbol)) {
+          type = 'crypto';
+          displayName = `${symbol}/USD`;
+        } else if (symbol === 'XAU') {
+          type = 'commodity';
+          displayName = 'Gold (XAU)';
+        } else if (symbol === 'XAG') {
+          type = 'commodity';
+          displayName = 'Silver (XAG)';
+        } else if (symbol.includes('/')) {
+          type = 'forex';
+          displayName = symbol;
         }
 
-        // Format symbol for display
-        let displaySymbol = symbolKey;
-        if (symbolKey.includes('USDT')) {
-          displaySymbol = symbolKey.replace('USDT', '/USD');
-        } else if (symbolKey.length === 6 && !symbolKey.includes('/')) {
-          displaySymbol = symbolKey.slice(0, 3) + '/' + symbolKey.slice(3);
-        }
+        // Calculate absolute change from percent
+        const price = parseFloat(data.price) || 0;
+        const changePercent = parseFloat(data.change_24h) || 0;
+        const change = data.change ? parseFloat(data.change) : (price * changePercent) / 100;
 
         const instrument = {
-          symbol: displaySymbol,
-          type: originalInst?.type || instrumentType,
-          price: priceData.price || priceData.price_24h || 0,
-          change: priceData.change_24h || priceData.change || 0,
-          changePercent: priceData.change_percent || priceData.change_percent_24h || 0,
-          volume: priceData.volume_24h || priceData.volume || originalInst?.volume || 0,
-          high: priceData.high_24h || priceData.high || originalInst?.high || 0,
-          low: priceData.low_24h || priceData.low || originalInst?.low || 0,
+          symbol: originalSymbol,         // For API calls - keep original
+          displayName: displayName,       // For UI display
+          type: type,
+          price: price,
+          change: change,                 // Calculated if not provided
+          changePercent: changePercent,
+          volume: parseFloat(data.volume) || 0,
+          high: parseFloat(data.high) || price,
+          low: parseFloat(data.low) || price,
+          source: data.source || 'api',
+          timestamp: data.timestamp || Date.now()
         };
 
         fetchedInstruments.push(instrument);
 
-        // Update price data
-        priceData.value.set(displaySymbol, {
+        // Update price data map using original symbol as key
+        priceData.value.set(originalSymbol, {
           price: instrument.price,
           change: instrument.change,
           changePercent: instrument.changePercent,
-          timestamp: Date.now(),
+          timestamp: instrument.timestamp,
+          source: instrument.source
         });
       }
 
-      // Update instruments if we got data
+      // Update instruments if we got data from backend
       if (fetchedInstruments.length > 0) {
+        console.log(`✅ Loaded ${fetchedInstruments.length} real instruments from backend`);
         instruments.value = fetchedInstruments;
+        
+        // Set selected instrument
         if (!selectedInstrument.value || !instruments.value.find(i => i.symbol === selectedInstrument.value.symbol)) {
           selectedInstrument.value = instruments.value[0];
         }
+      } else {
+        console.warn('⚠️ No data from backend, using fallback');
+        // Keep initial mock data as fallback
       }
     } catch (error) {
-      console.error('Failed to fetch instruments from API:', error);
+      console.error('❌ Failed to fetch instruments from API:', error);
       // Keep initial mock data as fallback
     } finally {
       isLoadingInstruments.value = false;

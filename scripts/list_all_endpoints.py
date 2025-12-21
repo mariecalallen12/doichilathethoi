@@ -228,8 +228,6 @@ def get_router_prefix(file_path: Path) -> str:
         'analysis': '/api/analysis',
         'support': '/api/support',
         'legal': '/api/legal',
-        'opex_trading': '/api/trading',
-        'opex_market': '/api/market',
         'admin_trading': '/api/admin',
     }
     

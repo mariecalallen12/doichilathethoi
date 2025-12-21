@@ -1,267 +1,151 @@
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
-import { io } from 'socket.io-client';
+import api from '../services/api';
+import { useAuthStore } from './auth'; // Assuming auth store exists for token
 
-export const useChatStore = defineStore('chat', () => {
-  // State
-  const messages = ref([]);
-  const unreadCount = ref(0);
-  const isConnected = ref(false);
-  const isLoading = ref(false);
-  const error = ref(null);
-  const socket = ref(null);
-  const hasMoreMessages = ref(true);
-  const currentPage = ref(1);
-  const pageSize = ref(50);
-
-  // Computed
-  const sortedMessages = computed(() => {
-    return [...messages.value].sort((a, b) => {
-      return new Date(a.timestamp) - new Date(b.timestamp);
-    });
-  });
-
-  // Actions
-  function connect() {
-    if (socket.value?.connected) {
-      return; // Already connected
-    }
-
-    try {
-      const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws';
-      const chatUrl = wsUrl.replace('/ws', '/ws/support/chat');
-
-      socket.value = io(chatUrl, {
-        transports: ['websocket'],
-        reconnection: true,
-        reconnectionDelay: 1000,
-        reconnectionAttempts: 5,
-        reconnectionDelayMax: 5000,
-      });
-
-      socket.value.on('connect', () => {
-        isConnected.value = true;
-        error.value = null;
-        console.log('Chat connected');
-      });
-
-      socket.value.on('disconnect', () => {
-        isConnected.value = false;
-        console.log('Chat disconnected');
-      });
-
-      socket.value.on('connect_error', (err) => {
-        error.value = 'Không thể kết nối đến chat. Vui lòng thử lại sau.';
-        isConnected.value = false;
-        console.error('Chat connection error:', err);
-      });
-
-      // Message events
-      socket.value.on('message', (message) => {
-        addMessage(message);
-        if (message.sender === 'support') {
-          unreadCount.value++;
-        }
-      });
-
-      socket.value.on('message_history', (history) => {
-        messages.value = history.messages || [];
-        hasMoreMessages.value = history.has_more || false;
-        isLoading.value = false;
-      });
-
-      socket.value.on('typing', (data) => {
-        // Handle typing indicator
-        // This would typically update a typing state
-      });
-
-      socket.value.on('read_receipt', (data) => {
-        // Update message read status
-        const message = messages.value.find(m => m.id === data.message_id);
-        if (message) {
-          message.read = true;
-        }
-      });
-
-      socket.value.on('error', (err) => {
-        error.value = err.message || 'Có lỗi xảy ra trong chat';
-        console.error('Chat error:', err);
-      });
-    } catch (err) {
-      error.value = 'Không thể khởi tạo kết nối chat';
-      console.error('Error connecting to chat:', err);
-    }
+const getWsBaseUrl = () => {
+  const url = api.baseURL;
+  if (url.startsWith('https')) {
+    return url.replace('https', 'wss');
   }
+  return url.replace('http', 'ws');
+};
 
-  function disconnect() {
-    if (socket.value) {
-      socket.value.disconnect();
-      socket.value = null;
-      isConnected.value = false;
-    }
-  }
-
-  function sendMessage(content, files = []) {
-    if (!socket.value?.connected) {
-      error.value = 'Chưa kết nối đến chat';
-      return Promise.reject(new Error('Not connected'));
-    }
-
-    return new Promise((resolve, reject) => {
-      const messageData = {
-        content,
-        files: files.map(file => ({
-          name: file.name,
-          type: file.type,
-          size: file.size,
-          // In production, files would be uploaded first and URLs returned
-          url: URL.createObjectURL(file)
-        })),
-        timestamp: new Date().toISOString()
-      };
-
-      // Optimistically add message
-      const tempMessage = {
-        id: `temp-${Date.now()}`,
-        ...messageData,
-        sender: 'user',
-        delivered: false,
-        read: false
-      };
-      addMessage(tempMessage);
-
-      socket.value.emit('send_message', messageData, (response) => {
-        if (response.success) {
-          // Replace temp message with real message
-          const index = messages.value.findIndex(m => m.id === tempMessage.id);
-          if (index !== -1) {
-            messages.value[index] = {
-              ...response.message,
-              delivered: true
-            };
-          }
-          resolve(response.message);
+export const useChatStore = defineStore('clientChat', { // Changed name to clientChat to avoid conflict
+  state: () => ({
+    conversation: null, // User will likely have one active conversation with support
+    messages: [],
+    isLoading: false,
+    error: null,
+    socket: null,
+    isConnected: false,
+    unreadCount: 0,
+    isChatOpen: false, // To control the visibility of the ChatWindow
+  }),
+  actions: {
+    async fetchOrCreateConversation() {
+      this.isLoading = true;
+      this.error = null;
+      try {
+        // First, try to fetch existing conversations for the user
+        const existingConversations = await api.get('/api/conversations/me');
+        if (existingConversations && existingConversations.length > 0) {
+          // Assuming user has only one primary conversation with support
+          this.conversation = existingConversations[0];
+          this.messages = this.conversation.messages;
+          this.calculateUnreadMessages();
         } else {
-          // Remove temp message on error
-          messages.value = messages.value.filter(m => m.id !== tempMessage.id);
-          error.value = response.error || 'Không thể gửi tin nhắn';
-          reject(new Error(response.error));
+          // If no conversation exists, create a new one with a default message
+          const initialMessageContent = "Hello, I need support."; // Default message for starting a new chat
+          const newConversation = await api.post('/api/conversations', { first_message: initialMessageContent });
+          this.conversation = newConversation;
+          this.messages = newConversation.messages;
+          this.unreadCount = 0;
         }
-      });
-    });
-  }
+        this.connectWebSocket();
+      } catch (error) {
+        this.error = error;
+        console.error("Failed to fetch or create conversation:", error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
 
-  function loadMessages() {
-    if (isLoading.value || !hasMoreMessages.value) {
-      return;
-    }
+    connectWebSocket() {
+      if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+        this.isConnected = true;
+        return;
+      }
+      if (!this.conversation) return;
 
-    isLoading.value = true;
-    
-    if (socket.value?.connected) {
-      socket.value.emit('get_messages', {
-        page: currentPage.value,
-        page_size: pageSize.value
-      });
-    } else {
-      // Fallback to API if WebSocket not available
-      loadMessagesFromAPI();
-    }
-  }
+      const conversationId = this.conversation.id;
+      const socketUrl = `${getWsBaseUrl()}/ws/chat/${conversationId}`;
+      this.socket = new WebSocket(socketUrl);
 
-  async function loadMessagesFromAPI() {
-    try {
-      const response = await fetch('/api/support/chat/messages', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+      this.socket.onopen = () => {
+        this.isConnected = true;
+        console.log(`WebSocket connected for conversation ${conversationId}`);
+        const authStore = useAuthStore();
+        if (authStore.token) {
+            this.socket.send(JSON.stringify({ token: authStore.token }));
+        } else {
+            console.error("No auth token found for WebSocket connection.");
+            this.socket.close();
         }
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        messages.value = data.messages || [];
-        hasMoreMessages.value = data.has_more || false;
+      };
+
+      this.socket.onmessage = (event) => {
+        const message = JSON.parse(event.data);
+        this.handleIncomingMessage(message);
+      };
+
+      this.socket.onclose = () => {
+        this.isConnected = false;
+        this.socket = null;
+        console.log('WebSocket disconnected');
+      };
+
+      this.socket.onerror = (error) => {
+        this.error = error;
+        this.isConnected = false;
+        console.error('WebSocket error:', error);
+      };
+    },
+
+    disconnectWebSocket() {
+      if (this.socket) {
+        this.socket.close();
+        this.socket = null;
+        this.isConnected = false;
       }
-    } catch (err) {
-      console.error('Error loading messages:', err);
-      error.value = 'Không thể tải tin nhắn';
-    } finally {
-      isLoading.value = false;
-    }
-  }
+    },
 
-  function loadMoreMessages() {
-    if (isLoading.value || !hasMoreMessages.value) {
-      return;
-    }
-
-    currentPage.value++;
-    loadMessages();
-  }
-
-  function addMessage(message) {
-    // Check if message already exists
-    const exists = messages.value.find(m => m.id === message.id);
-    if (!exists) {
-      messages.value.push(message);
-      // Keep only last 1000 messages in memory
-      if (messages.value.length > 1000) {
-        messages.value = messages.value.slice(-1000);
+    sendMessage(messageContent) {
+      if (!this.socket || !this.isConnected || !this.conversation) {
+        console.error("WebSocket is not connected or no active conversation.");
+        return;
       }
-    }
-  }
+      const message = {
+        content: messageContent,
+      };
+      this.socket.send(JSON.stringify(message));
+    },
 
-  function markAsRead() {
-    if (unreadCount.value > 0) {
-      unreadCount.value = 0;
-      
-      // Mark messages as read on server
-      if (socket.value?.connected) {
-        const unreadIds = messages.value
-          .filter(m => m.sender === 'support' && !m.read)
-          .map(m => m.id);
-        
-        if (unreadIds.length > 0) {
-          socket.value.emit('mark_read', { message_ids: unreadIds });
+    handleIncomingMessage(message) {
+      if (message.type === 'system') {
+        console.log('System message:', message.message);
+        return;
+      }
+      if (this.conversation && this.conversation.id === message.conversation_id) {
+        const existingMessage = this.messages.find(m => m.id === message.id);
+        if (!existingMessage) {
+            this.messages.push(message);
+            if (!this.isChatOpen && message.sender_type !== 'user') { // Increment unread if chat is closed and message is from admin
+                this.unreadCount++;
+            }
         }
       }
+    },
+
+    markAsRead() {
+        this.unreadCount = 0;
+        // In a real app, you might also send an API call to mark messages as read in DB
+    },
+
+    setChatOpen(isOpen) {
+        this.isChatOpen = isOpen;
+        if (isOpen) {
+            this.markAsRead();
+        }
+    },
+
+    calculateUnreadMessages() {
+        // This would require a 'read' status on messages and a user's last read timestamp
+        // For simplicity, we'll assume all messages not sent by 'user' are unread
+        if (this.messages && this.messages.length > 0) {
+            this.unreadCount = this.messages.filter(msg => msg.sender_type !== 'user').length;
+        } else {
+            this.unreadCount = 0;
+        }
     }
-  }
-
-  function sendTypingIndicator(typing) {
-    if (socket.value?.connected) {
-      socket.value.emit('typing', { typing });
-    }
-  }
-
-  function clearMessages() {
-    messages.value = [];
-    unreadCount.value = 0;
-    currentPage.value = 1;
-    hasMoreMessages.value = true;
-  }
-
-  // Initialize connection on store creation
-  // connect();
-
-  return {
-    // State
-    messages: sortedMessages,
-    unreadCount,
-    isConnected,
-    isLoading,
-    error,
-    hasMoreMessages,
-    
-    // Actions
-    connect,
-    disconnect,
-    sendMessage,
-    loadMessages,
-    loadMoreMessages,
-    markAsRead,
-    sendTypingIndicator,
-    clearMessages
-  };
+  },
 });
-

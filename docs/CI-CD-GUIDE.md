@@ -11,11 +11,10 @@ Dự án sử dụng GitHub Actions để tự động hóa quy trình build, te
 **Mục đích:** Build và test tất cả services
 
 **Jobs:**
-- ✅ Backend Tests - Build và lint backend service
-- ✅ Core-Main Tests - Build và lint core-main service  
-- ✅ Client-App Tests - Build và lint frontend client
-- ✅ Admin-App Tests - Build và lint admin dashboard
-- 🐳 Docker Build Test - Verify tất cả Docker images build thành công
+- ✅ Backend Tests - Build and lint backend service
+- ✅ Client-App Tests - Build and lint frontend client
+- ✅ Admin-App Tests - Build and lint admin dashboard
+- 🐳 Docker Build Test - Verify all Docker images build successfully
 
 **Thời gian:** ~10-15 phút
 
@@ -28,7 +27,7 @@ Dự án sử dụng GitHub Actions để tự động hóa quy trình build, te
 **Steps:**
 1. Khởi động PostgreSQL & Redis
 2. Chạy database migrations
-3. Khởi động Backend & Core-Main services
+3. Khởi động Backend services
 4. Kiểm tra health endpoints
 5. Chạy integration test suite
 6. Thu thập logs nếu có lỗi
@@ -90,7 +89,6 @@ Dự án sử dụng GitHub Actions để tự động hóa quy trình build, te
 
 **Validation Checks:**
 - ✅ Backend health endpoint
-- ✅ Core-Main health endpoint
 - 🔌 WebSocket connection test
 - 📊 Trading data endpoints
 - 📈 Real-time data stream

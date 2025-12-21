@@ -29,7 +29,7 @@ FEATURE_MAPPING = {
         "/api/admin/registrations",
         "/api/admin/registrations/{registration_id}/approve"
     ],
-    "OpexTradingManagement": [
+    "TradingManagement": [
         "/api/admin/trading",
         "/api/admin/trading/adjustments",
         "/api/admin/trades",

@@ -447,32 +447,6 @@ async def register(
         db.commit()
         db.refresh(user)
         
-        # Create OPEX user account (async, non-blocking)
-        # This runs in background and doesn't block registration
-        try:
-            from ...services.opex_user_service import get_opex_user_service
-            import asyncio
-            
-            opex_user_service = get_opex_user_service()
-            # Schedule background task (fire and forget)
-            # Since we're in an async endpoint, we can create a task
-            try:
-                asyncio.create_task(
-                    opex_user_service.sync_user_to_opex(
-                        user_id=user.id,
-                        email=email_to_use,
-                        phone=phone_number_normalized,
-                        full_name=register_data.displayName or phone_number,
-                        initialize_wallet=True
-                    )
-                )
-            except Exception as async_error:
-                # Don't fail registration if OPEX sync fails
-                logger.warning(f"Failed to schedule OPEX user sync: {async_error}")
-        except Exception as e:
-            # Don't fail registration if OPEX sync fails
-            logger.warning(f"Failed to sync user to OPEX during registration: {e}")
-        
         # Create referral registration if applicable
         if referral_code_id:
             from ...models.referral import ReferralRegistration
