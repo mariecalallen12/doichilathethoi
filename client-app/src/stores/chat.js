@@ -149,3 +149,6 @@ export const useChatStore = defineStore('clientChat', { // Changed name to clien
     }
   },
 });
+
+// Export with alias for compatibility
+export const useClientChatStore = useChatStore;

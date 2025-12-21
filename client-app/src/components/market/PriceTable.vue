@@ -208,22 +208,6 @@ watch(() => marketStore.priceData, (newData, oldData) => {
     }
   });
 }, { deep: true });
-
-    forex: 'Forex',
-    crypto: 'Cryptocurrency',
-    commodity: 'Hàng hóa',
-    index: 'Chỉ số',
-  };
-  return names[type] || 'Khác';
-};
-
-const getDecimals = (price) => {
-  if (price >= 1000) return 2;
-  if (price >= 100) return 2;
-  if (price >= 10) return 3;
-  if (price >= 1) return 4;
-  return 5;
-};
 </script>
 
 

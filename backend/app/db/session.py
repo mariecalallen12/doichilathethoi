@@ -8,8 +8,10 @@ Quản lý SQLAlchemy engine, session, và kết nối PostgreSQL
 from sqlalchemy import create_engine, event, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
-from sqlalchemy.pool import QueuePool
-from typing import Generator
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy.pool import QueuePool, AsyncAdaptedQueuePool
+from typing import Generator, AsyncGenerator
+from contextlib import asynccontextmanager
 import logging
 
 from ..core.config import settings
@@ -30,11 +32,39 @@ engine = create_engine(
     echo=settings.DEBUG,  # Log SQL queries trong debug mode
 )
 
+# =============== Tạo Async Engine ===============
+# Convert postgresql:// to postgresql+asyncpg://
+async_database_url = settings.DATABASE_URL.replace(
+    "postgresql://", "postgresql+asyncpg://"
+).replace(
+    "postgres://", "postgresql+asyncpg://"
+)
+
+async_engine = create_async_engine(
+    async_database_url,
+    poolclass=AsyncAdaptedQueuePool,
+    pool_size=10,
+    max_overflow=20,
+    pool_timeout=30,
+    pool_recycle=1800,
+    pool_pre_ping=True,
+    echo=settings.DEBUG,
+)
+
 # =============== Tạo Session Factory ===============
 SessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
     bind=engine
+)
+
+# =============== Tạo Async Session Factory ===============
+AsyncSessionLocal = async_sessionmaker(
+    async_engine,
+    class_=AsyncSession,
+    expire_on_commit=False,
+    autocommit=False,
+    autoflush=False,
 )
 
 # =============== Base class cho models ===============
@@ -84,6 +114,50 @@ def get_db() -> Generator[Session, None, None]:
         yield db
     finally:
         db.close()
+
+
+async def get_async_db() -> AsyncGenerator[AsyncSession, None]:
+    """
+    Dependency để inject async database session vào async endpoints
+    
+    Sử dụng:
+        @router.get("/items")
+        async def get_items(db: AsyncSession = Depends(get_async_db)):
+            result = await db.execute(select(Item))
+            return result.scalars().all()
+    
+    Yields:
+        AsyncSession: SQLAlchemy async database session
+    """
+    async with AsyncSessionLocal() as session:
+        try:
+            yield session
+        finally:
+            await session.close()
+
+
+@asynccontextmanager
+async def async_session() -> AsyncGenerator[AsyncSession, None]:
+    """
+    Context manager để sử dụng async session trong code
+    
+    Sử dụng:
+        async with async_session() as db:
+            result = await db.execute(select(User))
+            users = result.scalars().all()
+    
+    Yields:
+        AsyncSession: SQLAlchemy async database session
+    """
+    async with AsyncSessionLocal() as session:
+        try:
+            yield session
+            await session.commit()
+        except Exception:
+            await session.rollback()
+            raise
+        finally:
+            await session.close()
 
 
 def init_db():

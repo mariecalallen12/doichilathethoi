@@ -8,7 +8,7 @@
  * - Binary sentiment every 30 seconds
  */
 
-import { marketDataApi, tradingFeaturesApi } from './tradingSystem';
+import { marketDataApi, tradingFeaturesApi } from './api/tradingSystem';
 import { 
   mapAllMarketPrices, 
   mapAllTradingSignals,

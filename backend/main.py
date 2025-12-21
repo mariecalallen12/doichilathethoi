@@ -281,7 +281,11 @@ from app.middleware.logging import LoggingMiddleware
 app.add_middleware(LoggingMiddleware)
 
 # Static Files
-app.mount("/static", StaticFiles(directory="static"), name="static")
+import os
+if os.path.exists("static"):
+    app.mount("/static", StaticFiles(directory="static"), name="static")
+else:
+    logger.warning("Static directory not found, skipping static files mount")
 
 @app.get("/")
 async def root():
